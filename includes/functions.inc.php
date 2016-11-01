@@ -283,5 +283,23 @@ function createSingleGenreHeader(){
     return utf8_encode($header);
 }
 
+//----------------
+//BROWSE MUSEUM---
+//----------------
+function createBrowseMuseumCards(){   
+    $allGalleries = findAllGalleriesOrderedBy("GalleryName");
+    $output = "";
+    foreach($allGalleries as $gallery){
+        $output .= createGalleriesCard($gallery);
+    }
+    return utf8_encode($output);
+}
+function createGalleriesCard($gallery){
+    $card = "<div class='ui card'>";
+    $card .= "<a href='single_gallery.php?galleryid='".$gallery["GalleryID"]."' class='header'>". $gallery["GalleryName"]."</a>";
+    $card .= "<div class='ui text content'><p>".$gallery["GalleryCity"].", ".$gallery["GalleryCountry"]."</p></div>";
+    $card .= "</div>";
 
+    return $card;
+}
 ?>

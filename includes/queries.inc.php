@@ -137,6 +137,13 @@ function findGalleryByID($id){
     return $statement;
 }
 
+function findAllGalleriesOrderedBy($orderBy){
+    $pdo = PDO();
+    $sql = "SELECT GalleryID, GalleryName, GalleryNativeName, GalleryCity, GalleryCountry, Latitude, Longitude, GalleryWebSite FROM galleries ORDER BY $orderBy";
+    $statement = queryDatabaseForDataSet($pdo, $sql);
+    $pdo = null;
+    return $statement;
+}
 ///--GENRE
 function findGenreByID($id){
     $pdo = PDO();
