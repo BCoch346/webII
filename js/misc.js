@@ -29,4 +29,13 @@ $(function () {
     });
 
 });
+function addToTheCart(){
+$('#addToCart').on('click', function(e){
+    var paintingid = $(this).attr('value');
+    $.ajax({
+        type: 'POST',
+        url: 'single-painting.php',
+        data: { pid: paintingid, clicked: 'TRUE' }
+    }); 
+});}
 

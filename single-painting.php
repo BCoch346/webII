@@ -1,6 +1,7 @@
 <?php
-include("includes/functions.inc.php"); ?>
+include("includes/functions.inc.php"); 
 
+?>
 <!DOCTYPE html>
 <html lang=en>
 <head>
@@ -43,11 +44,7 @@ include("includes/functions.inc.php"); ?>
                     <?php echo createPaintingHeader(); ?>
                     <div class="meta">
                         <p>
-                            <i class="orange star icon"></i>
-                            <i class="orange star icon"></i>
-                            <i class="orange star icon"></i>
-                            <i class="orange star icon"></i>
-                            <i class="empty star icon"></i>
+                            <?php echo createSinglePaintingRating(); ?>
                         </p>
                         <?php echo createPaintingExcerpt(); ?>
                     </div>
@@ -108,7 +105,7 @@ include("includes/functions.inc.php"); ?>
                                     Museum
                                 </td>
                                 <td>
-                                    <?php echo getGalleryNameFromPainting(); ?>
+                                    <?php echo createMuseumNameLink(); ?>
                                 </td>
                             </tr>
                             <tr>
@@ -143,13 +140,16 @@ include("includes/functions.inc.php"); ?>
                 </div>
                 <div class="ui bottom attached tab segment" data-tab="subjects">
                     <!--to be completed in a later assignment-->
-                    <ul class="ui list">
+                    <!--<ul class="ui list">
                         <li class="item"><a href="#">People</a></li>
-                        <li class="item"><a href="#">Science</a></li>
-                    </ul>
+                        <li class="item"><a href="#">Science</a></li>-->
+                        <?php echo createPaintingSubjectList(); ?>
+                   <!-- </ul> -->
                 </div>
 
                 <!-- Cart and Price -->
+                <form action="includes/addTo_Functions.inc.php" method="post">
+
                 <div class="ui segment">
                     <div class="ui form">
                         <div class="ui tiny statistic">
@@ -159,8 +159,9 @@ include("includes/functions.inc.php"); ?>
                         </div>
                         <div class="four fields">
                             <div class="three wide field">
+                                
                                 <label>Quantity</label>
-                                <input type="number">
+                                <input type="number" name="quantity">
                             </div>
                             <div class="four wide field">
                                 <label>Frame</label>
@@ -182,17 +183,20 @@ include("includes/functions.inc.php"); ?>
                     </div>
 
                     <div class="ui divider"></div>
-
-                    <button class="ui labeled icon orange button">
+                    
+                        
+                    <button type="submit" name="addtocart" class="ui labeled icon orange button"  id="addToCart" value=<?php echo createButtonValue();?> >
                         <i class="add to cart icon"></i>
                         Add to Cart
                     </button>
-                    <button class="ui right labeled icon button">
+                    
+                    <button type="submit" name="addtofav" class="ui right labeled icon button" value=<?php echo createButtonValue();?>>
                         <i class="heart icon"></i>
                         Add to Favorites
                     </button>
-                </div>     <!-- END Cart -->
-
+                </div>                    
+                         
+                    </form></div> <p><!-- END Cart -->
             </div>	<!-- END RIGHT data Column -->
         </div>		<!-- END Grid -->
     </section>		<!-- END Main Section --> 
