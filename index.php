@@ -1,3 +1,10 @@
+
+<?php session_start();
+$_SESSION['Painting'] = array(
+    ["name" => "Madonna Enthroned","quantity" => 2, "frame" => "1", "glass" => "1", "matt" => "1", "id" => 441, "imgExt" => 114020],
+    ["name" => "Mona Lisa","quantity" => 3, "frame" => "4", "glass" => "2", "matt" => "34", "id" => 389, "imgExt" => "097050"]);
+
+?>  
 <?php include("includes/functions.inc.php"); ?>
 
 <!DOCTYPE html>
