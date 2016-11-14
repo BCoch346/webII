@@ -83,9 +83,9 @@ function findAllPaintingsByGalleryIDLimit($id, $limit, $orderBy){
     $pdo = null;
     return $statement;
 }
-function findAllPaintingsByShapeIDLimit($id, $limit, $orderBy){
+function findAllPaintingsBySubjectIDLimit($id, $limit){
     $pdo = PDO();
-    $sql = "SELECT PaintingID, ImageFileName, Title, Description, Cost, FirstName, LastName FROM Paintings JOIN Artists ON Paintings.ArtistID = Artists.ArtistID WHERE ShapeID = $id ORDER BY $orderBy LIMIT $limit";
+    $sql = "SELECT ImageFileName, Title, Paintings.PaintingID FROM Paintings INNER JOIN PaintingSubjects ON Paintings.PaintingID = PaintingSubjects.PaintingID INNER JOIN Subjects ON Subjects.SubjectID = PaintingSubjects.SubjectID WHERE Subjects.SubjectID = $id ORDER BY Title LIMIT $limit";
     $statement = queryDatabaseForDataSet($pdo, $sql);
     $pdo = null;
     return $statement;
@@ -119,6 +119,13 @@ function findPaintingsByGenreID($id){
     $pdo = null;
     return $statement;
 }
+function findAverageRating($id){
+    $pdo = PDO();
+    $sql = "SELECT AVG(Rating) as rating FROM Reviews WHERE PaintingID = $id GROUP BY PaintingID";
+    $statement = queryDatabaseForSingleItem($pdo, $sql);
+    $pdo = null;
+    return $statement;
+}
 ///--ARTIST
 function findArtistByID($id){
     $pdo = PDO();
@@ -127,11 +134,17 @@ function findArtistByID($id){
     $pdo = null;
     return $statement;
 }
-
+function findAllArtistsOrderedBy($orderBy){
+    $pdo = PDO();
+    $sql = "SELECT ArtistID, FirstName, LastName, Nationality, Gender, YearOfBirth, YearOfDeath, Details, ArtistLink FROM Artists ORDER BY $orderBy";
+    $statement = queryDatabaseForDataSet($pdo, $sql);
+    $pdo = null;
+    return $statement;
+}
 ///--GALLERY
 function findGalleryByID($id){
     $pdo = PDO();
-    $sql = "SELECT GalleryID, GalleryName, GalleryWebSite FROM Galleries WHERE GalleryID = ". $id;
+    $sql = "SELECT GalleryID, GalleryName, GalleryWebSite, GalleryCity, GalleryCountry, Latitude, Longitude FROM Galleries WHERE GalleryID = ". $id;
     $statement = queryDatabaseForSingleItem($pdo, $sql);
     $pdo = null;
     return $statement;
@@ -166,6 +179,29 @@ function findAllGenresOrderedBy($orderBy){
     $pdo = null;
     return $statement;
 }
+///--SUBJECT
+function findAllSubjectsOrderedBy($orderBy){
+    $pdo = PDO();
+    $sql = "SELECT SubjectID, SubjectName FROM Subjects ORDER BY $orderBy";
+    $statement = queryDatabaseForDataSet($pdo, $sql);
+    $pdo = null;
+    return $statement;
+}
+function findSubjectsByPaintingID($id){
+    $pdo = PDO();
+    $sql = "SELECT Subjects.SubjectID, SubjectName FROM Subjects JOIN PaintingSubjects ON Subjects.SubjectID = PaintingSubjects.SubjectID JOIN Paintings ON Paintings.PaintingID = PaintingSubjects.PaintingID WHERE Paintings.PaintingID = ". $id;
+    $statement = queryDatabaseForDataSet($pdo, $sql);
+    $pdo = null;
+    return $statement;
+}
+function findSubjectByID($id){
+    $pdo = PDO();
+    $sql = "SELECT SubjectID, SubjectName FROM Subjects WHERE SubjectID = ". $id;
+    $statement = queryDatabaseForSingleItem($pdo, $sql);
+    $pdo = null;
+    return $statement;
+}
+
 ///--TYPE
 function findAllOfType($type){
     $pdo = PDO();

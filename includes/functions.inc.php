@@ -5,6 +5,8 @@ define("DBPASS", 'mypassword');
 define("DEFAULT_PAINTING_ID", 105);
 define("DEFAULT_ARTIST_ID", 1);
 define("DEFAULT_GENRE_ID", 1);
+define("DEFAULT_GALLERY_ID", 2);
+define("DEFAULT_SUBJECT_ID", 11);
 define("BROWSE_PAINTING_LIMIT", 20);
 define("ADAPTERTYPE", "PDO");
 
@@ -12,6 +14,9 @@ include_once("queries.inc.php");
 include_once("paintingFunctions.inc.php");
 include_once("reviewFunctions.inc.php");
 include_once("artistFunctions.inc.php");
+
+
+
 
 
 function truncateString($string, $length){
@@ -232,6 +237,44 @@ function createCurrentFilterString(){
 
     return utf8_encode($string);
 }
+
+function createSinglePaintingRating(){
+    $paintingID = DEFAULT_PAINTING_ID;
+    $stars='';
+    if(isValid('paintingid')){
+        $paintingID = $_GET['paintingid'];
+    }
+    $aveRating = findAverageRating($paintingID);
+    if($aveRating==null){
+        $stars .= "Not Rated";
+    }
+    else{
+    foreach($aveRating as $rating){
+    $rating = ceil($rating);
+    for($i = 0; $i < $rating; $i++){
+        $stars .= '<i class="orange star icon"></i>';
+    }
+    if($rating<5){
+        $greyNo = 5-$rating;
+        for($i = 0; $i < $greyNo; $i++){
+           $stars .= '<i class="empty star icon"></i>';
+        }
+    }
+            break;
+    }
+    }
+    return utf8_encode($stars);
+}
+
+function createButtonValue(){
+    $value = DEFAULT_PAINTING_ID;
+    if(isValid("paintingid")){
+        $value = $_GET["paintingid"];
+    }
+    $output= '"'.$value.'"';
+    return $value;
+}
+
 //----------------
 //BROWSE GENRE----
 //----------------
@@ -296,10 +339,156 @@ function createBrowseMuseumCards(){
 }
 function createGalleriesCard($gallery){
     $card = "<div class='ui card'>";
-    $card .= "<a href='single_gallery.php?galleryid='".$gallery["GalleryID"]."' class='header'>". $gallery["GalleryName"]."</a>";
+    $card .= "<a href='single-gallery.php?galleryid=".$gallery["GalleryID"]."' class='header'>". $gallery["GalleryName"]."</a>";
     $card .= "<div class='ui text content'><p>".$gallery["GalleryCity"].", ".$gallery["GalleryCountry"]."</p></div>";
     $card .= "</div>";
 
     return $card;
 }
+function createSingleGalleryPictureGrid(){
+    $galleryID = DEFAULT_GALLERY_ID;
+    if(isValid("galleryid")){
+        $galleryID = $_GET["galleryid"];
+    }
+    $limit = 20;
+    $orderBy = 'Title';
+    $cards = "";
+    $allPaintings = findAllPaintingsByGalleryIDLimit($galleryID, $limit, $orderBy);
+    foreach($allPaintings as $painting){
+        $cards .= "<div class='ui column link'>";
+        $cards .= createWorksSquareMediumImageWithLink($painting);
+        $cards .= "</div>";
+    }
+
+    return utf8_encode($cards);
+}
+function createSingleGalleryHeader(){
+    $galleryID = DEFAULT_GALLERY_ID;
+    if(isValid("galleryid")){
+        $galleryID = $_GET["galleryid"];
+    }
+    $gallery = findGalleryByID($galleryID);
+    $header = "<div class='item'>";
+    $header .= '<div class="content"><h2 class="ui header">'.$gallery["GalleryName"].'</h2>';
+    $header .= '<div class="meta"><span>'.$gallery["GalleryCity"].', '.$gallery["GalleryCountry"].'</span></div>';
+    $header .= '<div class="ui divider"></div>';
+    $header .= '<div class="description"><h4>Website: </h4><a href="'.$gallery["GalleryWebSite"].'">'.$gallery["GalleryWebSite"].'
+    </a></div>';
+    $header .= '<h4>Location:</h4><div id="map"></div>'.createMuseumMap($gallery);
+    $header .= '</div></div>';
+
+    return utf8_encode($header);
+}
+function createMuseumMap($gallery){
+    $output = '</div>'.'<script> function createMap() {
+        var uluru = {lat:'.$gallery["Latitude"].', lng:'.$gallery["Longitude"].'};
+        var map = new google.maps.Map(document.getElementById("map"), {
+          zoom: 15,
+          center: uluru
+        });
+        var marker = new google.maps.Marker({
+          position: uluru,
+          map: map
+        });
+      };</script>
+      <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyABLWIe4bJ_hsZvhr1DfJ8GDTnme_0BDiY&callback=createMap">
+    </script>';
+    return $output;
+}
+
+//----------------
+//BROWSE Artists--
+//----------------
+function createBrowseArtistCards(){
+    $allArtists = findAllArtistsOrderedBy("LastName");
+    $output = "";
+    foreach($allArtists as $artist){
+        $output .= createArtistCard($artist);
+    }
+    return utf8_encode($output);
+}
+
+function createArtistCard($artist){
+    $card = "<div class='ui card'>";
+    $card .= "<div class='image'>".createImage("images/art/artists/square-thumb/".$artist["ArtistID"].".jpg", $artist["FirstName"].$artist["LastName"], $artist["FirstName"].$artist["LastName"], "", "")."</div>";
+    $card .= "<a class='ui text content' href='single-artist.php?artistid=".$artist["ArtistID"]."'><div class='extra header'>".$artist["FirstName"]." ".$artist["LastName"]."</div></a>";
+    $card .= "</div>";
+
+    return $card;
+}
+//----------------
+//BROWSE Subjects-
+//----------------
+function createBrowseSubjectsCards(){
+    $allSubjects = findAllSubjectsOrderedBy("SubjectName");
+    $output = "";
+    foreach($allSubjects as $subject){
+        $output .= createSubjectCard($subject);
+    }
+    return utf8_encode($output);
+}
+
+function createSubjectCard($subject){
+    $card = "<div class='ui card'>";
+    $card .= "<div class='image'>"."</div>";
+    $card .= "<a class='ui text content' href='single-subject.php?subjectid=".$subject["SubjectID"]."'><div class='extra header'>".$subject["SubjectName"]."</div></a>";
+    $card .= "</div>";
+
+    return $card;
+}
+function createSingleSubjectPictureGrid(){
+    $subjectID = DEFAULT_SUBJECT_ID;
+    if(isValid("subjectid")){
+        $subjectID = $_GET["subjectid"];
+    }
+    $limit = 20;
+    $orderBy = 'Title';
+    $cards = "";
+    $allPaintings = findAllPaintingsBySubjectIDLimit($subjectID, $limit);
+    foreach($allPaintings as $painting){
+        $cards .= "<div class='ui column link'>";
+        $cards .= createWorksSquareMediumImageWithLink($painting);
+        $cards .= "</div>";
+    }
+    return utf8_encode($cards);
+}
+function createSingleSubjectHeader(){
+    $subjectID = DEFAULT_SUBJECT_ID;
+    if(isValid("subjectid")){
+        $subjectID = $_GET["subjectid"];
+    }
+    $subject = findSubjectByID($subjectID);
+    $header = "<div class='item'>";
+    $header .= '<div class="content"><h2 class="ui header">'.$subject["SubjectName"].'</h2>';
+    $header .= '<div class="ui divider"></div>';
+    $header .= '</div></div>';
+
+    return utf8_encode($header);
+}
 ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -31,6 +31,12 @@ function getGalleryNameFromPainting(){
     $gallery = findGalleryByID($painting["GalleryID"]);
     return utf8_encode($gallery["GalleryName"]);
 }
+function createMuseumNameLink(){
+    $painting = getPainting();
+    $gName = getGalleryNameFromPainting();
+    $link = '<a href="single-gallery.php?'.$painting["GalleryID"].'">'.$gName.'</a>';
+    return utf8_encode($link);
+}
 function createPaintingGenreList(){
     $painting = getPainting();
     $genres = findGenresByPaintingID($painting["PaintingID"]);
@@ -38,6 +44,19 @@ function createPaintingGenreList(){
     foreach($genres as $genre){
         //$genre = findGenreByID($paintingGenre["GenreID"]);
         $itemContent = createAnchorTag("single-genre.php?genreid=".$genre["GenreID"], $genre["GenreName"]);
+        $list .= createListItem("item", $itemContent);
+    }
+    $list .= "</ul>";
+
+    return utf8_encode($list);
+}
+function createPaintingSubjectList(){
+    $painting = getPainting();
+    $subjects = findSubjectsByPaintingID($painting["PaintingID"]);
+    $list = "<ul class='ui list'>";
+    foreach($subjects as $subject){
+        //$genre = findGenreByID($paintingGenre["GenreID"]);
+        $itemContent = createAnchorTag("single-subject.php?subjectid=".$subject["SubjectID"], $subject["SubjectName"]);
         $list .= createListItem("item", $itemContent);
     }
     $list .= "</ul>";
