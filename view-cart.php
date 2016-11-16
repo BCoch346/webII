@@ -1,5 +1,5 @@
 <!--View Cart PHP-->
-<?php session_start();?>
+<?php session_start(); ?>
 <?php include("includes/functions.inc.php"); ?>            
 
 
@@ -60,7 +60,8 @@ $cart -> instantiateCartLogic();
  
 if(!empty($_SESSION['Painting'])){
     $painting = $_SESSION['Painting'];
-    $totalSubTotal = 0; 
+    $totalSubTotal = 0;
+    //$stopIndex = 0;
                    
     for($paintIndex = 0; $paintIndex < count($painting); $paintIndex++ ) { 
         
@@ -68,7 +69,8 @@ if(!empty($_SESSION['Painting'])){
         $singleFrame = findSingleFromTableByID('TypesFrames', 'FrameID', $painting[$paintIndex]['frame']);
         $singleGlass = findSingleFromTableByID('TypesGlass', 'GlassID', $painting[$paintIndex]['glass']);
         $singleMatte = findSingleFromTableByID('TypesMatt', 'MattID', $painting[$paintIndex]['matt']);
-
+        $standard = 0;
+        $express = 0;
         $subtotal = 0;
         $frameCost = 0;
         $glassCost = 0;
@@ -79,18 +81,31 @@ if(!empty($_SESSION['Painting'])){
         $frameCost = $painting[$paintIndex]['quantity'] * round($singleFrame['Price'], 2);
         $glassCost = $painting[$paintIndex]['quantity'] * round($singleGlass['Price'],2);           
         $matteCost = $painting[$paintIndex]['quantity'] * 10;
-        $subTotal = $matteCost + $glassCost + $frameCost + $basePrice;            
-        $totalSubTotal += $subTotal;
+        $subTotal = $matteCost + $glassCost + $frameCost + $basePrice; 
         
-         
-        $standard = 0;
-        $express = 0;
+        
+  
+        
+        if(isset($_POST['cartOptions'])&& $_POST['cartOptions'] == 'Update' ){
+            $totalSubTotal += $subTotal;}
+        elseif($_SESSION['stopVariable'] != count($painting)) {
+            $totalSubTotal += $subTotal;
+            $_SESSION['stopVariable']++;
+            $_SESSION['valueHolder']['totalSubtotal'] = $totalSubTotal;
+        }
+        elseif($_SESSION['valueHolder']['totalSubtotal'] != ''){
+            $totalSubTotal = $_SESSION['valueHolder']['totalSubtotal'];
+        }
+
         if($totalSubTotal <= 1500){
             $standard = $quantity * 25;}
                    
         if($totalSubTotal < 2500){
             $express = $quantity * 50;} 
         
+            $_SESSION['totalValues']['standard'] = $standard;
+            $_SESSION['totalValues']['express'] = $express;
+            $_SESSION['totalValues']['totalSubTotal'] = $totalSubTotal;
 ?>
  <div class="ui items">
      
@@ -119,12 +134,12 @@ if(!empty($_SESSION['Painting'])){
       echo '<div class="ui secondary vertical menu">';   
                                    
       echo '<h3  data-tooltip="Click the checkbox to accept changes" >Change Options</h3>';        
-        echo '<table class="ui compact celled definition blue table"><tr><td>Quantity </td><td><input type="number" min="1" name="'.$singlePainting['PaintingID'] . 'Quantity" value="TEST"></td></tr>';
-       echo '<tr><td>Frame</td><td>'; 
+        echo '<table class="ui compact celled definition blue table"><tr><td>Quantity </td><td>'. $quantity .'</td><td><input type="number" min="1" name="'.$singlePainting['PaintingID'] . 'Quantity" value="TEST"></td></tr>';
+       echo '<tr><td>Frame</td><td>'. $singleFrame['Title'] .'</td><td>'; 
       echo createFrameDropdownSelectList() .  '</td><td><input class="ui fitted checkbox" type="checkbox" name="'. $singlePainting['PaintingID'] .'changeFrame" value="yes"></td></tr><tr>';
-      echo '<tr><td>Glass</td><td>';              
+      echo '<tr><td>Glass</td><td>'. $singleGlass['Title'] .'</td><td>';              
       echo createGlassDropdownSelectList() . '</td><td><input class="ui toggle checkbox" type="checkbox" name="'. $singlePainting['PaintingID'] .'changeGlass" value="yes"></td></tr>';
-      echo '<tr><td>Matt</td><td>';              
+      echo '<tr><td>Matt</td><td>'. $singleMatte['Title'] .'</td><td>';              
       echo createMattDropdownSelectList() .  '</td><td><input class="ui toggle checkbox" type="checkbox" name="'. $singlePainting['PaintingID'] .'changeMatt" value="yes"></td></tr>';   
        echo '</table></div></div>'; 
        
@@ -150,7 +165,6 @@ if(!empty($_SESSION['Painting'])){
         echo'</a>';                   
                     
         echo '</div>';          
-        echo   '</form>';
         
         
         
@@ -168,28 +182,75 @@ if(!empty($_SESSION['Painting'])){
         
           
             
-            <?php 
-            if(!empty($_SESSION['Painting'])){
+            <?php   
+     
 
-                      
+     
+     
+     
+            if(!empty($_SESSION['Painting']) && isset($_POST['cartOptions']) && $_POST['cartOptions'] == 'Update'){   
                 echo '<table class="ui striped yellow table">';
+                echo '<tr><td><b>Standard Shipping:</b></td><td> $' . $_SESSION['totalValues']["standard"] . '</td></tr>';
+                echo '<tr><td><b>Express Shipping:</b></td><td> $' . $_SESSION['totalValues']['express'] . '</td></tr>';     
+                echo '<tr><td><b>Total Cost with Standard Shipping:</b></td><td>$'. ($_SESSION['totalValues']['totalSubTotal'] + $_SESSION['totalValues']["standard"]) . '</td></tr>';
+                echo '<tr><td><b>Total Cost with Express Shipping:</b></td><td>$'. ($_SESSION['totalValues']['totalSubTotal'] + $_SESSION['totalValues']['express']) . '</td></tr>';
+                echo '</table>';
+                echo '</div><br>';
+            
+                 $_SESSION['valueHolder']['standard'] = $standard;
+         $_SESSION['valueHolder']['express'] = $express;
+         $_SESSION['valueHolder']['totalSubtotal'] = $totalSubTotal ;
+                
+                
+            
+            
+            }
+        elseif(!empty($_SESSION['Painting']) && $_SESSION['valueHolder']['standard'] != '')
+            {   
+                
+                   /*  $_SESSION['valueHolder']['standard'] = $express;
+         $_SESSION['valueHolder']['express'] = $standard;
+         $_SESSION['valueHolder']['totalSubTotal'] = $totalSubTotal;*/
+                echo '<table class="ui striped yellow table">';
+                echo '<tr><td><b>Standard Shipping:</b></td><td> $' . $_SESSION['valueHolder']['standard'] . '</td></tr>';
+                echo '<tr><td><b>Express Shipping:</b></td><td> $' . $_SESSION['valueHolder']['express'] . '</td></tr>';     
+                echo '<tr><td><b>Total Cost with Standard Shipping:</b></td><td>$'. ($_SESSION['valueHolder']['totalSubtotal'] + $_SESSION['valueHolder']['standard']) . '</td></tr>';
+                echo '<tr><td><b>Total Cost with Express Shipping:</b></td><td>$'. ($_SESSION['valueHolder']['totalSubtotal'] + $_SESSION['valueHolder']['express']) . '</td></tr>';
+                echo '</table>';
+                echo '</div><br>';
+     
+     }
+     
+             elseif(!empty($_SESSION['Painting']))
+            {   
+                
+                   /*  $_SESSION['valueHolder']['standard'] = $express;
+         $_SESSION['valueHolder']['express'] = $standard;
+         $_SESSION['valueHolder']['totalSubTotal'] = $totalSubTotal;*/
+                echo '<table class="ui striped yellow table">';
+                echo '<td class="ui align center" data-tooltip="Click update to see new totals"><h3> Total Pricing</h3></td> ';
                 echo '<tr><td><b>Standard Shipping:</b></td><td> $' . $standard . '</td></tr>';
                 echo '<tr><td><b>Express Shipping:</b></td><td> $' . $express . '</td></tr>';     
                 echo '<tr><td><b>Total Cost with Standard Shipping:</b></td><td>$'. ($totalSubTotal + $standard) . '</td></tr>';
                 echo '<tr><td><b>Total Cost with Express Shipping:</b></td><td>$'. ($totalSubTotal + $express) . '</td></tr>';
                 echo '</table>';
-                echo '</div><br>';}
+                echo '</div><br>';
+                             
+     
+     }
      ?>
             
             
                     
      <?php               
-          if(!empty($_SESSION['Painting'])){  
+          if(!empty($_SESSION['Painting'])){
+              //echo '<input class="ui right floated button" type="submit" name="cartOptions" value="Update">';
+ echo   '</form>';
                 echo '<form class="ui form" method="POST" action="view-cart.php">';          
-                echo '<input class="ui right floated button" type="submit" name="cartOptions" value="Update">';
-                echo '<input class="ui right floated button" type="submit" name="cartOptions" value="Empty Cart">';
-                echo '</form><a href=index.php><input class="ui right floated button" type="submit" name="cartOptions" value="Continue Shopping"></a>';
-                echo '<input class="ui right floated button" type="submit" name="cartOptions" value="Order">';
+               echo '<input class="ui right floated orange button" type="submit" name="cartOptions" value="Update">';
+                echo '<input class="ui right floated orange button" type="submit" name="cartOptions" value="Empty Cart">';
+                echo '</form><a href=index.php><input class="ui right floated orange button" type="submit" name="cartOptions" value="Continue Shopping"></a>';
+                echo '<input class="ui right floated orange button" type="submit" name="cartOptions" value="Order">';
                 echo '<br><br>';
           }  
             ?> 

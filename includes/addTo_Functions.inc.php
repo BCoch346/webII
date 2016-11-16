@@ -14,8 +14,18 @@ if(isset($_POST["addtocart"])){
     if(isset($_POST['glassid'])){$glass = $_POST['glassid'];}
     $matt='';
     if(isset($_POST['mattid'])){$matt = $_POST['mattid'];}
-    $order = array("paintingInfo"=>$painting, "quantity"=>$quantity, "frame"=>$frame, "glass"=>$glass, "matt"=>$matt);
-    $_SESSION['painting'] = $order;
+    
+    $order = array("id"=>$painting['PaintingID'], "quantity"=>$quantity, "frame"=>$frame, "glass"=>$glass, "matt"=>$matt);
+    
+    
+    if(!empty($_SESSION['Painting'])){
+         array_push($_SESSION['Painting'], $order); 
+    }
+    else{
+        
+        $_SESSION['Painting'] = array($order);
+    }
+   
     echo "<script>
             alert('Your order has been submitted');
              window.history.go(-1);
@@ -33,8 +43,15 @@ if(isset($_POST["addtofav"])){
     if(isset($_POST['glassid'])){$glass = $_POST['glassid'];}
     $matt='';
     if(isset($_POST['mattid'])){$matt = $_POST['mattid'];}
-    $order = array("paintingInfo"=>$painting, "quantity"=>$quantity, "frame"=>$frame, "glass"=>$glass, "matt"=>$matt);
-    $_SESSION['painting'] = $order;
+    $order = array("id"=>$painting['PaintingID'], "quantity"=>$quantity, "frame"=>$frame, "glass"=>$glass, "matt"=>$matt);
+   
+        if(!empty($_SESSION['favourites'])){
+         array_push($_SESSION['favourites'], $order); 
+    }
+    else{
+        
+        $_SESSION['favourites'] = array($order);
+    }
     echo "<script>
              window.history.go(-1);
      </script>";

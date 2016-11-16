@@ -51,13 +51,15 @@ class cartLogic{
                 $_SESSION['Painting'] = array_values($_SESSION['Painting']);
             }
         
-        
+                      if(isset($_POST['cartOptions']) && $_POST['cartOptions'] == "Empty Cart"){
+                  unset($_SESSION['Painting']);
+              }
                       
               if(isset($_POST['cartOptions']) && $_POST['cartOptions'] == "Update"){
                 
                   
                   
-                  
+ /*                  }
 for($index = 0; $index < count($painting); $index++ ) { 
        // echo'<script>console.log($painting[$paintIndex]["id"])</script>';
         $singlePainting = findPaintingByID($painting[$index]['id']);
@@ -108,13 +110,13 @@ for($index = 0; $index < count($painting); $index++ ) {
                   
                   
                   
-                      }
+                      }*/
                   
                   
                   
                   
                   
-              }
+             
         
         
         
@@ -123,9 +125,7 @@ for($index = 0; $index < count($painting); $index++ ) {
         
         
         
-              if(isset($_POST['cartOptions']) && $_POST['cartOptions'] == "Empty Cart"){
-                  unset($_SESSION['Painting']);
-              }
+
         
         
         
@@ -136,6 +136,22 @@ for($index = 0; $index < count($painting); $index++ ) {
     
     
     
+}
+     if(!isset($_SESSION['totalValues'])){
+         
+          $_SESSION['totalValues'] = array("standard" => '', "express" => '', "totalSubtotal" => '');
+     };
+        
+    if(!isset($_SESSION['valueHolder'])){
+         
+          $_SESSION['valueHolder'] = array("standard" => '', "express" => '', "totalSubtotal" => '');
+     };
+        
+        if(!isset($_SESSION['stopVariable'])){
+            $_SESSION['stopVariable'] = 0;
+        }
+        
+        
 }
 }
 ?>
