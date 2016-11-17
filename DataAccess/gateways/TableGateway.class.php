@@ -36,7 +36,7 @@ abstract class TableDataGateway{
                 $sql .= " && " . $key . " = ?";
             }
         }
-        $result = $this->dbAdapter->fetchRow($sql);
+        $result = $this->dbAdapter->fetchAsArray($sql, $parameters);
     }
     protected function closeConnection(){
         $dbAdapter->closeConnection();
@@ -49,7 +49,7 @@ abstract class TableDataGateway{
         $values = array();
         $class = getClassName();
         foreach($data as $value){
-            $paintings[] = new $class($value);
+        	$values[] = new $class($value);
         }
         return $values;
     }

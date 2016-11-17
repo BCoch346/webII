@@ -28,6 +28,7 @@
 
     <main>
         <?php
+        
         ?>
         <br />
         <div class="ui container">

@@ -13,5 +13,5 @@ class Order extends DomainObject{
     public function __construct(array $data){
         parent::__construct($data);
     }
-
+}
 ?>
