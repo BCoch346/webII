@@ -1,3 +1,4 @@
+
 <div class="ui attached stackable grey inverted  menu">
     <div class="ui container">
         <nav class="right menu">
@@ -14,7 +15,7 @@
             <a class="item">
                 <i class="heartbeat icon"></i> Favorites
             </a>
-            <a class="item">
+            <a href="view-cart.php" class="item">
                 <i class="shop icon"></i> Cart
             </a>
         </nav>

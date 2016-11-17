@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <?php
 include("includes/functions.inc.php"); 
 
@@ -196,7 +197,9 @@ include("includes/functions.inc.php");
                     </button>
                 </div>                    
                          
-                    </form></div> <p><!-- END Cart -->
+                    </form>
+            </div> <p>
+            <!-- END Cart -->
             </div>	<!-- END RIGHT data Column -->
         </div>		<!-- END Grid -->
     </section>		<!-- END Main Section --> 
