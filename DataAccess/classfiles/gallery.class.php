@@ -1,7 +1,7 @@
 <?php
 
 class Gallery extends DomainObject{
-    private GalleryID;
+    private $GalleryID;
     private $GalleryName;
     private $GalleryNativeName;
     private $GalleryCity;

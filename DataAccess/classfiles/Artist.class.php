@@ -9,6 +9,7 @@ class Artist extends DomainObject{
     private $YearOfDeath;
     private $Details;
     private $ArtistLink;
+    private $works;
 
    protected static function getFieldNames(){
        return array("ArtistID", "FirstName", "LastName", "Nationality", "Gender", "YearOfBirth",
@@ -28,6 +29,22 @@ class Artist extends DomainObject{
 
     public function getLifeSpan(){
         return $this->yearOfDeath - $this->yearOfBirth;
+    }
+    
+    public function setWorks($data=array()){
+    	if(!is_array($data)){
+    		$data = array($data);
+    	}
+    	foreach($data as $painting){
+    		$works[] = new Painting($painting);
+    	}
+    }
+    
+    public function getWorks(){
+    	if(!is_array($this->works)){
+    		$this->works = array($this->works);
+    	}
+    	return $this->works;
     }
 }
 ?>

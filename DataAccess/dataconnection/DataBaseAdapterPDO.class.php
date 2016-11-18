@@ -59,4 +59,6 @@ class DatabaseAdapterPDO implements DatabaseAdapterInterface{
                 return $statement->fetchAll(); 
         }
 }
+
+
 ?>
