@@ -4,140 +4,213 @@
 <html lang=en>
 
 <head>
-    <meta charset=utf-8 />
-    <link href='http://fonts.googleapis.com/css?family=Merriweather' rel='stylesheet' type='text/css' />
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+<meta charset=utf-8 />
+<link href='http://fonts.googleapis.com/css?family=Merriweather'
+	rel='stylesheet' type='text/css' />
+<link href='http://fonts.googleapis.com/css?family=Open+Sans'
+	rel='stylesheet' type='text/css' />
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script src="css/semantic.js"></script>
-    <script src="js/misc.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="css/semantic.js"></script>
+<script src="js/misc.js"></script>
 
-    <link href="css/semantic.css" rel="stylesheet" />
-    <link href="css/icon.css" rel="stylesheet" />
-    <link href="css/styles.css" rel="stylesheet" />
+<link href="css/semantic.css" rel="stylesheet" />
+<link href="css/icon.css" rel="stylesheet" />
+<link href="css/styles.css" rel="stylesheet" />
 
 </head>
 
 <body>
 
-    <header>
+	<header>
         <?php include('includes/header.inc.php'); ?>
     </header>
 
-    <h2 class="ui horizontal divider">
-        <i class="tag icon"></i>About Us
-    </h2>
+	<h2 class="ui horizontal divider">
+		<i class="tag icon"></i>About Us
+	</h2>
+	<div class="ui small centered header red">This is a hypothetical term
+		project for COMP 3512 at Mount Royal University taught by Randy
+		Connolly</div>
+	<main> <br />
+	<div class="ui container grid">
+		<div class="bordered ui segments">
+			<div class="ui top attached label">
+				<h3>WEB II - Assignment 1</h3>
+			</div>
+			<div class="ui centered three column grid">
+				<div class="equal height row">
+					<div class="column">
+						<div class="ui segments">
+							<div class="ui top attached label">
+								<h4 class="header">Course Information</h4>
+							</div>
+							<div class="ui segment">
+								<p>
+									<strong>COMP 3512 - 001</strong> <br /> <strong>Winter 2016</strong>
+									<br /> <strong>Instructor: </strong>&nbsp; Randy Connolly <br />
+									<strong>Lecture: </strong>&nbsp; MW 8:00 - 9:00 <br /> <strong>Lab:
+									</strong>&nbsp; T 9:00 - 10:00 <br /> <strong>Textbook: </strong>&nbsp;
+									Fundamentals of Web Development (Connoly, Hoar)
+								</p>
 
-    <main>
-        <br />
-        <div class="ui container grid">
-            <div class="bordered ui segments">
-                <div class="ui top attached label">
-                    <h3>WEB II - Assignment 1</h3>
-                </div>
-                <div class="ui centered three column grid">
-                    <div class="equal height row">
-                        <div class="column">
-                            <div class="ui segments">
-                                <div class="ui top attached label">
-                                    <h4 class="header">Course Information</h4>
-                                </div>
-                                <div class="ui segment">
-                                    <p>
-                                        <strong>COMP 3512 - 001</strong>
-                                        <br />
-                                        <strong>Winter 2016</strong>
-                                        <br />
-                                        <strong>Instructor: </strong>&nbsp; Randy Connolly
-                                        <br />
-                                        <strong>Lecture: </strong>&nbsp; MW 8:00 - 9:00
-                                        <br />
-                                        <strong>Lab: </strong>&nbsp; T 9:00 - 10:00
-                                        <br />
-                                        <strong>Textbook: </strong>&nbsp; Fundamentals of Web Development (Connoly, Hoar)
-                                    </p>
+							</div>
+						</div>
+					</div>
+					<div class="column">
+						<div class="ui segments">
+							<div class="ui top attached label">
+								<h4 class="header">Assignment Information</h4>
+							</div>
+							<div class="ui segment">
+								<p>
+									<strong>Assignment 1</strong> <br /> <strong>Assigned Date:</strong>&nbsp;
+									October 7, 2016 <br /> <strong>Due Date:</strong>&nbsp;October
+									22, 2016 <br /> <strong>Course Weight:</strong>&nbsp;11% <br />
+									<strong>Objective:</strong>&nbsp; Dynamically generated web
+									pages from a database context using PHP. <br />
+								
+								
+								<p></p>
+								</p>
+							</div>
+						</div>
+					</div>
+					<div class="column">
+						<div class="ui segments">
+							<div class="ui top attached label">
+								<h4 class="header">Resources</h4>
+							</div>
+							<div class="ui segment">
+								<strong>Development Environment: </strong>&nbsp; Code hosted on
+								Cloud 9 <br /> <strong><a
+									href="https://ide.c9.io/brandoncochrane/assign2_bcoch346">source
+										code</a></strong> <br /> <strong>Languages:</strong>&nbsp;
+								CSS, HTML, JavaScript, PHP, MYSQL <br /> <strong>Frameworks:</strong>&nbsp;Semantic
+								UI Framework <br /> <strong>Additional Resources:</strong>&nbsp;Bacon
+								Ipsum. Site content is part of art.db provided by Instructor.
+								Course Textbook <br /> <strong>Profile images:</strong>&nbsp;students
+								LinkedIn profile pictures as of November 17, 2016
+							</div>
+						</div>
+					</div>
+				</div>
 
-                                </div>
-                            </div>
-                        </div>
-                        <div class="column">
-                            <div class="ui segments">
-                                <div class="ui top attached label">
-                                    <h4 class="header">Assignment Information</h4>
-                                </div>
-                                <div class="ui segment">
-                                    <p>
-                                        <strong>Assignment 1</strong>
-                                        <br />
-                                        <strong>Assigned Date:</strong>&nbsp; October 7, 2016
-                                        <br />
-                                        <strong>Due Date:</strong>&nbsp;October 22, 2016
-                                        <br />
-                                        <strong>Course Weight:</strong>&nbsp;11%
-                                        <br />
-                                        <strong>Objective:</strong>&nbsp; Dynamically generated web pages from a database context using PHP.
-                                        <br />
-                                        <p></p>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="column">
-                            <div class="ui segments">
-                                <div class="ui top attached label">
-                                    <h4 class="header">Resources</h4>
-                                </div>
-                                <div class="ui segment">
-                                    <strong>Development Environment: </strong>&nbsp; Visual Studio 2015 - Enterprise
-                                    <br />
-                                    <strong>Languages:</strong>&nbsp; CSS, HTML, PHP, MYSQL
-                                    <br />
-                                    <strong>Frameworks:</strong>&nbsp;Semantic UI Framework
-                                    <br />
-                                    <strong>Additional Resources:</strong>&nbsp;Bacon Ipsum. Site content is part of art.db provided by Instructor. Course Textbook
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+			</div>
+		</div>
 
-                </div>
-            </div>
+	</div>
+	<br />
+	<div class="ui hidden divider"></div>
+	<div class="ui bordered segments relaxed container">
+		<div class="ui top attached label">
+			<h3 class="header">Meet The Team</h3>
+		</div>
+		<div class="ui hidden divider"></div>
+		<div class="ui divided items">
+			<div class="item">
+				<div class="ui small image">
+					<img
+						src="https://media.licdn.com/media/AAEAAQAAAAAAAARJAAAAJGRkYWE5ZmViLWI4MjEtNDE3Ny1iNWQ0LTU2ZDJkZjcyMGQ4Ng.jpg"
+						alt="Michael Babb Headshot" title="Headshot of Michael Babb" />
+				</div>
 
-        </div>
-        <br />
-        <div class="ui hidden divider"></div>
-        <div class="ui bordered segments relaxed container">
-            <div class="ui top attached label">
-                <h3 class="header">Meet The Team</h3>
-            </div>
-            <div class="ui hidden divider"></div>
-                <div class="ui divided items">
-                    <div class="item">
-                        <div class="ui small circular image">
-                            <img src="https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAATaAAAAJDg4Y2JiNzBkLTA2MTAtNGI1YS1hMmYwLTRiOTBlZmViZjFiMQ.jpg" alt="Brandon Cochrane headshot" title="Headshot of Brandon Cochrane" />
-                        </div>
+				<div class="ui content">
+					<div class="header">
+						<h3>Michal Babb - mbabb668</h3>
+					</div>
+					<div class="ui segment">
+						<div class="ui two column relaxed grid">
+							<div class='ui column'>
+								<h5>About me:</h5>
+								<p class="text">Michael spends most of his days chillin' out maxin, relaxin all cool on the playground and playing basketball outside the school. Michael was born and raised in West Philidelphia, but moved after receiving a large inheritance from his uncle. </p>
+							</div>
+							<div class="ui column">
+								<h5>What I did:</h5>
+								<ul class="ui list">
+									<li class="item">add to cart</li>
+									<li class="item">Cart logic</li>
+									<li class="item">cart session state</li>
+								</ul>
+							</div>
+						</div>
 
-                        <div class="ui content">
-                            <div class="header">
-                                <h3>Brandon Cochrane - Student</h3>
-                            </div>
-                            <div class="ui segment">
-                                <h5>About me:</h5>
-                                <p class="text">
-                                    Spicy jalapeno bacon ipsum dolor amet hamburger shankle sausage jerky chuck kevin. Spare ribs doner tri-tip andouille leberkas. Turducken short loin burgdoggen short ribs hamburger pancetta. Shoulder kevin boudin short loin. Biltong tenderloin tongue cupim, short ribs jowl shankle burgdoggen ground round landjaeger meatball.
-                                </p>
-                            </div>
+					</div>
 
-                        </div>
-                    </div>
+				</div>
+			</div>
+			<div class="item">
+				<div class="ui small image">
+					<img
+						src="https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAiHAAAAJGU0MzFlNmE5LTcwZTUtNGUxZS1iMGZkLWYxMWU4ZDliYzhiOA.jpg"
+						alt="Tory Barber headshot" title="Headshot of Tory Barber" />
+				</div>
 
-                </div>
-            <div class="ui hidden divider"></div>
-        </div>
+				<div class="ui content">
+					<div class="header">
+						<h3>Tory Barber - tbarb066</h3>
+					</div>
+					<div class="ui segment">
+						<div class="ui two column relaxed grid">
+							<div class='ui column'>
+								<h5>About me:</h5>
+								<p class="text">Third year BCIS student at Mount Royal University. Completed her work term last summer with White Cap Resources as IT Support. On her free time Tory likes to play volleyball and hang out with friends.</p>
+							</div>
+							<div class="ui column">
+								<h5>What I did:</h5>
+								<ul class="ui list">
+									<li class="item">created and designed views</li>
+									<li class="item">created favorites</li>
+									<li class="item">changes needed from assignment 1</li>
+								</ul>
+							</div>
+						</div>
 
-    </main>
-    <footer>
-        <br />
+					</div>
+
+				</div>
+			</div>
+			<div class="item">
+				<div class="ui small image">
+					<img
+						src="https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAATaAAAAJDg4Y2JiNzBkLTA2MTAtNGI1YS1hMmYwLTRiOTBlZmViZjFiMQ.jpg"
+						alt="Brandon Cochrane headshot"
+						title="Headshot of Brandon Cochrane" />
+				</div>
+
+				<div class="ui content">
+					<div class="header">
+						<h3>Brandon Cochrane - bcoch346</h3>
+					</div>
+					<div class="ui segment">
+						<div class="ui two column relaxed grid">
+							<div class='ui column'>
+								<h5>About me:</h5>
+								<p class="text">Third year BCIS student at Mount Royal University. I completed my work term last summer with the Calgary Counselling Centre as a financial systems developer building a budget management application using ASP.net MVC. On his free time Brandon likes to skydive and play single player video games. </p>
+							</div>
+							<div class="ui column">
+								<h5>What I did:</h5>
+								<ul class="ui list">
+									<li class="item">modified database access</li>
+									<li class="item">implemented class infrastructre</li>
+									<li class="item">search functionality</li>
+								</ul>
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+		<div class="ui hidden divider"></div>
+	</div>
+
+	</main>
+	<footer>
+		<br />
         <?php include('includes/footer.inc.php'); ?>
     </footer>
 </body>
