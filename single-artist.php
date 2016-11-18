@@ -1,3 +1,4 @@
+<?php session_start();?>
 <?php include("includes/functions.inc.php"); ?>
 
 <!DOCTYPE html>
