@@ -215,7 +215,7 @@ function createBrowsePaintingItem($painting){
     $item .= "<br />" . $painting["Description"] . "<br />";
     $item .= "<div class='ui divider'></div><strong>" . "$ ". number_format($painting["Cost"] , 2). "</strong><br />";
     $item .= '<button type="submit" name="addtocart" class="ui orange button" value='. createButtonValue().'><i class="cart icon"></i></button>';
-    $item .= '<button type="submit" name="addtofav" class="ui button" value='. createButtonValue().'><i class="favorite icon"></i></button>';
+    $item .= '<button type="submit" name="addFavP" class="ui button" value='. $painting["PaintingID"].'><i class="favorite icon"></i></button>';
     $item .="</div></div>";
 
     return $item;
