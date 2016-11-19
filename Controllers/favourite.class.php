@@ -26,7 +26,7 @@ class favorite extends DomainObject{
 		<a class='text' href='".$this->destination."'>".$this->name."</a>
 		</div>
 		<div class='extra content'>
-		<button id='".$this->id."' class='ui floated right compact tiny negative button'>
+		<button id='".$this->id."' class='ui right floated mini button'>
 		<i class='trash icon'></i>remove
 		</button>
 		</div></div>";

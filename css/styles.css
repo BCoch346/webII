@@ -5,6 +5,9 @@
     border: none;
 }
 
+.card.hide{
+	display:none;
+}
 .hero-container {
     min-height: 400px;
     background-image: url(../images/hero1.jpg);
@@ -15,24 +18,25 @@
     align-items: center;
 }
 
-.browse-genre-container{
-        min-height: 100px;
-        background-image: url(../images/banner1.jpg);
+.browse-genre-container {
+    min-height: 100px;
+    background-image: url(../images/banner1.jpg);
 }
-.genre-container{
-        min-height: 150px;
-        background-image: none;
-        background-color:lightgray;
-        border-top:1px solid gray;
-        padding-top:15px;
-        padding-bottom:15px;
+
+.genre-container {
+    min-height: 150px;
+    background-image: none;
+    background-color: lightgray;
+    border-top: 1px solid gray;
+    padding-top: 15px;
+    padding-bottom: 15px;
 }
-.bordered{
+
+.bordered {
     border: 1px solid lightgray;
     border-top-left-radius: 20px;
-    border-top-right-radius:20px;
+    border-top-right-radius: 20px;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
-    padding:10px;
-
+    padding: 10px;
 }

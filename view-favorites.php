@@ -1,5 +1,4 @@
 <?php
-
 include ("includes/functions.inc.php");
 include ("controllers/favourite.class.php");
 session_start ();
@@ -41,13 +40,13 @@ session_start ();
 		<div class="ui content"></div>
 
 		<div class="ui top attached tabular menu">
-			<a class="active item" id="paintings">Paintings</a> <a class="item"
-				id="artists">Artist</a> <a class="right item"> <a
-				class="ui compact negative button"> <i class="trash icon"></i>Empty
-					Favorites
-			</a> <a class="ui compact button"> <i class="trash icon"></i>Empty
-					Paintings
-			</a>
+			<a class="active item" id="menu_painting">Paintings</a> <a class="item"
+				id="menu_artist">Artists</a> <a class="right item"> <a class="ui compact button" id="rem_artist"><i class="trash icon"></i>Remove
+					Artists</a>
+			<a class="ui compact button" id="rem_painting"><i class="trash icon"></i>Remove
+					Paintings</a>
+			<a class="ui compact negative button"><i class="trash icon"></i>Remove
+					Favorites</a>
 			</a>
 
 
@@ -55,37 +54,44 @@ session_start ();
 		
 		<?php
 		$p1 = new favorite ( 1, "images/art/artists/square-medium/1.jpg", "pablo picasso", "single-artist.php?artistid=1" );
-		$p2 = new favorite ( 1, "images/art/artists/square-medium/1.jpg", "pablo picasso", "single-artist.php?artistid=1" );
-		$p3 = new favorite ( 1, "images/art/artists/square-medium/1.jpg", "pablo picasso", "single-artist.php?artistid=1" );
-		$p4 = new favorite ( 1, "images/art/artists/square-medium/1.jpg", "pablo picasso", "single-artist.php?artistid=1" );
+		$p2 = new favorite ( 1, "images/art/artists/square-medium/6.jpg", "pablo picasso", "single-artist.php?artistid=1" );
+		$p3 = new favorite ( 1, "images/art/artists/square-medium/7.jpg", "pablo picasso", "single-artist.php?artistid=1" );
+		$p4 = new favorite ( 1, "images/art/artists/square-medium/8.jpg", "pablo picasso", "single-artist.php?artistid=1" );
 		
-		$_SESSION ['FavoritePaintings'] = array (
+		$_SESSION ['favorite_paintings'] = array (
 				$p1,
 				$p2,
 				$p3,
 				$p4 
 		);
-		$_SESSION ['FavoriteArtists'] = array (
+		$_SESSION ['favorite_artists'] = array (
 				$p1,
 				$p2,
-				$p3,
-				$p4 
+				$p4,
+				$p3 
 		);
 		?>
 		<div class="ui bottom attached segment">
-			<div class="ui six column grid">
+					<div class="ui six column grid fav-paintings">
+		</div>
+			<div class="ui six column grid fav-paintings">
 			<?php
-			if (! empty ( $_SESSION ['FavoritePaintings'] )) {
-				$paintings = $_SESSION ['FavoritePaintings'];
+			if (! empty ( $_SESSION ['favorite_paintings'] )) {
+				$paintings = $_SESSION ['favorite_paintings'];
 				
 				for($i = 0; $i < count ( $paintings ); $i ++) {
-					echo "<div class='ui column painting'>";
+					echo "<div class='ui column'>";
 					echo $paintings [$i]->createFavoriteCard ();
 					echo "</div>";
 				}
 			}
-			if (! empty ( $_SESSION ['FavoriteArtists'] )) {
-				$paintings = $_SESSION ['FavoriteArtists'];
+			?>
+			</div>
+			<div class="ui six column grid fav-artists">
+			<?php
+			
+			if (! empty ( $_SESSION ['favorite_artists'] )) {
+				$paintings = $_SESSION ['favorite_artists'];
 				
 				for($i = 0; $i < count ( $paintings ); $i ++) {
 					echo "<div class='ui column artist'>";
@@ -94,9 +100,11 @@ session_start ();
 				}
 			}
 			?>
-
 			</div>
+
+
 		</div>
+	</div>
 	</div>
 
 	<br />
@@ -107,5 +115,74 @@ session_start ();
         <?php include('includes/footer.inc.php'); ?>
     </footer>
 </body>
+<script>
+	var artists = document.querySelectorAll(".fav-artists .card");
+	var paintings = document.querySelectorAll(".fav-paintings .card");
+	var remPainting = document.getElementById("rem_painting");
+	var remArtist = document.getElementById("rem_artist");
+	
+	var show = function(list){
+		for(var i = 0; i < list.length; i++){
+			list[i].classList.remove("hide");
+		}
+	}
 
+	var hide = function(list){
+		for(var i = 0; i < list.length; i++){
+			list[i].classList.add("hide");
+		}
+	}
+	
+
+	var toggleDisplay = function(e){
+		console.log("clicked "+ e.target.text);
+		
+		if(e.target.text === "Artists"){
+			console.log(paintings);
+			hide(paintings);
+			show(artists);
+			remPainting.style.display = "none";
+			remArtist.style.display ="";
+			}
+		else{
+			hide(artists);
+			show(paintings);
+			remArtist.style.display = "none";
+			remPainting.style.display ="";
+			
+		}
+	}
+
+
+	var removeFromFavorites = function(){
+		jQuery.ajax({
+		    type: "POST",
+		    url: 'view-favorites.php',
+		    dataType: 'json',
+		    data: {functionname: 'add', arguments: [1, 2]},
+
+		    success: function (obj, textstatus) {
+		                  if( !('error' in obj) ) {
+		                      yourVariable = obj.result;
+		                  }
+		                  else {
+		                      console.log(obj.error);
+		                  }
+		            }
+		});
+	}
+	
+	hide(artists);
+	remArtist.style.display = "none";
+	
+	var paintingMenuButton = document.getElementById("menu_painting");
+	paintingMenuButton.addEventListener("click", toggleDisplay);
+
+	var paintingMenuButton = document.getElementById("menu_artist");
+	paintingMenuButton.addEventListener("click", toggleDisplay);
+
+	remArtist.addEventListener("click", toggleDisplay);
+	remPainting.addEventListener("click", toggleDisplay);
+	
+</script>
 </html>
