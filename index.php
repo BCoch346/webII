@@ -29,9 +29,9 @@
         
         <?php
         //DATA USED FOR TESTING THE PAGE, SKIPS HAVING TO ADD TO CART FOR TESTING
-$_SESSION['Painting'] = array(
+/*$_SESSION['Painting'] = array(
     ["name" => "Madonna Enthroned","quantity" => 2, "frame" => "1", "glass" => "1", "matt" => "1", "id" => 441, "imgExt" => 114020],
-    ["name" => "Mona Lisa","quantity" => 3, "frame" => "4", "glass" => "2", "matt" => "34", "id" => 389, "imgExt" => "097050"]);
+    ["name" => "Mona Lisa","quantity" => 3, "frame" => "4", "glass" => "2", "matt" => "34", "id" => 389, "imgExt" => "097050"]);*/
 
         
        

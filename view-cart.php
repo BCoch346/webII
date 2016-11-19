@@ -61,7 +61,6 @@ $cart -> instantiateCartLogic();
 if(!empty($_SESSION['Painting'])){
     $painting = $_SESSION['Painting'];
     $totalSubTotal = 0;
-    //$stopIndex = 0;
                    
     for($paintIndex = 0; $paintIndex < count($painting); $paintIndex++ ) { 
         
