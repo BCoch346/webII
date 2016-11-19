@@ -87,9 +87,9 @@
                         </h2>
                     </div>
                     <div class="ui divider"></div>
-
+                    <form action="includes/addTo_Functions.inc.php" method="post">
                     <?php echo createBrowsePaintingItems(); ?>
-
+                    </form>
                 </div>
         <div class="two wide column"></div>
 
