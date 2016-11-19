@@ -1,7 +1,8 @@
 <?php
+include('DatabaseAdapterInterface.php');
 class DatabaseAdapterPDO implements DatabaseAdapterInterface{
     private $pdo;
-    private $lastStatement = null;
+    private $lastStatement;
     public function __construct($values){
         $this->setConnectionInfo($values);
         }
@@ -29,21 +30,21 @@ class DatabaseAdapterPDO implements DatabaseAdapterInterface{
             $parameters = array($parameters);
         }
         try{
-            $this->laststatement = null;
+            $this->lastStatement = null;
             if(count($parameters > 0)){
-                $this->laststatement = $this->pdo->prepare($sql);
+                $this->lastStatement = $this->pdo->prepare($sql);
                 $executed = $this->lastStatement->execute($parameters);
                 if(!$executed){
                     throw new PDOException;
                     }
             }
             else{
-                 $this->laststatement = $this->pdo->query($sql);
+                 $this->lastStatement = $this->pdo->query($sql);
                 if(!$this->lastStatement){
                     throw new PDOException;
                     }
                  }
-            return $statement;
+            return $this->lastStatement;
         }
         catch(PDOException $e){
             throw $e;
@@ -51,11 +52,11 @@ class DatabaseAdapterPDO implements DatabaseAdapterInterface{
     }
 
     public function fetchRow($sql, $parameters=array()){
-        $statement = runQuery($sql, $parameters);
-        return $statement->fetch();    
+        $statement = $this->runQuery($sql, $parameters);
+        return $statement->fetch(); 
     }
     public function fetchAsArray($sql, $parameters=array()){
-                $statement = runQuery($sql, $parameters);
+                $statement = $this->runQuery($sql, $parameters);
                 return $statement->fetchAll(); 
         }
 }

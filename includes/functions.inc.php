@@ -17,8 +17,8 @@ include_once("artistFunctions.inc.php");
 include_once("favoriteFunctions.inc.php");
 
 function getPDOConnection(){
-	$dbFactory = new DatabaseAdapterFactory;
-	return $dbFactory.create(ADAPTERTYPE, array(DBCONN, DBUSER, DBPASS));
+	//$dbFactory = new DatabaseAdapterFactory;
+	//return $dbFactory.create(ADAPTERTYPE, array(DBCONN, DBUSER, DBPASS));
 }
 
 
@@ -348,6 +348,16 @@ function createGalleriesCard($gallery){
 
     return $card;
 }
+
+function gallerySegment(){
+	$output = '<a href="single-gallery?galleryid='.$this->GalleryID.'">'.
+			'<div class="ui segment gallery">'.
+			'<h3 class="ui header">'.$this->GalleryName.'</h3>'.
+			'<div class="ui divider"></div>'.
+			'<p>'.$this->GalleryCity.', '.$this->GalleryCountry.'</p></div></a>';
+	return $output;
+}
+
 function createSingleGalleryPictureGrid(){
     $galleryID = DEFAULT_GALLERY_ID;
     if(isValid("galleryid")){
@@ -516,11 +526,7 @@ function createIndividualSelectList($id, $itemID, $class, $listItems, $searchStr
 }
 
 
-
-
-
-
-
+//HEADER SESSION COUNTERS
 
 
 

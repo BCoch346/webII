@@ -1,4 +1,26 @@
+<?php 
 
+function countFavorites(){
+	$count = 0;
+	if(isset($_SESSION['favorite_paintings'])&& !empty($_SESSION['favorite_paintings'])){
+		$count += count($_SESSION['favorite_paintings']);
+	}
+	if(isset($_SESSION['favorite_artists'])&& !empty($_SESSION['favorite_artists'])){
+		$count += count($_SESSION['favorite_artists']);
+	}
+	return $count;
+}
+
+	function countCart(){
+		if(isset($_SESSION['painting'])&& !empty($_SESSION['painting'])){
+			return count($_SESSION['Painting']);
+		}
+		else{
+			return 0;
+		}
+	}
+
+?>
 <div class="ui attached stackable grey inverted  menu">
     <div class="ui container">
         <nav class="right menu">
@@ -14,9 +36,12 @@
             </div>
             <a class="item" href="view-favorites.php">
                 <i class="heartbeat icon"></i> Favorites
+                <div class="right ui medium teal label"><?php echo countFavorites(); ?>
+                </div>   
             </a>
             <a href="view-cart.php" class="item">
                 <i class="shop icon"></i> Cart
+                <div class="right ui medium teal label"><?php echo countCart(); ?></div>             
             </a>
         </nav>
     </div>

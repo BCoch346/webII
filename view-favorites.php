@@ -1,7 +1,8 @@
 <?php
+session_start ();
 include ("includes/functions.inc.php");
 include ("controllers/favourite.class.php");
-session_start ();
+
 ?>
 
 <!DOCTYPE html>

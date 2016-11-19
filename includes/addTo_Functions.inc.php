@@ -21,8 +21,7 @@ if(isset($_POST["addtocart"])){
     if(!empty($_SESSION['Painting'])){
          array_push($_SESSION['Painting'], $order); 
     }
-    else{
-        
+    else{        
         $_SESSION['Painting'] = array($order);
     }
    

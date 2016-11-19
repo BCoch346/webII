@@ -38,8 +38,8 @@
         <div class="ui wide container">
                     <div class="ui stackable grid">
             	<div class="ui four wide column">
-            		<h2 class="ui header">Gallery Name</h2>
-            		<p>city, country</p>
+            		<h2 class="ui header">Belvedere</h2>
+            		<p>Vienna, Austria</p>
             		<div class='ui divider'></div>
 					<div class="animated fluid ui button">
                     <a href="#">
@@ -53,8 +53,10 @@
                 	
             		<?php echo createMuseumMap(); ?>
             	</div>
-            	<div class="ui twelve wide column"><iframe src="http://www.belvedere.at/" height="500" width="100%"></iframe>
-</div>
+            	<div class="ui twelve wide column">
+            		<div class='right floated right'><a href='http://www.belvedere.at/'>http://www.belvedere.at/</a></div>
+            		<iframe src="http://www.belvedere.at/" height="500" width="100%">http://www.belvedere.at/</iframe>
+				</div>
             
             </div>
         

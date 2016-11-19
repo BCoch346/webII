@@ -1,47 +1,5 @@
 <?php
 
-//-----------------------
-//------PDO-------------
-//---------------------
-function PDO(){
-	try{
-		$pdo = new PDO(DBCONN, DBUSER, DBPASS);
-		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-        return $pdo;
-	}
-	catch(PDOException $e){
-		die( $e->getmessage() );
-	}
-}
-function runQuery($pdo, $sql, $parameters=array()){
-    if(!is_array($parameters)){
-        $parameters = array($parameters);
-    }
-    try{
-        $statement = null;
-        if(count($parameters > 0)){
-            $statement = $pdo->prepare($sql);
-            $statement->execute($parameters);
-        }
-        else{
-            $statement = $pdo->query($sql);
-        }
-        return $statement;
-    }
-    catch(PDOException $e){
-        throw $e;
-    }
-}
-
-function queryDatabaseForSingleItem($pdo, $sql, $parameters=array()){
-    $result = queryDatabaseForDataSet($pdo, $sql, $parameters);
-    return $result->fetch();
-}
-function queryDatabaseForDataSet($pdo, $sql, $parameters=array()){
-    $statement = runQuery($pdo, $sql, $parameters);
-    return $statement;
-}
 
 //-----------------------
 //-----QUERIES----------

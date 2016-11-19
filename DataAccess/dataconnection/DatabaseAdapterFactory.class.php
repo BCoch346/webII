@@ -1,6 +1,7 @@
 <?php
-
+include('DatabaseAdapterPDO.class.php');
 class DatabaseAdapterFactory{
+	
     public static function create($type, $connectionValues){
         $adapter = "DatabaseAdapter".$type;
         if(class_exists($adapter)){

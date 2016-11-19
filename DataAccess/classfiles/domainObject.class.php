@@ -2,12 +2,12 @@
 
 abstract class DomainObject{
 
-    abstract protected function getFieldNames();
+    abstract protected static function getFieldNames();
 
     public function __construct(array $data){
         if (!empty($data)) {
             foreach ($data as $name => $value) {
-                __set($this->$name, $value);
+                $this->__set($name, $value);
             }
         }
     }
@@ -20,12 +20,12 @@ abstract class DomainObject{
     }
     public function __set($name, $value){
         $mutator = 'set' . ucfirst($name);
-        if(method_exists($this, $mutator) && is_callable(array($this, $mutator))){
-            $this->$mutator($value);
-        }
-        else{
+        //if(method_exists($this, $mutator) && is_callable(array($this, $mutator))){
+         //   $this->$mutator($value);
+        //}
+       // else{
             $this->$name = $value;
-        }
+        //}
 
     }
     public function __isset($name){

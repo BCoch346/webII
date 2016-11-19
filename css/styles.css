@@ -8,6 +8,15 @@
 .card.hide{
 	display:none;
 }
+.ui.segment.gallery{
+	height:9em;
+}
+.ui.segment.gallery h3{
+	height:55%;
+}
+.ui.segment:hover.gallery{
+box-shadow: 3px 4px 15px -4px rgba(0,0,0,0.61);
+}
 .hero-container {
     min-height: 400px;
     background-image: url(../images/hero1.jpg);

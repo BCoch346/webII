@@ -1,5 +1,5 @@
 <?php
-
+include("TableGateway.class.php");
 class ArtistTableGateway extends TableDataGateway{
     public function getClassName(){
         return "Artist";
@@ -53,10 +53,13 @@ class GalleriesTableGateway extends TableDataGateway{
         return "Gallery";
     }
     public function getSelectStatement(){
-        return "SELECT GallryID, GalleryName, GalleryNativeName, GalleryWebSite, Latitude, Longitude FROM Galleries";
+        return "SELECT GalleryID, GalleryName, GalleryCity, GalleryCountry, GalleryNativeName, GalleryWebSite, Latitude, Longitude FROM Galleries";
     }
     public function getPrimaryKeyName(){
         return "GalleryID";
+    }
+    public function getSelectStatementForBrowseAll(){
+    	return "SELECT GalleryID, GalleryName, GalleryCity, GalleryCountry FROM Galleries";
     }
 }
 class GenresTableGateway extends TableDataGateway{
