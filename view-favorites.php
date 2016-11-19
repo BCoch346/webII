@@ -45,32 +45,13 @@ session_start ();
 					Artists</a>
 			<a class="ui compact button" id="rem_painting"><i class="trash icon"></i>Remove
 					Paintings</a>
-			<a class="ui compact negative button"><i class="trash icon"></i>Remove
+			<a class="ui compact negative button" id="rem_all"><i class="trash icon"></i>Remove
 					Favorites</a>
 			</a>
 
 
 		</div>
 		
-		<?php
-		$p1 = new favorite ( 1, "images/art/artists/square-medium/1.jpg", "pablo picasso", "single-artist.php?artistid=1" );
-		$p2 = new favorite ( 1, "images/art/artists/square-medium/6.jpg", "pablo picasso", "single-artist.php?artistid=1" );
-		$p3 = new favorite ( 1, "images/art/artists/square-medium/7.jpg", "pablo picasso", "single-artist.php?artistid=1" );
-		$p4 = new favorite ( 1, "images/art/artists/square-medium/8.jpg", "pablo picasso", "single-artist.php?artistid=1" );
-		
-		$_SESSION ['favorite_paintings'] = array (
-				$p1,
-				$p2,
-				$p3,
-				$p4 
-		);
-		$_SESSION ['favorite_artists'] = array (
-				$p1,
-				$p2,
-				$p4,
-				$p3 
-		);
-		?>
 		<div class="ui bottom attached segment">
 					<div class="ui six column grid fav-paintings">
 		</div>
@@ -120,18 +101,19 @@ session_start ();
 	var paintings = document.querySelectorAll(".fav-paintings .card");
 	var remPainting = document.getElementById("rem_painting");
 	var remArtist = document.getElementById("rem_artist");
+	var remFavorites = document.getElementById("rem_all");
 	
 	var show = function(list){
 		for(var i = 0; i < list.length; i++){
 			list[i].classList.remove("hide");
 		}
-	}
+	};
 
 	var hide = function(list){
 		for(var i = 0; i < list.length; i++){
 			list[i].classList.add("hide");
 		}
-	}
+	};
 	
 
 	var toggleDisplay = function(e){
@@ -151,15 +133,16 @@ session_start ();
 			remPainting.style.display ="";
 			
 		}
-	}
+	};
 
 
-	var removeFromFavorites = function(){
+	var removeFromFavorites = function(functionToCall){
+		console.log(functionToCall);
 		jQuery.ajax({
 		    type: "POST",
 		    url: 'view-favorites.php',
 		    dataType: 'json',
-		    data: {functionname: 'add', arguments: [1, 2]},
+		    data: {functionname: functionToCall},
 
 		    success: function (obj, textstatus) {
 		                  if( !('error' in obj) ) {
@@ -170,7 +153,8 @@ session_start ();
 		                  }
 		            }
 		});
-	}
+		console.log("removed");
+	};
 	
 	hide(artists);
 	remArtist.style.display = "none";
@@ -181,8 +165,11 @@ session_start ();
 	var paintingMenuButton = document.getElementById("menu_artist");
 	paintingMenuButton.addEventListener("click", toggleDisplay);
 
-	remArtist.addEventListener("click", toggleDisplay);
-	remPainting.addEventListener("click", toggleDisplay);
+	remArtist.addEventListener("click", removeArtistsFromFavorites);
+	remPainting.addEventListener("click", removePaintingsFromFavorites);
+	remFavorites.addEventListener("click", removeFromFavorites);
+
+	
 	
 </script>
 </html>
