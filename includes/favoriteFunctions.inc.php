@@ -1,14 +1,14 @@
 <?php
 class favoriteController{
-	function removeFavoriteArtist($id){
+	public function removeFavoriteArtist($id){
 		removeFromFavorites($id, "favorite_artists");
 	}
 	
-	function removeFavoritePainting($id){
+	public function removeFavoritePainting($id){
 		removeFromFavorites($id, "favorite_paintings");
 	}
 	
-	function removeFromFavorites($id, $sessionArray){
+	public function removeFromFavorites($id, $sessionArray){
 		if(isset($_SESSION([$sessionArray]))){
 			$favorites = $_SESSION[$sessionArray];
 			for($i = 0; $i < $favorites.length; $i++){
@@ -20,13 +20,14 @@ class favoriteController{
 		}
 	}
 	
-	function emptyFavorites(){
+	public function emptyFavorites(){
+		emptyFavoriteArtists();
+		emptyFavoriteArtists();
+	}
+	public function emptyFavoriteArtists(){
 	
 	}
-	function emptyFavoriteArtists(){
-	
-	}
-	function emptyFavoritePaintings(){
+	public function emptyFavoritePaintings(){
 	
 	}
 }
