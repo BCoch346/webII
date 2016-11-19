@@ -14,6 +14,7 @@ include_once("queries.inc.php");
 include_once("paintingFunctions.inc.php");
 include_once("reviewFunctions.inc.php");
 include_once("artistFunctions.inc.php");
+include_once("favoriteFunctions.inc.php");
 
 function getPDOConnection(){
 	$dbFactory = new DatabaseAdapterFactory;

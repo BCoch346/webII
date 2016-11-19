@@ -46,5 +46,21 @@ class Artist extends DomainObject{
     	}
     	return $this->works;
     }
+    
+    public function mediumImage(){
+    	$name = getFullName(false);
+    	$image = createImage("images/art/artists/medium/".$this->ArtistID.".jpg",$name,$name, "image", "");
+    	return $image;
+    }
+    public function squareMediumImage(){
+    	$name = getFullName(false);
+    	 $image = createImage("images/art/artists/square-medium/".$this->ArtistID.".jpg",$name,$name, "image", "");
+    	return $image;
+    }
+    public function squareThumbImage(){
+    	$name = getFullName(false);
+    	 $image = createImage("images/art/artists/square-thumb/".$this->ArtistID.".jpg",$name,$name, "image", "");
+    	return $image;
+    }
 }
 ?>

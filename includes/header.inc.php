@@ -12,7 +12,7 @@
                     <a class="item"><i class="settings icon"></i> Account Settings</a>
                 </div>
             </div>
-            <a class="item">
+            <a class="item" href="view-favorites.php">
                 <i class="heartbeat icon"></i> Favorites
             </a>
             <a href="view-cart.php" class="item">
