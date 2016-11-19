@@ -57,7 +57,7 @@ function createArtistViewWorksButton($id){
     return $button;
 }
 function createArtistFavoriteButton($id){
-    $button = "<button value=$id class='ui right floated button' id='addFav'>Add To Favourites <i class='heart icon'></i>";
+    $button = "<button value=$id class='ui right floated button' id='addFavA'>Add To Favourites <i class='heart icon'></i>";
     $button .= "</button>";
 
     return $button;

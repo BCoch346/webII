@@ -39,12 +39,22 @@ $('#addToCart').on('click', function(e){
     }); 
 });}*/
 
-document.getElementById('addFav').addEventListener('onClick', function(e){
+document.getElementById('addFavA').addEventListener('onClick', function(e){
 	var id = event.target.getAttribute("value");
     jQuery.ajax({
 		    type: "POST",
 		    url: 'view-favorites.php',
 		    dataType: 'json',
 		    data: {functionname: 'addFavoriteArtist', arguments: [id]}
+		});
+	});
+
+document.getElementById('addFavP').addEventListener('onClick', function(e){
+	var id = event.target.getAttribute("value");
+    jQuery.ajax({
+		    type: "POST",
+		    url: 'view-favorites.php',
+		    dataType: 'json',
+		    data: {functionname: 'addFavoritePaintings', arguments: [id]}
 		});
 	});
