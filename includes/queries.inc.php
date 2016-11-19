@@ -182,7 +182,7 @@ function findAllGenresOrderedBy($orderBy){
 ///--SUBJECT
 function findAllSubjectsOrderedBy($orderBy){
     $pdo = PDO();
-    $sql = "SELECT SubjectID, SubjectName FROM Subjects ORDER BY $orderBy";
+    $sql = "SELECT DISTINCT SubjectID, SubjectName FROM Subjects ORDER BY $orderBy";
     $statement = queryDatabaseForDataSet($pdo, $sql);
     $pdo = null;
     return $statement;

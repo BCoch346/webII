@@ -211,8 +211,8 @@ function createBrowsePaintingItem($painting){
     $item .= "<h3 class='ui header'>" . $painting["Title"] . "<em class='sub header'>". $painting["FirstName"] . " " . $painting["LastName"] ."</em></h3>";
     $item .= "<br />" . $painting["Description"] . "<br />";
     $item .= "<div class='ui divider'></div><strong>" . "$ ". number_format($painting["Cost"] , 2). "</strong><br />";
-    $item .= "<button class='ui orange button'><i class='cart icon'></i></button>";
-    $item .= "<button class='ui button'><i class='favorite icon'></i></button>";
+    $item .= '<button type="submit" name="addtocart" class="ui orange button" value='. createButtonValue().'><i class="cart icon"></i></button>';
+    $item .= '<button type="submit" name="addtofav" class="ui button" value='. createButtonValue().'><i class="favorite icon"></i></button>';
     $item .="</div></div>";
 
     return $item;
@@ -338,9 +338,9 @@ function createBrowseMuseumCards(){
     return utf8_encode($output);
 }
 function createGalleriesCard($gallery){
-    $card = "<div class='ui card'>";
-    $card .= "<a href='single-gallery.php?galleryid=".$gallery["GalleryID"]."' class='header'>". $gallery["GalleryName"]."</a>";
-    $card .= "<div class='ui text content'><p>".$gallery["GalleryCity"].", ".$gallery["GalleryCountry"]."</p></div>";
+    $card = "<div class='ui grey card'>";
+    $card .= "<div class='ui top attached button' tabindex='0'><strong><h3 class='header'><a href='single-gallery.php?galleryid=".$gallery["GalleryID"]."'>". $gallery["GalleryName"]."</a><h3></strong></div>";
+    $card .= "<div class='ui text content'><h5>".$gallery["GalleryCity"].", ".$gallery["GalleryCountry"]."</h5></div>";
     $card .= "</div>";
 
     return $card;
@@ -430,8 +430,16 @@ function createBrowseSubjectsCards(){
 }
 
 function createSubjectCard($subject){
+    $id = $subject["SubjectID"];
+    $limit = 1;
+    $holder = findAllPaintingsBySubjectIDLimit($id, $limit);
+    $img = '';
+    foreach($holder as $row){
+        $img = $row["ImageFileName"];
+        break;
+    }
     $card = "<div class='ui card'>";
-    $card .= "<div class='image'>"."</div>";
+    $card .= "<div class='image'>".createImage("images/art/works/square-medium/".$img.".jpg", $subject["SubjectName"], $subject["SubjectName"], "", "")."</div>";
     $card .= "<a class='ui text content' href='single-subject.php?subjectid=".$subject["SubjectID"]."'><div class='extra header'>".$subject["SubjectName"]."</div></a>";
     $card .= "</div>";
 
