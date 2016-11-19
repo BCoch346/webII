@@ -215,7 +215,7 @@ function createBrowsePaintingItem($painting){
     $item .= "<br />" . $painting["Description"] . "<br />";
     $item .= "<div class='ui divider'></div><strong>" . "$ ". number_format($painting["Cost"] , 2). "</strong><br />";
     $item .= '<button type="submit" name="addtocart" class="ui orange button" value='. createButtonValue().'><i class="cart icon"></i></button>';
-    $item .= '<button type="submit" name="addFavP" class="ui button" value='. $painting["PaintingID"].'><i class="favorite icon"></i></button>';
+    $item .= '<button type="submit" name="addFav" class="ui button" value='. createButtonValue().'><i class="favorite icon"></i></button>';
     $item .="</div></div>";
 
     return $item;
@@ -471,7 +471,8 @@ function createSingleSubjectHeader(){
     }
     $subject = findSubjectByID($subjectID);
     $header = "<div class='item'>";
-    $header .= '<div class="content"><h2 class="ui header">'.$subject["SubjectName"].'</h2>';
+    $header .= '<div class="ui content"><h1 class="ui header">'.$subject["SubjectName"].'</h1>';
+    $header .= '<div class="ui divider"></div>';
     $header .= '<div class="ui divider"></div>';
     $header .= '</div></div>';
 

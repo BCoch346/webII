@@ -191,7 +191,7 @@ include("includes/functions.inc.php");
                         Add to Cart
                     </button>
                     
-                    <button type="submit" name="addtofav" class="ui right labeled icon button" value=<?php echo createButtonValue();?>>
+                    <button type="button" name="addFavP" class="ui right labeled icon button" value=<?php echo createButtonValue();?>>
                         <i class="heart icon"></i>
                         Add to Favorites
                     </button>

@@ -24,11 +24,9 @@
     <header>
         <?php include('includes/header.inc.php'); ?>
     </header>
-    <div class="hero-container genre-container">
         <div class="ui container items">
                    <?php echo createSingleSubjectHeader(); ?>
             </div>
-    </div>
 
 
     <main>
