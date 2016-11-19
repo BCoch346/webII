@@ -41,6 +41,7 @@ function createArtistItemContent($artist){
     $content .= "<strong>Year of death: </strong>" . $deathYear . " (age ". ($deathYear - $birthYear) . " )";
     $content .= "<div class='ui bottom attached'>";
     $content .= createArtistViewWorksButton($artist["ArtistID"]);
+    $content .= createArtistFavoriteButton($artist["ArtistID"]);
     $content .= createAnchorTag($artist["ArtistLink"], "Wikipedia");
     $content .= "</div><br /><div class='ui horizontal divider'><div class='ui header'>Details</div></div>";
     $content .="<p>" . $artist["Details"]."</p>";
@@ -52,6 +53,12 @@ function createArtistViewWorksButton($id){
     $button = "<a href='browse-paintings.php?artistid=$id'>";
     $button .= "<div class='ui right floated primary button'>View Works<i class='right chevron icon'></i></div>";
     $button .= "</a>";
+
+    return $button;
+}
+function createArtistFavoriteButton($id){
+    $button = "<button value=$id class='ui right floated button' id='addFav'>Add To Favourites <i class='heart icon'></i>";
+    $button .= "</button>";
 
     return $button;
 }

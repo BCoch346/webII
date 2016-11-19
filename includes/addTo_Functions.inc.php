@@ -32,30 +32,4 @@ if(isset($_POST["addtocart"])){
      </script>";
     //echo "<p>Painting ID: ".$order["paintingInfo"]["PaintingID"].", Quantity: ".$order["quantity"].", Frame: ".$order["frame"]."</p>";
 }
-
-if(isset($_POST["addtofav"])){
-    $id = $_POST["addtofav"];
-    $painting = findPaintingByID($id);
-    $quantity='';
-    if(isset($_POST['quantity'])){$quantity = $_POST['quantity'];}
-    $frame='';
-    if(isset($_POST['frameid'])){$frame = $_POST['frameid'];}
-    $glass='';
-    if(isset($_POST['glassid'])){$glass = $_POST['glassid'];}
-    $matt='';
-    if(isset($_POST['mattid'])){$matt = $_POST['mattid'];}
-    $order = array("id"=>$painting['PaintingID'], "quantity"=>$quantity, "frame"=>$frame, "glass"=>$glass, "matt"=>$matt);
-   
-        if(!empty($_SESSION['favourites'])){
-         array_push($_SESSION['favourites'], $order); 
-    }
-    else{
-        
-        $_SESSION['favourites'] = array($order);
-    }
-    echo "<script>
-             window.history.go(-1);
-     </script>";
-   // echo "<p>Painting ID: ".$order["paintingInfo"]["PaintingID"].", Quantity: ".$order["quantity"].", Frame: ".$order["frame"]."</p>";
-}
 ?>
