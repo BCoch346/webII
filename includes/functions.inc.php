@@ -15,8 +15,10 @@ include_once("paintingFunctions.inc.php");
 include_once("reviewFunctions.inc.php");
 include_once("artistFunctions.inc.php");
 
-
-
+function getPDOConnection(){
+	$dbFactory = new DatabaseAdapterFactory;
+	return $dbFactory.create(ADAPTERTYPE, array(DBCONN, DBUSER, DBPASS));
+}
 
 
 function truncateString($string, $length){
