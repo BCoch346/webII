@@ -19,8 +19,8 @@
 
 <style>
        #map {
-    height: 300px;
-    width: 25%;
+    height: 350px;
+    width: 100%;
        }
 
     </style>
@@ -32,29 +32,45 @@
     <header>
         <?php include('includes/header.inc.php'); ?>
     </header>
-    <div class="hero-container genre-container">
-        <div class="ui container items">
-           <?php echo createSingleGalleryHeader(); ?>
-        
-            </div>
-    </div>
-
 
     <main>
-        <?php 
-
-
-        
-        ?>
         <br />
-        <div class="ui container">
+        <div class="ui wide container">
+                    <div class="ui stackable grid">
+            	<div class="ui four wide column">
+            		<h2 class="ui header">Gallery Name</h2>
+            		<p>city, country</p>
+            		<div class='ui divider'></div>
+					<div class="animated fluid ui button">
+                    <a href="#">
+                        <div class="visible content">Visit website</div>
+                        <div class="hidden content">
+                            <i class='right arrow icon'></i>
+                        </div>
+                    </a>                    
+                	</div>
+                	<div class='ui hidden divider'></div>
+                	
+            		<?php echo createMuseumMap(); ?>
+            	</div>
+            	<div class="ui twelve wide column"><iframe src="http://www.belvedere.at/" height="500" width="100%"></iframe>
+</div>
+            
+            </div>
+        
             <div class="ui horizontal divider">
                 <h2 class="ui">Paintings</h2>
             </div>
+
             <div class="ui six column stackable grid">
                 <?php echo createSingleGalleryPictureGrid(); ?>
             </div>
+            
+
+            
+            
         </div>
+
 
     </main>
     <footer>

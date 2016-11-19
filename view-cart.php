@@ -1,9 +1,7 @@
 <!--View Cart PHP-->
-<?php session_start(); ?>
-<?php include("includes/functions.inc.php"); ?>            
+<?php session_start();
+include("includes/functions.inc.php"); ?>            
 
-
-<?php 
 include("cart-logic.class.php");
 $cart = new cartLogic;
 $cart -> instantiateCartLogic();

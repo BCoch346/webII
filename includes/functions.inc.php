@@ -366,7 +366,6 @@ function createSingleGalleryPictureGrid(){
     return utf8_encode($cards);
 }
 function createSingleGalleryHeader(){
-    $galleryID = DEFAULT_GALLERY_ID;
     if(isValid("galleryid")){
         $galleryID = $_GET["galleryid"];
     }
@@ -377,13 +376,17 @@ function createSingleGalleryHeader(){
     $header .= '<div class="ui divider"></div>';
     $header .= '<div class="description"><h4>Website: </h4><a href="'.$gallery["GalleryWebSite"].'">'.$gallery["GalleryWebSite"].'
     </a></div>';
-    $header .= '<h4>Location:</h4><div id="map"></div>'.createMuseumMap($gallery);
+    $header .= '<h4>Location:</h4>'.createMuseumMap();
     $header .= '</div></div>';
 
     return utf8_encode($header);
 }
-function createMuseumMap($gallery){
-    $output = '</div>'.'<script> function createMap() {
+function createMuseumMap(){
+	if(isValid("galleryid")){
+		$galleryID = $_GET["galleryid"];
+	}
+	$gallery = findGalleryByID($galleryID);
+    $output = '<div id="map"></div><script> function createMap() {
         var uluru = {lat:'.$gallery["Latitude"].', lng:'.$gallery["Longitude"].'};
         var map = new google.maps.Map(document.getElementById("map"), {
           zoom: 15,

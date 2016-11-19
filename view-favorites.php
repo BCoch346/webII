@@ -142,14 +142,15 @@ session_start ();
 		    type: "POST",
 		    url: 'view-favorites.php',
 		    dataType: 'json',
-		    data: {functionname: functionToCall},
-
-		    success: function (obj, textstatus) {
-		                  if( !('error' in obj) ) {
-		                      yourVariable = obj.result;
+		    data: {functionname: 'functionname',
+					'$id': id 
+			    },
+		    success: function (result) {
+		                  if(result) {
+		                      alert("success");
 		                  }
 		                  else {
-		                      console.log(obj.error);
+		                      alert("error");
 		                  }
 		            }
 		});
