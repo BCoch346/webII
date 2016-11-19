@@ -5,7 +5,10 @@ class ArtistTableGateway extends TableDataGateway{
         return "Artist";
     }
     public function getSelectStatement(){
-        return "SELECT * FROM Artists";
+        return "SELECT ArtistID, ArtistLink, Details, FirstName, LastName, Gender, Nationality, YearOfBirth, YearOfDeath FROM Artists";
+    }
+    public function getArtistWorks(){
+    	
     }
     public function getPrimaryKeyName(){
         return "ArtistID";
@@ -17,7 +20,7 @@ class CustomerLogonTableGateway extends TableDataGateway{
         return "CustomerLogon";
     }
     public function getSelectStatement(){
-        return "SELECT * FROM CustomerLogon";
+        return "SELECT CustomerID, DateJoined, DateLastModified, Pass, Salt, State, UserName FROM CustomerLogon";
     }
     public function getPrimaryKeyName(){
         return "CustomerID";
@@ -28,7 +31,7 @@ class CustomersTableGateway extends TableDataGateway{
         return "Customer";
     }
     public function getSelectStatement(){
-        return "SELECT * FROM Customers";
+        return "SELECT CustomerID, Address, City, Country, Email, FirstName, LastName, Phone, Postal, Privacy, Region  FROM Customers";
     }
     public function getPrimaryKeyName(){
         return "CustomerID";
@@ -39,7 +42,7 @@ class ErasTableGateway extends TableDataGateway{
         return "Era";
     }
     public function getSelectStatement(){
-        return "SELECT * FROM Eras";
+        return "SELECT EraID, EraName, EraYears FROM Eras";
     }
     public function getPrimaryKeyName(){
         return "EraID";
@@ -50,7 +53,7 @@ class GalleriesTableGateway extends TableDataGateway{
         return "Gallery";
     }
     public function getSelectStatement(){
-        return "SELECT * FROM Galleries";
+        return "SELECT GallryID, GalleryName, GalleryNativeName, GalleryWebSite, Latitude, Longitude FROM Galleries";
     }
     public function getPrimaryKeyName(){
         return "GalleryID";
@@ -61,7 +64,7 @@ class GenresTableGateway extends TableDataGateway{
         return "Genre";
     }
     public function getSelectStatement(){
-        return "SELECT * FROM Genres";
+        return "SELECT GenreID, GenreName, EraID, Link, Description FROM Genres";
     }
     public function getPrimaryKeyName(){
         return "GenreID";
@@ -72,7 +75,7 @@ class OrderDetailsTableGateway extends TableDataGateway{
         return "OrderDetail";
     }
     public function getSelectStatement(){
-        return "SELECT * FROM OrderDetails";
+        return "SELECT OrderDetailID, OrderID, PaintingID, FramID, GlassID, MattID FROM OrderDetails";
     }
     public function getPrimaryKeyName(){
         return "OrderDetailID";
@@ -83,7 +86,7 @@ class OrdersTableGateway extends TableDataGateway{
         return "Order";
     }
     public function getSelectStatement(){
-        return "SELECT * FROM Orders";
+        return "SELECT CustomerID, DateStarted, OrderID, Quantity, ShipperID FROM Orders";
     }
     public function getPrimaryKeyName(){
         return "OrderID";
@@ -94,7 +97,7 @@ class PaintingGenreTableGateway extends TableDataGateway{
         return "PaintingGenre";
     }
     public function getSelectStatement(){
-        return "SELECT * FROM PaintingGenres";
+        return "SELECT GenreID, PaintingGenreID, PaintingID FROM PaintingGenres";
     }
     public function getPrimaryKeyName(){
         return "PaintingGenreID";
@@ -105,7 +108,7 @@ class PaintingsTableGateway extends TableDataGateway{
         return "Painting";
     }
     public function getSelectStatement(){
-        return "SELECT * FROM Paintings";
+        return "SELECT AccessionNumber, ArtistID, CopyrightText, Cost, Description, Excerpt, GalleryID, GoogleDescription, GoogleLink, Height, ImageFileName, Medium, MSRP, MuseumLink, PaintingID, ShapeID, Title, Width, WikiLink, YearOfWork FROM Paintings";
     }
     public function getPrimaryKeyName(){
         return "PaintingID";
@@ -118,7 +121,7 @@ class PaintingSubjectsTableGateway extends TableDataGateway{
         return "PaintingSubject";
     }
     public function getSelectStatement(){
-        return "SELECT * FROM PaintingSubjects";
+        return "SELECT PaintingID, PaintingSubjectID, SubjectID FROM PaintingSubjects";
     }
     public function getPrimaryKeyName(){
         return "PaintingSubjectID";
@@ -129,7 +132,7 @@ class ReviewsTableGateway extends TableDataGateway{
         return "Review";
     }
     public function getSelectStatement(){
-        return "SELECT * FROM Reviews";
+        return "SELECT Comment, PaintingID, Rating, RatingID, ReviewDate FROM Reviews";
     }
     public function getPrimaryKeyName(){
         return "RatingID";
@@ -140,7 +143,7 @@ class ShapesTableGateway extends TableDataGateway{
         return "Shape";
     }
     public function getSelectStatement(){
-        return "SELECT * FROM Shapes";
+        return "SELECT ShapeID, ShapeName FROM Shapes";
     }
     public function getPrimaryKeyName(){
         return "ShapeID";
@@ -151,7 +154,7 @@ class SubjectsTableGateway extends TableDataGateway{
         return "Subject";
     }
     public function getSelectStatement(){
-        return "SELECT * FROM Subjects";
+        return "SELECT SubjectID, SubjectName FROM Subjects";
     }
     public function getPrimaryKeyName(){
         return "SubjectID";
@@ -162,7 +165,7 @@ class TypesFramesTableGateway extends TableDataGateway{
         return "Frame";
     }
     public function getSelectStatement(){
-        return "SELECT * FROM TypesFrames";
+        return "SELECT Color, FrameID, Price, Syle, Title FROM TypesFrames";
     }
     public function getPrimaryKeyName(){
         return "FrameID";
@@ -173,7 +176,7 @@ class TypesGlassTableGateway extends TableDataGateway{
         return "Glass";
     }
     public function getSelectStatement(){
-        return "SELECT * FROM TypesGlass";
+        return "SELECT Description, GlassID, Price, Title FROM TypesGlass";
     }
     public function getPrimaryKeyName(){
         return "GlassID";
@@ -184,7 +187,7 @@ class TypesMattTableGateway extends TableDataGateway{
         return "Matt";
     }
     public function getSelectStatement(){
-        return "SELECT * FROM TypesMatt";
+        return "SELECT ColorCode, MattID, Title FROM TypesMatt";
     }
     public function getPrimaryKeyName(){
         return "MattID";
@@ -195,7 +198,7 @@ class TypesShippersTableGateway extends TableDataGateway{
         return "Shipper";
     }
     public function getSelectStatement(){
-        return "SELECT * FROM TypeShippers";
+        return "SELECT shipperAvgTime, shipperBaseFee, shipperClass, shipperDescription, shipperID, shipperName, shipperWeightFee FROM TypeShippers";
     }
     public function getPrimaryKeyName(){
         return "shipperID";
@@ -206,7 +209,7 @@ class TypesStatusCodesTableGateway extends TableDataGateway{
         return "Status";
     }
     public function getSelectStatement(){
-        return "SELECT * FROM TypesStatusCodes";
+        return "SELECT StatusID, status FROM TypesStatusCodes";
     }
     public function getPrimaryKeyName(){
         return "StatusID";

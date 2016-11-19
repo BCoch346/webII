@@ -1,3 +1,4 @@
+<?php session_start();?>
 <?php include("includes/functions.inc.php"); ?>
 
 <!DOCTYPE html>
@@ -28,6 +29,7 @@
 
     <main>
         <?php
+        
         ?>
         <br />
         <div class="ui container">

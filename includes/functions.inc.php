@@ -15,8 +15,10 @@ include_once("paintingFunctions.inc.php");
 include_once("reviewFunctions.inc.php");
 include_once("artistFunctions.inc.php");
 
-
-
+function getPDOConnection(){
+	$dbFactory = new DatabaseAdapterFactory;
+	return $dbFactory.create(ADAPTERTYPE, array(DBCONN, DBUSER, DBPASS));
+}
 
 
 function truncateString($string, $length){
@@ -474,6 +476,51 @@ function createSingleSubjectHeader(){
 
     return utf8_encode($header);
 }
+
+
+
+
+/////////////////////////////////////////////////////
+
+
+function createIndividualFrameDropdownSelectList($paintingID){
+    $frames = findAllOfType("Frames");
+    return utf8_encode(createIndividualSelectList("frame", "FrameID", "ui search dropdown", $frames, "Title",'"'. $paintingID . 'FrameID"'));
+}
+function createIndividualGlassDropdownSelectList($paintingID){
+    $glass = findAllOfType("Glass");
+    return utf8_encode(createIndividualSelectList("glass", "GlassID", "ui search dropdown", $glass, "Title",'"'. $paintingID . 'FrameID"'));
+}
+function createIndividualMattDropdownSelectList($paintingID){
+    $matts = findAllOfType("Matt");
+    return utf8_encode(createIndividualSelectList("matt", "MattID", "ui search dropdown", $matts, "Title",'"'. $paintingID . 'FrameID"'));
+}
+
+
+
+
+
+
+function createIndividualSelectList($id, $itemID, $class, $listItems, $searchString, $name){
+    $list = "<select name='".strtolower($name)."' id='".$id."' class='".$class."'>";
+
+    foreach($listItems as $item){
+        $list .= createOption($item[$itemID], $item[$searchString]);
+    }
+    $list .= "</select>";
+    return $list;
+}
+
+
+
+
+
+
+
+
+
+
+
 ?>
 
 
