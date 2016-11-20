@@ -1,3 +1,9 @@
+<?php
+ include("Controllers/GenresController.class.php");
+ 
+ $controller = new GenresController();
+ ?>
+
 <!DOCTYPE html>
 <html lang=en>
 
@@ -25,24 +31,19 @@
     </header>
     <div class="hero-container genre-container">
         <div class="ui container items">
-           <?php echo createSingleGenreHeader(); ?>
+           <?php echo $controller->singleGenreHeader(); ?>
         </div>
     </div>
 
 
     <main>
-        <?php 
-
-
-        
-        ?>
         <br />
         <div class="ui container">
             <div class="ui horizontal divider">
                 <h2 class="ui">Paintings</h2>
             </div>
             <div class="ui six column stackable grid">
-                <?php echo createSingleGenrePictureGrid(); ?>
+                <?php echo $controller->createSingleGenrePictureGrid(); ?>
             </div>
         </div>
 

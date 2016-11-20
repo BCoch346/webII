@@ -10,7 +10,7 @@ class Visit extends DomainObject{
         return array("VisitID", "PaintingID", "DateViewed", "IpAddress", "CountryCode");
     }
 
-    public function __construct(array $data){
+    public function __construct($data){
         parent::__construct($data);
     }
 }

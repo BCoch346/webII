@@ -75,6 +75,9 @@ class GenresTableGateway extends TableDataGateway{
     public function getPrimaryKeyName(){
         return "GenreID";
     }
+    public function getPaintings($id){ 
+    	return "SELECT ImageFileName, Title, Paintings.PaintingID FROM Paintings INNER JOIN PaintingGenres ON Paintings.PaintingID = PaintingGenres.PaintingID INNER JOIN Genres ON Genres.GenreID = PaintingGenres.GenreID WHERE Genres.GenreID = $id ORDER BY YearOfWork";
+    }
 }
 class OrderDetailsTableGateway extends TableDataGateway{
      public function getClassName(){
@@ -171,6 +174,11 @@ class SubjectsTableGateway extends TableDataGateway{
     }
     public function getPrimaryKeyName(){
         return "SubjectID";
+    }
+    
+    public function getPaintingsSelectStatement($id){
+    	return "SELECT ImageFileName, Title, Paintings.PaintingID FROM Paintings INNER JOIN PaintingSubjects ON Paintings.PaintingID = PaintingSubjects.PaintingID INNER JOIN Subjects ON Subjects.SubjectID = PaintingSubjects.SubjectID WHERE Subjects.SubjectID = $id ORDER BY Title";
+    	 
     }
 }
 class TypesFramesTableGateway extends TableDataGateway{

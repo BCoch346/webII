@@ -1,5 +1,5 @@
 <?php
-include('DatabaseAdapterInterface.php');
+include_once('DatabaseAdapterInterface.php');
 class DatabaseAdapterPDO implements DatabaseAdapterInterface{
     private $pdo;
     private $lastStatement;

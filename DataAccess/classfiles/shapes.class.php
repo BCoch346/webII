@@ -7,7 +7,7 @@ class Shape extends DomainObject{
         return array("ShapeID", "ShapeName");
     }
 
-    public function __construct(array $data){
+    public function __construct($data){
         parent::__construct($data);
     }
 }

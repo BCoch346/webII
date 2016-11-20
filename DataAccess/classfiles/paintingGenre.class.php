@@ -8,7 +8,7 @@ class PaintingGenre extends DomainObject{
         return array("PaintingGenreID", "PaintingID", "GenreID");
     }
 
-    public function __construct(array $data){
+    public function __construct($data){
         parent::__construct($data);
     }
 }

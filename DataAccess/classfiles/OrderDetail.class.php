@@ -11,7 +11,7 @@ class OrderDetail extends DomainObject{
         return array("OrderDetailID", "OrderID", "PaintingID", "FrameID", "GlassID", "MattID");
     }
 
-    public function __construct(array $data){
+    public function __construct($data){
         parent::__construct($data);
     }
 }

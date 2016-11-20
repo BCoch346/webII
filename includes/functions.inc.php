@@ -233,137 +233,14 @@ function createButtonValue(){
 //----------------
 //BROWSE GENRE----
 //----------------
-function createBrowseGenreCards(){
-    $allGenres = findAllGenresOrderedBy("EraID, GenreName");
-    $output = "";
-    foreach($allGenres as $genre){
-        $output .= createGenreCard($genre);
-    }
-    return utf8_encode($output);
-}
-function createGenreCard($genre){
-    $card = "<div class='ui card'>";
-    $card .= "<div class='image'>".createImage("images/art/genres/square-medium/".$genre["GenreID"].".jpg", $genre["GenreName"], $genre["GenreName"], "", "")."</div>";
-    $card .= "<a class='ui text content' href='single-genre.php?genreid=".$genre["GenreID"]."'><div class='extra header'>".$genre["GenreName"]."</div></a>";
-    $card .= "</div>";
 
-    return $card;
-}
-function createSingleGenrePictureGrid(){
-    $genreID = DEFAULT_GENRE_ID;
-    if(isValid("genreid")){
-        $genreID = $_GET["genreid"];
-    }
-    $cards = "";
-    $allPaintings = findPaintingsByGenreID($genreID);
-    foreach($allPaintings as $painting){
-        $cards .= "<div class='ui column link'>";
-        $cards .= createWorksSquareMediumImageWithLink($painting);
-        $cards .= "</div>";
-    }
 
-    return utf8_encode($cards);
-}
 
-function createSingleGenreHeader(){
-    $genreID = 1;
-    if(isValid("genreid")){
-        $genreID = $_GET["genreid"];
-    }
-    $genre = findGenreByID($genreID);
-    $header = "<div class='item'><div class='image'>";
-    $header .= createGenreSquareMediumImage($genre) . "</div>";
-    $header .= '<div class="content"><h2 class="ui header">'.$genre["GenreName"].'</h2>';
-    $header .= '<div class="ui divider"></div>';
-    $header .= '<div class="description"><p>'.$genre["Description"].'</p>';
-    $header .= '</div></div></div>';
-
-    return utf8_encode($header);
-}
 
 //----------------
 //BROWSE MUSEUM---
 //----------------
-function createBrowseMuseumCards(){   
-    $allGalleries = findAllGalleriesOrderedBy("GalleryName");
-    $output = "";
-    foreach($allGalleries as $gallery){
-        $output .= createGalleriesCard($gallery);
-    }
-    return utf8_encode($output);
-}
-function createGalleriesCard($gallery){
-    $card = "<div class='ui grey card'>";
-    $card .= "<div class='ui top attached button' tabindex='0'><strong><h3 class='header'><a href='single-gallery.php?galleryid=".$gallery["GalleryID"]."'>". $gallery["GalleryName"]."</a><h3></strong></div>";
-    $card .= "<div class='ui text content'><h5>".$gallery["GalleryCity"].", ".$gallery["GalleryCountry"]."</h5></div>";
-    $card .= "</div>";
 
-    return $card;
-}
-
-function gallerySegment(){
-	$output = '<a href="single-gallery?galleryid='.$this->GalleryID.'">'.
-			'<div class="ui segment gallery">'.
-			'<h3 class="ui header">'.$this->GalleryName.'</h3>'.
-			'<div class="ui divider"></div>'.
-			'<p>'.$this->GalleryCity.', '.$this->GalleryCountry.'</p></div></a>';
-	return $output;
-}
-
-function createSingleGalleryPictureGrid(){
-    $galleryID = DEFAULT_GALLERY_ID;
-    if(isValid("galleryid")){
-        $galleryID = $_GET["galleryid"];
-    }
-    $limit = 20;
-    $orderBy = 'Title';
-    $cards = "";
-    $allPaintings = findAllPaintingsByGalleryIDLimit($galleryID, $limit, $orderBy);
-    foreach($allPaintings as $painting){
-        $cards .= "<div class='ui column link'>";
-        $cards .= createWorksSquareMediumImageWithLink($painting);
-        $cards .= "</div>";
-    }
-
-    return utf8_encode($cards);
-}
-function createSingleGalleryHeader(){
-    if(isValid("galleryid")){
-        $galleryID = $_GET["galleryid"];
-    }
-    $gallery = findGalleryByID($galleryID);
-    $header = "<div class='item'>";
-    $header .= '<div class="content"><h2 class="ui header">'.$gallery["GalleryName"].'</h2>';
-    $header .= '<div class="meta"><span>'.$gallery["GalleryCity"].', '.$gallery["GalleryCountry"].'</span></div>';
-    $header .= '<div class="ui divider"></div>';
-    $header .= '<div class="description"><h4>Website: </h4><a href="'.$gallery["GalleryWebSite"].'">'.$gallery["GalleryWebSite"].'
-    </a></div>';
-    $header .= '<h4>Location:</h4>'.createMuseumMap();
-    $header .= '</div></div>';
-
-    return utf8_encode($header);
-}
-function createMuseumMap(){
-	if(isValid("galleryid")){
-		$galleryID = $_GET["galleryid"];
-	}
-	$gallery = findGalleryByID($galleryID);
-    $output = '<div id="map"></div><script> function createMap() {
-        var uluru = {lat:'.$gallery["Latitude"].', lng:'.$gallery["Longitude"].'};
-        var map = new google.maps.Map(document.getElementById("map"), {
-          zoom: 15,
-          center: uluru
-        });
-        var marker = new google.maps.Marker({
-          position: uluru,
-          map: map
-        });
-      };</script>
-      <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyABLWIe4bJ_hsZvhr1DfJ8GDTnme_0BDiY&callback=createMap">
-    </script>';
-    return $output;
-}
 
 //----------------
 //BROWSE Artists--
@@ -389,35 +266,6 @@ function createArtistCard($artist){
 //BROWSE Subjects-
 //----------------
 
-function createSingleSubjectPictureGrid(){
-    $subjectID = DEFAULT_SUBJECT_ID;
-    if(isValid("subjectid")){
-        $subjectID = $_GET["subjectid"];
-    }
-    $limit = 20;
-    $orderBy = 'Title';
-    $cards = "";
-    $allPaintings = findAllPaintingsBySubjectIDLimit($subjectID, $limit);
-    foreach($allPaintings as $painting){
-        $cards .= "<div class='ui column link'>";
-        $cards .= createWorksSquareMediumImageWithLink($painting);
-        $cards .= "</div>";
-    }
-    return utf8_encode($cards);
-}
-function createSingleSubjectHeader(){
-    $subjectID = DEFAULT_SUBJECT_ID;
-    if(isValid("subjectid")){
-        $subjectID = $_GET["subjectid"];
-    }
-    $subject = findSubjectByID($subjectID);
-    $header = "<div class='item'>";
-    $header .= '<div class="content"><h2 class="ui header">'.$subject["SubjectName"].'</h2>';
-    $header .= '<div class="ui divider"></div>';
-    $header .= '</div></div>';
-
-    return utf8_encode($header);
-}
 
 
 

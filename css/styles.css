@@ -23,6 +23,25 @@
 .ui.segment:hover.gallery{
 box-shadow: 3px 4px 15px -4px rgba(0,0,0,0.61);
 }
+.ui.segment:hover.subject{
+	box-shadow: 3px 4px 15px -4px rgba(0,0,0,0.61);
+	
+}
+.ui.segment.subject h3:hover{
+	color:blue;
+}
+.painting-thumbnail:hover{
+box-shadow: -11px -4px 29px -7px rgba(59,59,59,0.58);
+
+}
+.ui.cards>.card.genre:hover
+{
+		box-shadow: 3px 4px 15px -4px rgba(0,0,0,0.61);
+}
+.ui.cards>.card.genre:hover>.content>.header:not(.ui){
+	color:blue;
+	
+}
 .hero-container {
     min-height: 400px;
     background-image: url(../images/hero1.jpg);

@@ -7,7 +7,7 @@ class StatusCode extends DomainObject{
         return array("StatusID", "Status");
     }
 
-    public function __construct(array $data){
+    public function __construct($data){
         parent::__construct($data);
     }
 }

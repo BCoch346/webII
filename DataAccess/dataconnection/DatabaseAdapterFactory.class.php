@@ -1,5 +1,5 @@
 <?php
-include('DatabaseAdapterPDO.class.php');
+include_once('DatabaseAdapterPDO.class.php');
 class DatabaseAdapterFactory{
 	
     public static function create($type, $connectionValues){

@@ -7,7 +7,7 @@ class Era extends DomainObject{
     protected static function getFieldNames(){
         return array("EraID", "EraName", "EraYears");
     }
-    public function __construct(array $data){
+    public function __construct($data){
         parent::__construct($data);
     }
 

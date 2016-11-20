@@ -29,11 +29,11 @@ class Painting extends DomainObject{
             "GoogleDescription", "WikiLink");
     }
 
-    public function __construct(array $data){
+    public function __construct($data){
         parent::__construct($data);
     }
     public function createThumbnail(){
-    	return '<a href="single-painting.php?paintingid='.$this->PaintingID.'"><img src="'.$this->squareMediumImageFilePath().'" alt="'.$this->Title.'" title="'.$this->title.'"></a>';
+    	return '<div class="painting-thumbnail"><a href="single-painting.php?paintingid='.$this->PaintingID.'"><img src="'.$this->squareMediumImageFilePath().'" alt="'.$this->Title.'" title="'.$this->title.'"></a></div>';
     }
     
     public function mediumImageFilePath(){

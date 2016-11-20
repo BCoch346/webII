@@ -12,7 +12,7 @@ class Shipper extends DomainObject{
         return array("shipperID", "shipperName", "shipperDescription", "shipperAvgTime", "shipperClass", "shipperBaseFee", "shipperWeightFee");
     }
 
-    public function __construct(array $data){
+    public function __construct($data){
         parent::__construct($data);
     }
 }

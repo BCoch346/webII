@@ -10,7 +10,7 @@ class Order extends DomainObject{
         return array("OrderID", "ShipperID", "CustomerID", "DateStarted", "Quantity");
     }
 
-    public function __construct(array $data){
+    public function __construct($data){
         parent::__construct($data);
     }
 }

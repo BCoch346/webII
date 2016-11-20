@@ -1,5 +1,8 @@
-<?php session_start();?>
-<?php include("includes/functions.inc.php"); ?>
+<?php
+ include_once("Controllers/GenresController.class.php");
+ 
+ $controller = new GenresController();
+ ?>
 
 <!DOCTYPE html>
 <html lang=en>
@@ -38,13 +41,20 @@
         </h2>
 
         <div class="ui container six cards stackable">
-            <?php echo createBrowseGenreCards(); ?>
+            
+            <?php
+            $controller->setBrowseGenreData();
+            echo $controller->createBrowseGenreCards(); 
+            ?>
         </div>
 
     </main>
     <footer>
         <br />
-        <?php include('includes/footer.inc.php'); ?>
+        <?php include('includes/footer.inc.php'); 
+        $controller->closeConnection();
+        
+        ?>
     </footer>
 </body>
 </html>

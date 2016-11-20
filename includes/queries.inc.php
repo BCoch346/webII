@@ -71,11 +71,7 @@ function findGenresByPaintingID($id){
     return $statement;
 }
 function findPaintingsByGenreID($id){
-    $pdo = PDO();
-    $sql = "SELECT ImageFileName, Title, Paintings.PaintingID FROM Paintings INNER JOIN PaintingGenres ON Paintings.PaintingID = PaintingGenres.PaintingID INNER JOIN Genres ON Genres.GenreID = PaintingGenres.GenreID WHERE Genres.GenreID = $id ORDER BY YearOfWork";
-    $statement = queryDatabaseForDataSet($pdo, $sql);
-    $pdo = null;
-    return $statement;
+
 }
 function findAverageRating($id){
     $pdo = PDO();

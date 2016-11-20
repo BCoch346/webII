@@ -12,7 +12,7 @@ class CustomerLogon extends DomainObject{
        return array("CustomerID", "UserName", "Pass", "Salt", "State", "DateJoined",
            "DateLastModified");
    }
-   public function __construct(array $data){
+   public function __construct($data){
        parent::__construct($data);
    }
     public function setDateLastModified($value){

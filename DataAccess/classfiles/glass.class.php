@@ -9,7 +9,7 @@ class Glass extends DomainObject{
         return array("GlassID", "Title", "Description", "Price");
     }
 
-    public function __construct(array $data){
+    public function __construct($data){
         parent::__construct($data);
     }
 }

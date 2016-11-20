@@ -15,7 +15,7 @@ class Artist extends DomainObject{
        return array("ArtistID", "FirstName", "LastName", "Nationality", "Gender", "YearOfBirth",
            "yearOfDeath", "Details", "ArtistLink");
    }
-   public function __construct(array $data){
+   public function __construct($data){
        parent::__construct($data);
    }
     public function getFullName($commaDelimited=bool){

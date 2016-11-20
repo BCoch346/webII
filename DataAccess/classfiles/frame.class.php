@@ -10,7 +10,7 @@ class Frame extends DomainObject{
         return array("FrameID", "Title", "Price", "Color", "Syle");
     }
 
-    public function __construct(array $data){
+    public function __construct($data){
         parent::__construct($data);
     }
 }

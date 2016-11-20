@@ -1,5 +1,9 @@
-<?php session_start();?>
-<?php include("includes/functions.inc.php"); ?>
+<?php 
+include ("Controllers/SubjectController.class.php");
+
+$controller = new SubjectController();
+
+?>
 
 <!DOCTYPE html>
 <html lang=en>
@@ -37,8 +41,12 @@
             <i class="tag icon"></i>Browse Subjects
         </h2>
 
-        <div class="ui container six cards stackable">
-            <?php echo createBrowseSubjectsCards(); ?>
+        <div class="ui container ">
+        <div class="ui six column equal height stackable grid">
+                    <?php 
+            echo $controller->createBrowseSubjectsCards(); ?>
+        </div>
+
         </div>
 
     </main>

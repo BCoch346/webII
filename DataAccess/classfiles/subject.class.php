@@ -1,40 +1,24 @@
 <?php
+include_once('domainObject.class.php');
 class Subject extends DomainObject{
-    private $SubjectID;
-    private $SubjectName;
+    public $SubjectID;
+    public $SubjectName;
 
     protected static function getFieldNames(){
         return array("SubjectID", "SubjectName");
     }
 
-    public function __construct(array $data){
+    public function __construct($data){
         parent::__construct($data);
     }
-    
-    function createBrowseSubjectsCards(){
-    	$allSubjects = findAllSubjectsOrderedBy("SubjectName");
-    	$output = "";
-    	foreach($allSubjects as $subject){
-    		$output .= createSubjectCard($subject);
-    	}
-    	return utf8_encode($output);
-    }
-    
-    function createSubjectCard($subject){
-    	$id = $subject["SubjectID"];
-    	$limit = 1;
-    	$holder = findAllPaintingsBySubjectIDLimit($id, $limit);
-    	$img = '';
-    	foreach($holder as $row){
-    		$img = $row["ImageFileName"];
-    		break;
-    	}
-    	$card = "<div class='ui card'>";
-    	$card .= "<div class='image'>".createImage("images/art/works/square-medium/".$img.".jpg", $subject["SubjectName"], $subject["SubjectName"], "", "")."</div>";
-    	$card .= "<a class='ui text content' href='single-subject.php?subjectid=".$subject["SubjectID"]."'><div class='extra header'>".$subject["SubjectName"]."</div></a>";
-    	$card .= "</div>";
+        
+    public function createSubjectCard(){
+    	$card = '<div class="ui column"><div class="ui segment subject">';
+    	$card .= '<a href="single-subject.php?subjectid='.$this->SubjectID.'"><h3 class="ui header">'.$this->SubjectName.'</h3></a>';
+    	$card .= '</div></div>';
     
     	return $card;
     }
+    
 }
 ?>

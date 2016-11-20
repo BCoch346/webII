@@ -10,7 +10,7 @@ class Review extends DomainObject{
         return array("RatingID", "PaintingID", "ReviewDate", "Rating", "Comment");
     }
 
-    public function __construct(array $data){
+    public function __construct($data){
         parent::__construct($data);
     }
 }

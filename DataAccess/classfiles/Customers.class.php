@@ -16,7 +16,7 @@ class Customer extends DomainObject{
     protected static function getFieldNames(){
         return array("CustomerID", "FirstName", "Address", "City", "Region", "Country", "Postal", "Phone", "Email", "Privacy");
     }
-    public function __construct(array $data){
+    public function __construct($data){
         parent::__construct($data);
     }
     public function getFullName($commaDelimited=bool){

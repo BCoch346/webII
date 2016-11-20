@@ -8,7 +8,7 @@ class Matt extends DomainObject{
         return array("MattID", "Title", "ColorCode");
     }
 
-    public function __construct(array $data){
+    public function __construct($data){
         parent::__construct($data);
     }
 }
