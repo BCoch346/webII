@@ -1,5 +1,4 @@
 <?php
-include('DataAccess/gateways/gateways.class.php');
 include('DataAccess/classfiles/gallery.class.php');
 include("instance.class.php");
 class GalleriesController extends Instance{
@@ -11,7 +10,8 @@ class GalleriesController extends Instance{
 	}
 	
 	public function setBrowseGalleryData(){
-		$statement = $this->dbAdapter->fetchAsArray($this->gateway->getSelectStatementForBrowseAll());
+		$sql = $this->gateway->getSelectStatement();
+		$statement = $this->dbAdapter->fetchAsArray($sql, "GalleryName");
 		foreach($statement as $data){
 			$gallery = new Gallery($data);
 			$this->galleries[] = $gallery;
@@ -20,7 +20,7 @@ class GalleriesController extends Instance{
 	
 	public function createBrowseGalleryColumnSegment(){
 
-		$this->setBrowseGalleryData();
+		usort($this->galleries, array($this, "cmp"));
 		$output = "";
 		foreach ($this->galleries as $gallery){
 			$output .= '<div class="ui column">';
@@ -29,6 +29,12 @@ class GalleriesController extends Instance{
 		}
 
 		return utf8_encode($output);
+	}
+	
+	
+	
+	private function cmp($a, $b){
+		return strcmp($a->GalleryName, $b->GalleryName);
 	}
 	
 }

@@ -39,7 +39,7 @@ $('#addToCart').on('click', function(e){
     }); 
 });}*/
 
-document.getElementById('addFavA').addEventListener('onClick', function(e){
+/*document.getElementById('addFavA').addEventListener('Click', function(e){
 	var id = event.target.getAttribute("value");
     jQuery.ajax({
 		    type: "POST",
@@ -49,7 +49,7 @@ document.getElementById('addFavA').addEventListener('onClick', function(e){
 		});
 	});
 
-document.getElementById('addFavP').addEventListener('onClick', function(e){
+document.getElementById('addFavP').addEventListener('Click', function(e){
 	var id = event.target.getAttribute("value");
     jQuery.ajax({
 		    type: "POST",
@@ -58,3 +58,7 @@ document.getElementById('addFavP').addEventListener('onClick', function(e){
 		    data: {functionname: 'addFavoritePaintings', arguments: [id]}
 		});
 	});
+*/
+
+
+

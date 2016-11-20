@@ -1,5 +1,7 @@
 <?php
 include("DataAccess/dataconnection/DatabaseAdapterFactory.class.php");
+include('DataAccess/gateways/gateways.class.php');
+
 class Instance{
 	protected $DBCONN = 'mysql:host=localhost;dbname=art';
 	protected $DBUSER = 'testuser';
@@ -21,14 +23,13 @@ class Instance{
 		
 	}
 	
-	protected function getPDOConnection(){
-		print_r("type: ".$this->ADAPTERTYPE);
-		print_r(" --  uname: ".$this->DBUSER);
-		print_r(" -- pass: ".$this->DBPASS);
-		print_r(" -- dbconn: ".$this->DBCONN);
+	public function closeConnection(){
+		$this->dbAdapter->closeConnection();
 		
-		$adapter = DatabaseAdapterFactory::create($this->ADAPTERTYPE, array($this->DBCONN, $this->DBUSER, $this->DBPASS));
-		
+	}
+	
+	protected function truncateString($string, $length){
+		return utf8_encode(substr($string, 0, strpos(wordwrap($string, $length), "\n")));
 	}
 	
 	public function isValid($key){
@@ -37,6 +38,10 @@ class Instance{
 			return true;
 		}
 		return false;
+	}
+
+	public function createImage($src, $alt, $title, $class, $id){
+		return utf8_encode('<img class="'.$class.'" id="'.$id.'" src="'.$src.'" alt="'.$alt.'" title="'.$title.'"/>');
 	}
 }
 

@@ -1,5 +1,5 @@
 <?php
-include ('domainObject.class.php');
+include_once('domainObject.class.php');
 class Gallery extends DomainObject {
 	public $GalleryID;
 	public $GalleryName;
@@ -24,12 +24,15 @@ class Gallery extends DomainObject {
 	public function __construct(array $data) {
 		parent::__construct ( $data );
 	}
+	public function getGalleryLocation(){
+		return $this->GalleryCity.', '.$this->GalleryCountry;
+	}
 	public function getGallerySegment() {
-		$output = '<a href="single-gallery?galleryid=' . $this->GalleryID . '">' . 
-		'<div class="ui segment gallery">' . '
-				<h3 class="ui header">' . $this->GalleryName . '</h3>' . 
+		$output = '<div class="ui segment gallery">' . 
+		'<a href="single-gallery.php?galleryid=' . $this->GalleryID . '">
+				<h3 class="ui header">' . $this->GalleryName . '</h3><a>' . 
 		'<div class="ui divider"></div>' . 
-		'<p>' . $this->GalleryCity . ', ' . $this->GalleryCountry . '</p></div></a>';
+		'<p class="ui text content">' . $this->GalleryCity . ', ' . $this->GalleryCountry . '</p></div>';
 		return $output;
 	}
 }

@@ -1,33 +1,10 @@
 <?php
-define("DBCONN", 'mysql:host=localhost;dbname=art');
-define("DBUSER", 'testuser');
-define("DBPASS", 'mypassword');
-define("DEFAULT_PAINTING_ID", 105);
-define("DEFAULT_ARTIST_ID", 1);
-define("DEFAULT_GENRE_ID", 1);
-define("DEFAULT_GALLERY_ID", 2);
-define("DEFAULT_SUBJECT_ID", 11);
-define("BROWSE_PAINTING_LIMIT", 20);
-define("ADAPTERTYPE", "PDO");
-
 include_once("queries.inc.php");
 include_once("paintingFunctions.inc.php");
 include_once("reviewFunctions.inc.php");
 include_once("artistFunctions.inc.php");
 include_once("favoriteFunctions.inc.php");
 
-function getPDOConnection(){
-	//$dbFactory = new DatabaseAdapterFactory;
-	//return $dbFactory.create(ADAPTERTYPE, array(DBCONN, DBUSER, DBPASS));
-}
-
-
-function truncateString($string, $length){
-    return utf8_encode(substr($string, 0, strpos(wordwrap($string, $length), "\n")));
-}
-function name_format($first, $last){
-    return $first . " " . $last;
-}
 function isValid($key){
     $key = strtolower($key);
     if(isset($_GET[$key]) && !empty($_GET[$key]) && is_numeric($_GET[$key])){
@@ -175,33 +152,8 @@ function createFullScreenPaintingModal($class){
 //BROWSE PAINTING-
 //----------------
 
-function getPaintingByFilter(){
-    $orderBy = "YearOfWork";
-    $paintings = findAllPaintingSortByLimit($orderBy, BROWSE_PAINTING_LIMIT);
-    if(isValid("artistid")){
-        $paintings = findAllPaintingsByArtistIDLimit($_GET["artistid"], BROWSE_PAINTING_LIMIT, $orderBy);
-    }
-    else if(isValid("galleryid")){
-        $paintings = findAllPaintingsByGalleryIDLimit($_GET["galleryid"], BROWSE_PAINTING_LIMIT, $orderBy);
-    }
-    else if(isValid("shapeid")){
-        $paintings = findAllPaintingsByShapeIDLimit($_GET["shapeid"], BROWSE_PAINTING_LIMIT, $orderBy);
-    }
 
-    return $paintings;
-}
-function createBrowsePaintingItems(){
-    $allPaintings = getPaintingByFilter();
-    $items = "<div class='ui divided items'>";
-    foreach($allPaintings as $painting){
-        if($painting != null){
-            $items .= createBrowsePaintingItem($painting);
-        }
-    }
-    $items .= "</div>";
 
-    return utf8_encode($items);
-}
 
 function createBrowsePaintingItem($painting){
     $image = createWorksSquareMediumImage("ui rounded image", $painting);
@@ -436,31 +388,7 @@ function createArtistCard($artist){
 //----------------
 //BROWSE Subjects-
 //----------------
-function createBrowseSubjectsCards(){
-    $allSubjects = findAllSubjectsOrderedBy("SubjectName");
-    $output = "";
-    foreach($allSubjects as $subject){
-        $output .= createSubjectCard($subject);
-    }
-    return utf8_encode($output);
-}
 
-function createSubjectCard($subject){
-    $id = $subject["SubjectID"];
-    $limit = 1;
-    $holder = findAllPaintingsBySubjectIDLimit($id, $limit);
-    $img = '';
-    foreach($holder as $row){
-        $img = $row["ImageFileName"];
-        break;
-    }
-    $card = "<div class='ui card'>";
-    $card .= "<div class='image'>".createImage("images/art/works/square-medium/".$img.".jpg", $subject["SubjectName"], $subject["SubjectName"], "", "")."</div>";
-    $card .= "<a class='ui text content' href='single-subject.php?subjectid=".$subject["SubjectID"]."'><div class='extra header'>".$subject["SubjectName"]."</div></a>";
-    $card .= "</div>";
-
-    return $card;
-}
 function createSingleSubjectPictureGrid(){
     $subjectID = DEFAULT_SUBJECT_ID;
     if(isValid("subjectid")){
@@ -528,6 +456,25 @@ function createIndividualSelectList($id, $itemID, $class, $listItems, $searchStr
 
 //HEADER SESSION COUNTERS
 
+function countFavorites(){
+	$count = 0;
+	if(isset($_SESSION['favorite_paintings'])&& !empty($_SESSION['favorite_paintings'])){
+		$count += count($_SESSION['favorite_paintings']);
+	}
+	if(isset($_SESSION['favorite_artists'])&& !empty($_SESSION['favorite_artists'])){
+		$count += count($_SESSION['favorite_artists']);
+	}
+	return $count;
+}
+
+function countCart(){
+	if(isset($_SESSION['painting'])&& !empty($_SESSION['painting'])){
+		return count($_SESSION['Painting']);
+	}
+	else{
+		return 0;
+	}
+}
 
 
 

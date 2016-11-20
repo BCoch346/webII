@@ -28,15 +28,18 @@ abstract class TableDataGateway{
         }
         $sql = $this->getSelectStatement();
         $count = 0;
-        foreach($parameters as $key->$value){
-            if($count == 0){
-                $sql .= " WHERE " . $key ." = ?";
-            }
-            else{
-                $sql .= " && " . $key . " = ?";
-            }
+        if(!empty($parameters)){
+        	foreach($parameters as $key=>$value){
+        		if($count == 0){
+        			$sql .= " WHERE " . $key ." = ".$value;
+        		}
+        		else{
+        			$sql .= " && " . $key . " = ".$value;
+        		}
+        	}
         }
-        $result = $this->dbAdapter->fetchAsArray($sql, $parameters);
+
+        $result = $this->dbAdapter->fetchAsArray($sql);
     }
     protected function closeConnection(){
         $dbAdapter->closeConnection();
@@ -47,7 +50,7 @@ abstract class TableDataGateway{
             $data = array($data);
         }
         $values = array();
-        $class = getClassName();
+        $class = getCassName();
         foreach($data as $value){
         	$values[] = new $class($value);
         }

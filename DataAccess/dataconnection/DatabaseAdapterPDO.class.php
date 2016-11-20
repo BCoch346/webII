@@ -31,7 +31,7 @@ class DatabaseAdapterPDO implements DatabaseAdapterInterface{
         }
         try{
             $this->lastStatement = null;
-            if(count($parameters > 0)){
+            if(count($parameters) > 0){
                 $this->lastStatement = $this->pdo->prepare($sql);
                 $executed = $this->lastStatement->execute($parameters);
                 if(!$executed){

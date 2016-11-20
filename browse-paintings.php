@@ -1,6 +1,8 @@
-<?php session_start();?>
-<?php include("includes/functions.inc.php"); ?>
+<?php 
+include("Controllers/PaintingController.class.php");
 
+$paintingController = new PaintingsController;
+?>
 <!DOCTYPE html>
 <html lang=en>
 
@@ -32,11 +34,6 @@
         <h2 class="ui horizontal divider">
             <i class="tag icon"></i>Browse Paintings
         </h2>
-        <div class="ui left dividing rail">
-            <div class="ui segment">
-                Left Rail Content
-            </div>
-        </div>
         <br />
         <div class="ui fluid stackable grid">
             <div class="one wide column"></div>
@@ -51,19 +48,25 @@
                                 <label class="ui grey header">
                                     Artist
                                 </label>
-                                <?php echo createArtistDropdownSelectList() ?>
+                                <?php 
+                                //echo createArtistDropdownSelectList() 
+                                ?>
                             </div>
                             <div class="field">
                                 <label class="ui grey header">
                                     Museum
                                 </label>
-                                <?php echo createMuseumDropdownSelectList() ?>
+                                <?php 
+                                //echo createMuseumDropdownSelectList() 
+                                ?>
                             </div>
                             <div class="field">
                                 <label class="ui grey header">
                                     Shape
                                 </label>
-                                <?php echo createShapeDropdownSelectList() ?>
+                                <?php 
+                                //echo createShapeDropdownSelectList() 
+                                ?>
 
 
                             </div>
@@ -82,13 +85,14 @@
                         <h2 class="ui header">
                             Paintings
                             <div class="sub header">
-                                <?php echo createCurrentFilterString(); ?>
+                                <?php 
+                                echo $paintingController->createCurrentFilterString(); ?>
                             </div>
                         </h2>
                     </div>
                     <div class="ui divider"></div>
                     <form action="includes/addTo_Functions.inc.php" method="post">
-                    <?php echo createBrowsePaintingItems(); ?>
+                    <?php echo $paintingController->createBrowsePaintingItems(); ?>
                     </form>
                 </div>
         <div class="two wide column"></div>

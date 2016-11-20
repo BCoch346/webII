@@ -1,5 +1,3 @@
-<?php include("includes/functions.inc.php"); ?>
-
 <!DOCTYPE html>
 <html lang=en>
 
@@ -37,7 +35,7 @@
 	<div class="ui container grid">
 		<div class="bordered ui segments">
 			<div class="ui top attached label">
-				<h3>WEB II - Assignment 1</h3>
+				<h3>WEB II - Assignment 2</h3>
 			</div>
 			<div class="ui centered three column grid">
 				<div class="equal height row">
@@ -65,11 +63,10 @@
 							</div>
 							<div class="ui segment">
 								<p>
-									<strong>Assignment 1</strong> <br /> <strong>Assigned Date:</strong>&nbsp;
-									October 7, 2016 <br /> <strong>Due Date:</strong>&nbsp;October
-									22, 2016 <br /> <strong>Course Weight:</strong>&nbsp;11% <br />
+									<strong>Assignment 2</strong> <br /> <strong>Assigned Date:</strong>&nbsp;
+									October 30, 2016 <br /> <strong>Due Date:</strong>&nbsp;November 20, 2016 <br /> <strong>Course Weight:</strong>&nbsp;11% <br />
 									<strong>Objective:</strong>&nbsp; Dynamically generated web
-									pages from a database context using PHP. <br />
+									pages from a database context using PHP sessions and class infrastructure. <br />
 								
 								
 								<p></p>
@@ -84,13 +81,12 @@
 							</div>
 							<div class="ui segment">
 								<strong>Development Environment: </strong>&nbsp; Code hosted on
-								Cloud 9 <br /> <strong><a
+								Cloud 9 <strong><a
 									href="https://ide.c9.io/brandoncochrane/assign2_bcoch346">source
 										code</a></strong> <br /> <strong>Languages:</strong>&nbsp;
 								CSS, HTML, JavaScript, PHP, MYSQL <br /> <strong>Frameworks:</strong>&nbsp;Semantic
-								UI Framework <br /> <strong>Additional Resources:</strong>&nbsp;Bacon
-								Ipsum. Site content is part of art.db provided by Instructor.
-								Course Textbook <br /> <strong>Profile images:</strong>&nbsp;students
+								UI Framework <br /> <strong>Additional Resources:</strong>&nbsp;Github, Cloud9, Site content is part of art.db provided by Instructor,
+								Course Textbook, LinkedIn. <br /> <strong>Profile images:</strong>&nbsp;students
 								LinkedIn profile pictures as of November 17, 2016
 							</div>
 						</div>
@@ -174,7 +170,7 @@
 			<div class="item">
 				<div class="ui small image">
 					<img
-						src="https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAATaAAAAJDg4Y2JiNzBkLTA2MTAtNGI1YS1hMmYwLTRiOTBlZmViZjFiMQ.jpg"
+						src="https://scontent-sea1-1.xx.fbcdn.net/v/t1.0-9/13669177_524203214445206_5306889157124785134_n.jpg?oh=e68313d7ba7f899cb9448ea640aac1b9&oe=5888E4F4"
 						alt="Brandon Cochrane headshot"
 						title="Headshot of Brandon Cochrane" />
 				</div>

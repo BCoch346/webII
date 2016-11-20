@@ -1,8 +1,9 @@
-<?php session_start(); ?>
-<?php
-include("includes/functions.inc.php"); 
+<?php 
+include("Controllers/PaintingController.class.php");
 
+$paintingController = new PaintingsController;
 ?>
+
 <!DOCTYPE html>
 <html lang=en>
 <head>

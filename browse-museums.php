@@ -1,5 +1,4 @@
-<?php session_start();
- include("includes/functions.inc.php"); 
+<?php
  include("Controllers/galleries.class.php");
  
  $galleryController = new GalleriesController;
@@ -47,6 +46,7 @@
 		<div class='ui five column equal height stackable grid'>
 		
 		<?php 
+			$galleryController->setBrowseGalleryData();
 			echo $galleryController->createBrowseGalleryColumnSegment();
 		?>
 
@@ -56,7 +56,9 @@
 	</main>
 	<footer>
 		<br />
-        <?php include('includes/footer.inc.php'); ?>
+        <?php include('includes/footer.inc.php'); 
+        	$galleryController->closeConnection();
+        ?>
     </footer>
 </body>
 </html>

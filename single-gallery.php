@@ -1,6 +1,9 @@
-<?php session_start();?>
-<?php include("includes/functions.inc.php"); ?>
-
+ <?php 
+ include("Controllers/singleGallery.class.php");
+ 
+ $galleryController = new SingleGalleryController;
+ ?>
+ 
 <!DOCTYPE html>
 <html lang=en>
 
@@ -28,7 +31,6 @@
 </head>
 
 <body>
-
     <header>
         <?php include('includes/header.inc.php'); ?>
     </header>
@@ -38,11 +40,12 @@
         <div class="ui wide container">
                     <div class="ui stackable grid">
             	<div class="ui four wide column">
-            		<h2 class="ui header">Belvedere</h2>
-            		<p>Vienna, Austria</p>
+            		<h2 class="ui header"><?php echo utf8_encode($galleryController->gallery->GalleryName); ?></h2>
+            		<p><?php echo $galleryController->gallery->getGalleryLocation(); ?></p>
             		<div class='ui divider'></div>
 					<div class="animated fluid ui button">
-                    <a href="#">
+					<?php $website = $galleryController->gallery->GalleryWebSite; ?>
+                    <a href="<?php echo $website; ?>">
                         <div class="visible content">Visit website</div>
                         <div class="hidden content">
                             <i class='right arrow icon'></i>
@@ -51,11 +54,10 @@
                 	</div>
                 	<div class='ui hidden divider'></div>
                 	
-            		<?php echo createMuseumMap(); ?>
+            		<?php echo $galleryController->createMuseumMap(); ?>
             	</div>
             	<div class="ui twelve wide column">
-            		<div class='right floated right'><a href='http://www.belvedere.at/'>http://www.belvedere.at/</a></div>
-            		<iframe src="http://www.belvedere.at/" height="500" width="100%">http://www.belvedere.at/</iframe>
+            		<iframe src="<?php echo $website; ?>" height="550" width="100%"></iframe>
 				</div>
             
             </div>
@@ -65,7 +67,9 @@
             </div>
 
             <div class="ui six column stackable grid">
-                <?php echo createSingleGalleryPictureGrid(); ?>
+                <?php
+                echo $galleryController->createSingleGalleryPictureGrid();
+?>
             </div>
             
 

@@ -1,84 +1,65 @@
 <?php
-
-	function removeFavoriteArtist($id){
+include_once("Controllers/instance.class.php");
+function emptyFavorites(){
+	emptyFavoriteArtists();
+	emptyFavoriteArtists();
+}
+function emptyFavoriteArtists(){
+	unset($_SESSION['favorite_artists']);
+	$_SESSION['favorite_artists'] = array();
+}
+function emptyFavoritePaintings(){
+	unset($_SESSION['favorite_paintings']);
+	$_SESSION['favorite_paintings'] = array();
+}
+class FavoriteFunctions{
+	public static function removeFavoriteArtist($id){
 		removeFromFavorites($id, "favorite_artists");
 	}
 	
-	function removeFavoritePainting($id){
+	public static function removeFavoritePainting($id){
 		removeFromFavorites($id, "favorite_paintings");
 	}
 	
-	function removeFromFavorites($id, $sessionArray){
+	private function removeFromFavorites($id, $sessionArray){
 		if(null != ($_SESSION([$sessionArray]))){
-			$favorites = $_SESSION[$sessionArray];
-			for($i = 0; $i < $favorites.length; $i++){
-				if($favorites[$i].id == $id){
-					unset($favorites[$i]);
-					$_SESSION[$sessionArray] = array_values($favorites);
+			for($i = 0; $i < count($_SESSION[$sessionArray]); $i++){
+				if($_SESSION[$sessionArray][$i]->id == $id){
+					unset($_SESSION[$sessionArray][$i]);
 				}
 			}
 		}
 	}
 	
-	function emptyFavorites(){
+	public static function emptyFavorites(){
 		emptyFavoriteArtists();
 		emptyFavoriteArtists();
-		print_r($_SESSION['favorite_paintings']);
 	}
-	function emptyFavoriteArtists(){
+	public static function emptyFavoriteArtists(){
 		unset($_SESSION['favorite_artists']);
 		$_SESSION['favorite_artists'] = array();
 	}
-	function emptyFavoritePaintings(){
+	public static function emptyFavoritePaintings(){
 		unset($_SESSION['favorite_paintings']);
 		$_SESSION['favorite_paintings'] = array();
 	}
 	
-	function addFavoriteArtist($id){
-		$success = false;
-		$dbAdapter = getPDOConnection();
-		$gateway = new ArtistTableGateway($dbAdapter);
-		if(!exists($id, $_SESSION['favorite_artists'])){
-			$artist = $connection->getRow($gateway->findById($id));			
-			if($artist != null){
-				$favoriteArtist = new favorite(
-							$artist->ArtistId, 
-							$artist->squareMediumImage(), 
-							$artist->getFullName(false), 
-							"single-artist.php?".$gateway->getPrimaryKeyName()."=".$artist->ArtistId
-						);
-				array_push($_SESSION['favorite_artists'], $favoriteArtist);
-				$sucess = true;
-			}
-		}
-
-		$dbAdapter->closeConnection();
-		return $sucess;			
+	public static function addFavoriteArtist($id){
+		$helper = new favoriteHelpers;
+		$isSuccess = $helper->addArtist($id);
+		
+		return $isSuccess;
 	}
 	
-	function addFavoritePainting($id){
-		$success = false;
-		$dbAdapter = getPDOConnection();
-		$gateway = new PaintingsTableGateway($dbAdapter);
-		if(!exists($id, $_SESSION['favorite_paintings'])){
-			$artist = $connection->getRow($gateway->findById($id));
-			if($artist != null){
-				$favoriteArtist = new favorite(
-							$artist->ArtistId, 
-							$artist->squareMediumImage(), 
-							$artist->getFullName(false),
-							"single-painting.php?".$gateway->getPrimaryKeyName()."=".$artist->ArtistId
-						);
-				array_push($_SESSION['favorite_paintings'], $favoriteArtist);
-				$sucess = true;
-			}
-		}
+	public static function addFavoritePainting($id){
+		$helper = new favoriteHelpers;
+		$isSuccess = $helper->addPainting($id);
 		
-		$dbAdapter->closeConnection();
-		return $sucess;
+		return $isSuccess;
 	}
 
-	function exists($id, $list=array()){
+	
+	public function exists($id, $list=array()){
 		for($i = 0; $i<$list.length; $i++){
 			if($list[i]->id == $id){
 				return true;
@@ -86,4 +67,49 @@
 		}
 		return false;
 	}
+}
+
+class favoriteHelpers extends Instance{
+	public function addPainting($id){
+		$success = false;
+		$this->gateway = new PaintingsTableGateway;
+		if(!FavoriteFunctions::exists($id, $_SESSION['favorite_paintings'])){
+			$artist = $this->gateway->findByID($id);
+			if($artist != null){
+				$favoriteArtist = new favorite(
+						$artist->ArtistId,
+						$artist->squareMediumImage(),
+						$artist->getFullName(false),
+						"single-painting.php?".$this->gateway->getPrimaryKeyName()."=".$artist->ArtistId
+						);
+				array_push($_SESSION['favorite_paintings'], $favoriteArtist);
+				$sucess = true;
+			}
+		}
+	
+		$this->closeConnection();
+		return $sucess;
+	}
+	public function addArtist($id){
+		$success = false;
+		$this->gateway = new ArtistTableGateway;
+		if(!FavoriteFunctions::exists($id, $_SESSION['favorite_artists'])){
+			$artist = $this->gateway->findByID($id);
+				if($artist != null){
+				$favoriteArtist = new favorite(
+						$artist->ArtistId,
+						$artist->squareMediumImage(),
+						$artist->getFullName(false),
+						"single-artist.php?".$this->gateway->getPrimaryKeyName()."=".$artist->ArtistId
+						);
+				array_push($_SESSION['favorite_artists'], $favoriteArtist);
+				$sucess = true;
+			}
+		}
+		
+		$this->closeConnection();
+		return $sucess;
+	}
+}
+	
 ?>

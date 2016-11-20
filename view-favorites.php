@@ -1,8 +1,5 @@
 <?php
-session_start ();
-include ("includes/functions.inc.php");
-include ("controllers/favourite.class.php");
-
+include_once("Controllers/favourite.class.php");
 ?>
 
 <!DOCTYPE html>
@@ -58,12 +55,13 @@ include ("controllers/favourite.class.php");
 		</div>
 			<div class="ui six column grid fav-paintings">
 			<?php
+
 			if (! empty ( $_SESSION ['favorite_paintings'] )) {
 				$paintings = $_SESSION ['favorite_paintings'];
 				
 				for($i = 0; $i < count ( $paintings ); $i ++) {
 					echo "<div class='ui column'>";
-					echo $paintings [$i]->createFavoriteCard ();
+					echo $paintings[$i]->createFavoriteCard ();
 					echo "</div>";
 				}
 			}
@@ -86,7 +84,6 @@ include ("controllers/favourite.class.php");
 
 
 		</div>
-	</div>
 	</div>
 
 	<br />
@@ -118,10 +115,7 @@ include ("controllers/favourite.class.php");
 	
 
 	var toggleDisplay = function(e){
-		console.log("clicked "+ e.target.text);
-		
 		if(e.target.text === "Artists"){
-			console.log(paintings);
 			hide(paintings);
 			show(artists);
 			remPainting.style.display = "none";
@@ -137,15 +131,12 @@ include ("controllers/favourite.class.php");
 	};
 
 
-	var removeFromFavorites = function(functionToCall){
-		console.log(functionToCall);
+	var removeAllFavorites = function(e){;
 		jQuery.ajax({
 		    type: "POST",
-		    url: 'view-favorites.php',
+		    url: 'includes/favoriteFunctions.inc.php',
 		    dataType: 'json',
-		    data: {functionname: 'functionname',
-					'$id': id 
-			    },
+		    data: {functionname: 'emptyFavorites' },
 		    success: function (result) {
 		                  if(result) {
 		                      alert("success");
@@ -157,7 +148,45 @@ include ("controllers/favourite.class.php");
 		});
 		console.log("removed");
 	};
-	
+	var removeArtistFromFavorites = function(e){
+		console.log("f:"+ e);
+		jQuery.ajax({
+		    type: "POST",
+		    url: 'includes/favoriteFunctions.php',
+		    dataType: 'json',
+		    data: {functionname: 'emptyFavorites' },
+		    success: function (result) {
+		                  if(result) {
+		                      alert("success");
+		                  }
+		                  else {
+		                      alert("error");
+		                  }
+		            }
+		});
+		console.log("removed");
+
+		}
+
+	var removePaintingFromFavorites = function(e){
+		console.log("f:"+ e);
+		jQuery.ajax({
+		    type: "POST",
+		    url: 'view-favorites.php',
+		    dataType: 'json',
+		    data: {functionname: 'FavoriteFunctions::emptyFavorites' },
+		    success: function (result) {
+		                  if(result) {
+		                      alert("success");
+		                  }
+		                  else {
+		                      alert("error");
+		                  }
+		            }
+		});
+		console.log("removed");
+
+		}
 	hide(artists);
 	remArtist.style.display = "none";
 	
@@ -167,9 +196,9 @@ include ("controllers/favourite.class.php");
 	var paintingMenuButton = document.getElementById("menu_artist");
 	paintingMenuButton.addEventListener("click", toggleDisplay);
 
-	remArtist.addEventListener("click", removeArtistsFromFavorites);
-	remPainting.addEventListener("click", removePaintingsFromFavorites);
-	remFavorites.addEventListener("click", removeFromFavorites);
+	remArtist.addEventListener("click", removeArtistFromFavorites);
+	remPainting.addEventListener("click", removePaintingFromFavorites);
+	remFavorites.addEventListener('click', removeAllFavorites);
 
 	
 	
