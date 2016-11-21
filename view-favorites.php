@@ -1,5 +1,6 @@
 <?php
 include_once("Controllers/favourite.class.php");
+$favorite = new FavoriteHelpers;
 ?>
 
 <!DOCTYPE html>
@@ -55,7 +56,7 @@ include_once("Controllers/favourite.class.php");
 		</div>
 			<div class="ui six column grid fav-paintings">
 			<?php
-
+			
 			if (! empty ( $_SESSION ['favorite_paintings'] )) {
 				$paintings = $_SESSION ['favorite_paintings'];
 				

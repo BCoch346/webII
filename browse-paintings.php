@@ -1,7 +1,10 @@
 <?php 
 include("Controllers/PaintingController.class.php");
+include("Controllers/DropdownController.class.php");
 
 $paintingController = new PaintingsController;
+$dropdown = new DropdownController();
+
 ?>
 <!DOCTYPE html>
 <html lang=en>
@@ -49,7 +52,7 @@ $paintingController = new PaintingsController;
                                     Artist
                                 </label>
                                 <?php 
-                                //echo createArtistDropdownSelectList() 
+                                echo $dropdown->artistDropdown() 
                                 ?>
                             </div>
                             <div class="field">
@@ -57,7 +60,7 @@ $paintingController = new PaintingsController;
                                     Museum
                                 </label>
                                 <?php 
-                                //echo createMuseumDropdownSelectList() 
+                                echo $dropdown->museumDropdown(); 
                                 ?>
                             </div>
                             <div class="field">
@@ -65,7 +68,7 @@ $paintingController = new PaintingsController;
                                     Shape
                                 </label>
                                 <?php 
-                                //echo createShapeDropdownSelectList() 
+                                echo $dropdown->shapeDropdown(); 
                                 ?>
 
 

@@ -1,7 +1,13 @@
 <!--View Cart PHP-->
-<?php session_start();
- include('includes/functions.inc.php');
+<?php
 include('cart-logic.class.php');
+include_once("Controllers/PaintingController.class.php");
+include_once("Controllers/DropdownController.class.php");
+include_once('DataAccess/classfiles/Frame.class.php');
+include_once('DataAccess/classfiles/Glass.class.php');
+include_once('DataAccess/classfiles/Matt.class.php');
+	$dropdown = new DropdownController();
+	$controller = new PaintingsController;
 	$cart = new cartLogic;
 	$cart -> instantiateCartLogic();
 ?>
@@ -61,10 +67,10 @@ if(!empty($_SESSION['Painting'])){
                    
     for($paintIndex = 0; $paintIndex < count($painting); $paintIndex++ ) { 
         
-        $singlePainting = findPaintingByID($painting[$paintIndex]['id']);
-        $singleFrame = findSingleFromTableByID('TypesFrames', 'FrameID', $painting[$paintIndex]['frame']);
-        $singleGlass = findSingleFromTableByID('TypesGlass', 'GlassID', $painting[$paintIndex]['glass']);
-        $singleMatte = findSingleFromTableByID('TypesMatt', 'MattID', $painting[$paintIndex]['matt']);
+        $singlePainting = $controller->gateway->findById($painting[$paintIndex]['id']);
+        $singleFrame = $cart->getFrameByID($painting[$paintIndex]['frame']);
+        $singleGlass = $cart->getGlassByID($painting[$paintIndex]['glass']);
+        $singleMatte = $cart->getMattByID($painting[$paintIndex]['matt']);
         $standard = 0;
         $express = 0;
         $subtotal = 0;
@@ -72,7 +78,7 @@ if(!empty($_SESSION['Painting'])){
         $glassCost = 0;
         $matteCost = 0;
         $quantity = $painting[$paintIndex]['quantity'];
-        $basePrice = round($singlePainting['Cost']/*CHANGE TO MSRP*/, 2) * $quantity;   
+        $basePrice = round($singlePainting['MSRP']/*CHANGE TO MSRP*/, 2) * $quantity;   
 
         $frameCost = $painting[$paintIndex]['quantity'] * round($singleFrame['Price'], 2);
         $glassCost = $painting[$paintIndex]['quantity'] * round($singleGlass['Price'],2);           
@@ -120,7 +126,7 @@ if(!empty($_SESSION['Painting'])){
     
        echo '<div class="item">'; 
             echo '<div class="ui small image">';
-                echo createAnchorTag('single-painting.php?paintingid='. $singlePainting['PaintingID'], '<img src=images/art/works/square-medium/'. $singlePainting['ImageFileName'] . '.jpg>');
+                echo '<a href="single-painting.php?paintingid='. $singlePainting['PaintingID'].'"><img src="images/art/works/square-medium/'. $singlePainting['ImageFileName'] . '.jpg"></a>';
             echo '</div>';
                 echo '<div class="middle aligned content">';
                     
@@ -132,17 +138,16 @@ if(!empty($_SESSION['Painting'])){
       echo '<h3  data-tooltip="Click the checkbox to accept changes" >Change Options</h3>';        
         echo '<table class="ui compact celled definition blue table"><tr><td>Quantity </td><td>'. $quantity .'</td><td><input type="number" min="1" name="'.$singlePainting['PaintingID'] . 'Quantity" value="TEST"></td></tr>';
        echo '<tr><td>Frame</td><td>'. $singleFrame['Title'] .'</td><td>'; 
-      echo createFrameDropdownSelectList() .  '</td><td><input class="ui fitted checkbox" type="checkbox" name="'. $singlePainting['PaintingID'] .'changeFrame" value="yes"></td></tr><tr>';
+      echo $dropdown->framesDropdown() .  '</td><td><input class="ui fitted checkbox" type="checkbox" name="'. $singlePainting['PaintingID'] .'changeFrame" value="yes"></td></tr><tr>';
       echo '<tr><td>Glass</td><td>'. $singleGlass['Title'] .'</td><td>';              
-      echo createGlassDropdownSelectList() . '</td><td><input class="ui toggle checkbox" type="checkbox" name="'. $singlePainting['PaintingID'] .'changeGlass" value="yes"></td></tr>';
+      echo $dropdown->glassDropdown() . '</td><td><input class="ui toggle checkbox" type="checkbox" name="'. $singlePainting['PaintingID'] .'changeGlass" value="yes"></td></tr>';
       echo '<tr><td>Matt</td><td>'. $singleMatte['Title'] .'</td><td>';              
-      echo createMattDropdownSelectList() .  '</td><td><input class="ui toggle checkbox" type="checkbox" name="'. $singlePainting['PaintingID'] .'changeMatt" value="yes"></td></tr>';   
+      echo $dropdown->mattDropdown() .  '</td><td><input class="ui toggle checkbox" type="checkbox" name="'. $singlePainting['PaintingID'] .'changeMatt" value="yes"></td></tr>';   
        echo '</table></div></div>'; 
        
                     
                     
 /********PRICING TABLE************************************************************************************************************/                    
-                    
         echo '<div>';             
         echo '<h3> Pricing </h3>';
         echo '<table class="ui orange table">';                 

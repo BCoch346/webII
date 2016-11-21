@@ -51,10 +51,10 @@ include_once ("functions.inc.php");
 			</div>
 		</div>
 		<div class="right item">
-		<form action="browse-painting.php" method="post">
-					<div class="ui small action input">
-				<input type="text" name="searchValue" placeholder="Search...">
-				<button class="ui button">Search</button>
+		<form action="browse-paintings.php" method="get">
+			<div class="ui small action input">
+				<input name="title" type="text" name="searchValue" placeholder="Search...">
+				<button class="ui button" type="submit">Search</button>
 			</div>
 		</form>
 

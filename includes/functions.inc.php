@@ -1,12 +1,6 @@
 <?php
-include_once("queries.inc.php");
-include_once("artistFunctions.inc.php");
-include_once("favoriteFunctions.inc.php");
 //------Basic functions-----
-
 /////////////////////////////////////////////////////
-
-
 function createIndividualFrameDropdownSelectList($paintingID){
     $frames = findAllOfType("Frames");
     return utf8_encode(createIndividualSelectList("frame", "FrameID", "ui search dropdown", $frames, "Title",'"'. $paintingID . 'FrameID"'));
@@ -19,12 +13,6 @@ function createIndividualMattDropdownSelectList($paintingID){
     $matts = findAllOfType("Matt");
     return utf8_encode(createIndividualSelectList("matt", "MattID", "ui search dropdown", $matts, "Title",'"'. $paintingID . 'FrameID"'));
 }
-
-
-
-
-
-
 function createIndividualSelectList($id, $itemID, $class, $listItems, $searchString, $name){
     $list = "<select name='".strtolower($name)."' id='".$id."' class='".$class."'>";
 
@@ -34,7 +22,6 @@ function createIndividualSelectList($id, $itemID, $class, $listItems, $searchStr
     $list .= "</select>";
     return $list;
 }
-
 
 //HEADER SESSION COUNTERS
 

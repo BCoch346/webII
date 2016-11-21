@@ -85,7 +85,7 @@ class Painting extends DomainObject{
     	$modal = "<div class='ui fullscreen modal'>";
     	$modal .= "<div class='header'>".$this->Title."</div>";
     	$modal .= '<div class="image content">'. $this->createLargeImage();
-    	$modal .= '<div class="ui text content">'.$this->description.'</div>';
+    	$modal .= '<div class="ui text content">'.$this->Description.'</div>';
     	$modal .= "</div></div>";
     
     

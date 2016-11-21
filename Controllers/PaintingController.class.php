@@ -8,7 +8,7 @@ include_once('DataAccess/classfiles/review.class.php');
 
 include_once("instance.class.php");
 class PaintingsController extends Instance{
-	private $gateway;
+	public $gateway;
 	private $paintings;
 	public function __construct(){
 		parent::__construct();
@@ -42,25 +42,25 @@ class PaintingsController extends Instance{
 	private function getPaintingByFilter(){
 		$limit = $this->BROWSE_PAINTING_LIMIT;
 		$basesql = $this->gateway->getSelectStatement();
-		$orderByLimit = ' ORDER BY ? LIMIT '.$limit;
-		$joinsql = $basesql . 'JOIN Artists ON Paintings.ArtistID = Artists.ArtistID ';	
 		$paintings = $this->dbAdapter->fetchAsArray($basesql." ORDER BY YearOfWork LIMIT ".$this->BROWSE_PAINTING_LIMIT);
 		if($this->isValid("artistid")){
-			$joinsql .= 'WHERE Artists.ArtistID = ? '.$orderByLimit;
-			$paintings = $this->dbAdapter->fetchAsArray($joinsql, array($_GET["artistid"], "LastName"));
-			//findAllPaintingsByArtistIDLimit($_GET["artistid"], BROWSE_PAINTING_LIMIT, $orderBy);
+			$sql = $basesql .' WHERE ArtistID = '.$_GET['artistid'] .' ORDER BY YearOfWork LIMIT '.$this->BROWSE_PAINTING_LIMIT;
+			$paintings = $this->dbAdapter->fetchAsArray($sql);
 		}
 		else if($this->isValid("galleryid")){
-			$joinsql .= 'WHERE GalleryID = ? '.$orderByLimit;
-			$paintings = $this->dbAdapter->fetchAsArray($joinsql, array($_GET["galleryid"], "GalleryName"));
+			$sql = $basesql .' WHERE GalleryID = '.$_GET['galleryid'] .' LIMIT '.$this->BROWSE_PAINTING_LIMIT;
+				$paintings = $this->dbAdapter->fetchAsArray($sql);
 				
-			//$paintings = findAllPaintingsByGalleryIDLimit($_GET["galleryid"], BROWSE_PAINTING_LIMIT, $orderBy);
 		}
 		else if($this->isValid("shapeid")){
-			$joinsql .= 'WHERE ShapeID = ? '.$orderByLimit;
-			$paintings = $this->dbAdapter->fetchAsArray($joinsql, array($_GET["shapeid"], "ShapeName"));
+			$sql = $basesql .' WHERE ShapeID = '.$_GET['shapeid'] .' ORDER BY ShapeID LIMIT '.$this->BROWSE_PAINTING_LIMIT;
+				$paintings = $this->dbAdapter->fetchAsArray($sql);
 				
-			//$paintings = findAllPaintingsByShapeIDLimit($_GET["shapeid"], BROWSE_PAINTING_LIMIT, $orderBy);
+		}
+		else if(isset($_GET['title'])){
+			$searchValue = " '%".$_GET['title']."%'";
+			$sql = $basesql .' WHERE Title LIKE '.$searchValue.' LIMIT '.$this->BROWSE_PAINTING_LIMIT;
+			$paintings = $this->dbAdapter->fetchAsArray($sql);
 		}
 		
 		return $paintings;
@@ -124,18 +124,19 @@ class PaintingsController extends Instance{
 	}
 	private function createBrowsePaintingItem($painting){
 		$image = $this->createImage($painting->squareMediumImageFilePath(), $painting->Title, $painting->title, "ui rounded image", "");
-		//$image = createWorksSquareMediumImage("ui rounded image", $painting);
-		//$artist = $this->gateway->findByField(array("ArtistID" => $painting->ArtistID));
+		$this->setArtist($painting);
 	
 		$item = "<div class='item'>";
 		$item .= "<div class='ui image'>";
 		$item .= "<a href='".$painting->getLink()."'>". $image."</a>";
 		$item .= "</div><div class='middle aligned content'>";
-		$item .= "<h3 class='ui header'>" . $painting->Title . "<em class='sub header'>". $painting->FirstName. " " . $painting->LastName."</em></h3>";
+		$item .= "<h3 class='ui header'>" . $painting->Title . "<em class='sub header'>". $painting->artist->FirstName. " " . $painting->artist->LastName."</em></h3>";
 		$item .= "<br />" . $painting->Excerpt . "<br />";
 		$item .= "<div class='ui divider'></div><strong>" . "$ ". number_format($painting->Cost , 2). "</strong><br />";
 		$item .= '<button type="submit" name="addtocart" class="ui orange button" value='. $painting->PaintingID.'><i class="cart icon"></i></button>';
-		$item .= '<button type="submit" name="addFavP" class="ui button" value='. $painting->PaintingID.'><i class="favorite icon"></i></button>';
+		$item .= '<form method="get" action="view-favorites.php">
+				<button type="submit" name="addfavp" class="ui button" value='. $painting->PaintingID.'><i class="favorite icon"></i></button>
+						</form>';
 		$item .="</div></div>";
 	
 		return $item;
@@ -146,21 +147,22 @@ class PaintingsController extends Instance{
 		$string = "All Paintings [Top 20]";
 	
 		if($this->isValid("artistid")){
-			$data = $this->gateway->findByField(array("ArtistID"=>$_GET["artistid"]));
-			$artist = new Artist($data);
-			$string = "Artist = " . $artist->getFullName();
+			$data = $this->dbAdapter->fetchRow("SELECT FirstName, LastName FROM artists WHERE ArtistID = ".$_GET['artistid']);
+			$string = "Artist = " . $data[0]." ".$data[1];
 		}
 		else if($this->isValid("galleryid")){
-			$sql = $this->gateway->getGenre($_GET["galleryid"]);
-			$data = $this->dbAdapter->fetchRow($sql);
-			$gallery = new Gallery($data);
-			$string = "Museum = " . $gallery->GalleryName;
+			$data = $this->dbAdapter->fetchRow("SELECT GalleryName FROM galleries WHERE GalleryID = ".$_GET['galleryid']);
+
+			$string = "Museum = " . $data[0];
 		}
 		else if($this->isValid("shapeid")){
-			$sql = $this->gateway->getShape($_GET["shapeid"]);
-			$data = $this->dbAdapter->fetchRow($sql);
-			$shape = new Shape($data);
-			$string = "Shape = " . $shape->ShapeName;
+			$data = $this->dbAdapter->fetchRow("SELECT ShapeName FROM shapes WHERE ShapeID = ".$_GET['shapeid']);
+			
+			$string = "Shape = " . $data[0];
+		}
+		else if(isset($_GET['title'])){
+			$string = "Search = " . $_GET['title'];
+				
 		}
 	
 		return utf8_encode($string);

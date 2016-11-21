@@ -53,8 +53,7 @@ class DropdownController extends Instance{
 		$list = "<select name='artistid' id='".$id."' class='".$class."'>";
 		$list .= "<option value=''>".$id."</option>";
 		foreach($listItems as $item){
-
-			//$list .= $this->createOptionWithName($item->ArtistID,$item->FirstName, $item->LastName);
+			$list .= $this->createOptionWithName($item->ArtistID,$item->FirstName, $item->LastName);
 		}
 		$list .= "</select>";
 		return $list;
@@ -76,59 +75,77 @@ class DropdownController extends Instance{
 	//-DROPDOWN----
 	//-------------
 	public function framesDropdown(){
-		$sql = "SELECT FrameID, Title FROM typesframes";
+		$sql = "SELECT FrameID, Title FROM typesframes ORDER BY Title";
 		
 		$frames = $this->dbAdapter->fetchAsArray($sql);
-		$list = '<select name="FrameID" id="frame" class="ui search dropdown">';
+		$list = '<select name="frameid" id="frame" class="ui search dropdown">';
 		foreach($frames as $data){
 			$list .= $this->createOption($data[0],$data[1]);
 		}
 		$list .= '</select>';
-		return $list;
-	}
+		return utf8_encode($list);
+		}
 	public function glassDropdown(){
-		$sql = "SELECT GlassID, Title FROM typesglass";
+		$sql = "SELECT GlassID, Title FROM typesglass ORDER BY Title";
 		
 		$statement = $this->dbAdapter->fetchAsArray($sql);
-		$list = '<select name="GlassID" id="glass" class="ui search dropdown">';
+		$list = '<select name="glassid" id="glass" class="ui search dropdown">';
 		foreach($statement as $data){
 			$list .= $this->createOption($data[0],$data[1]);
 		}
 		$list .= '</select>';
-		return $list;
-	}	
+		return utf8_encode($list);
+		}	
 	public function mattDropdown(){
-		$sql = "SELECT MattID, Title FROM typesmatt";
-	
+		$sql = "SELECT MattID, Title FROM typesmatt ORDER BY Title";
+		
 		$statement = $this->dbAdapter->fetchAsArray($sql);
-		$list = '<select name="MattID" id="matt" class="ui search dropdown">';
+		$list = '<select name="mattid" id="matt" class="ui search dropdown">';
 		foreach($statement as $data){
 			$list .= $this->createOption($data[0],$data[1]);
 		}
 		$list .= '</select>';
-		return $list;
-	}
+		return utf8_encode($list);
+		}
 
-	public function getArtists(){
-		$gateway = new ArtistTableGateway($this->dbAdapter);
-		$statement = $gateway->findAll();
+	public function artistDropdown(){
+		$sql = "SELECT ArtistID, FirstName, LastName FROM artists ORDER BY LastName";
+		
+		$statement = $this->dbAdapter->fetchAsArray($sql);
+		$list = '<select name="artistid" id="artist" class="ui fluid search dropdown">';
+		$list .= "<option value=''>Artist</option>";
+		
 		foreach($statement as $data){
-			$this->artists[] = new Artist($data);
+			$list .= $this->createOptionWithName($data[0], $data[1], $data[2]);
 		}
-	}
-	public function getMuseums(){
-		$gateway = new GalleriesTableGateway($this->dbAdapter);
-		$statement = $gateway->findAll();
+		$list .= '</select>';
+		return utf8_encode($list);
+		}
+	public function museumDropdown(){
+		$sql = "SELECT GalleryID, GalleryName FROM galleries ORDER BY GalleryName";
+		
+		$statement = $this->dbAdapter->fetchAsArray($sql);
+		$list = '<select name="galleryid" id="gallery" class="ui fluid search dropdown">';
+		$list .= "<option value=''>Museum</option>";
+		
 		foreach($statement as $data){
-			$this->museums[] = new Gallery($data);
+			$list .= $this->createOption($data[0], $data[1]);
 		}
-	}
-	public function getShapes(){
-		$gateway = new ShapesTableGateway($this->dbAdapter);
-		$statement = $gateway->findAll();
+		$list .= '</select>';
+		return utf8_encode($list);
+		}
+	public function shapeDropdown(){
+		$sql = "SELECT ShapeID, ShapeName FROM shapes ORDER BY ShapeName";
+		
+		$statement = $this->dbAdapter->fetchAsArray($sql);
+		$list = '<select name="shapeid" id="shape" class="ui fluid search dropdown">';
+		$list .= "<option value=''>Shape</option>";
+		
 		foreach($statement as $data){
-			$this->shapes[] = new Shape($data);
+			$list .= $this->createOption($data[0],$data[1]);
 		}
+		$list .= '</select>';
+		return utf8_encode($list);
 	}
 	public function createFrameDropdownSelectList(){
 		return utf8_encode($this->createSelectList("frame", "FrameID", "ui search dropdown", $this->frames, "Title"));

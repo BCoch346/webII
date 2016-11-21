@@ -1,11 +1,10 @@
 <?php 
 include_once("functions.inc.php");
-include_once("queries.inc.php");
-session_start();
-
+include_once("PaintingsController.class.php");
+$controller = new PaintingsController;
 if(isset($_POST["addtocart"])){
     $id = $_POST["addtocart"];
-    $painting = findPaintingByID($id);
+    $painting = $controller->gateway->findById($id);
     $quantity=1;
     if(isset($_POST['quantity'])){$quantity = $_POST['quantity'];}
     $frame='None';

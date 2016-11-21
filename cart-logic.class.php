@@ -1,12 +1,28 @@
 <?php
-class cartLogic {
+include("Controllers/instance.class.php");
+
+class cartLogic extends instance{
+	private $gateway;
+	public function __construct(){
+		parent::__construct();
+		$this->gateway = new PaintingsTableGateway($this->dbAdapter);
+	}
+	public function getGlassByID($id){
+		return $this->dbAdapter->fetchRow("SELECT Description, GlassID, Price, Title FROM typesglass");
+	}
+	public function getMattByID($id){
+		return $this->dbAdapter->fetchRow("SELECT ColorCode, MattID, Title FROM typesmatt");
+	}
+	public function getFrameByID($id){
+		return $this->dbAdapter->fetchRow("SELECT Color, FrameID, Price, Syle, Title FROM typesframes");
+	}
 	// ADD CURRENT SELECTIONS TO THE CART DISPLAY
-	function instantiateCartLogic() {
+	public function instantiateCartLogic() {
 		if (! empty ( $_SESSION ['Painting'] )) {
 			$painting = $_SESSION ['Painting'];
 			for($paintIndex = 0; $paintIndex < count ( $painting ); $paintIndex ++) {
 				// echo'<script>console.log($painting[$paintIndex]["id"])</script>';
-				$singlePainting = findPaintingByID ( $painting [$paintIndex] ['id'] );
+				$singlePainting = $this->gateway->findById( $painting [$paintIndex] ['id'] );
 				if (isset ( $_POST [$singlePainting ['PaintingID'] . 'Quantity'] ) && ! empty ( $_POST [$singlePainting ['PaintingID'] . 'Quantity'] )) {
 					$_SESSION ['Painting'] [$paintIndex] ['quantity'] = $_POST [$singlePainting ['PaintingID'] . 'Quantity'];
 				}
