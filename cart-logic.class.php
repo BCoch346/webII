@@ -7,6 +7,47 @@ class cartLogic extends instance{
 		parent::__construct();
 		$this->gateway = new PaintingsTableGateway($this->dbAdapter);
 	}
+	public function checkForUpdates(){
+		$this->remove();
+	}
+	public function addToCart(){
+		if(isset($_POST["addtocart"])){
+			$data = $this->gateway->findById($_POST["addtocart"]);
+			$painting = new Painting($data);
+			$quantity=1;
+			if(isset($_POST['quantity'])){$quantity = $_POST['quantity'];}
+			$frame='None';
+			if(isset($_POST['frameid'])){$frame = $_POST['frameid'];}
+			$glass='None';
+			if(isset($_POST['glassid'])){$glass = $_POST['glassid'];}
+			$matt='None';
+			if(isset($_POST['mattid'])){$matt = $_POST['mattid'];}
+			
+			$order = array("id"=>$painting->PaintingID, "quantity"=>$quantity, "frame"=>$frame, "glass"=>$glass, "matt"=>$matt);
+			
+			
+			if(!empty($_SESSION['Painting'])){
+				array_push($_SESSION['Painting'], $order);
+			}
+			else{
+				$_SESSION['Painting'] = array($order);
+			}
+	}
+
+
+	}
+	
+	public function remove(){
+		if(isset($_POST['remove'])){
+			$id = isset($_POST['remove']);
+			for($i = 0; $i < count($_SESSION['Painting']); $i++){
+				if($_SESSION['Painting'][$i]['PaintingID'] == $id){
+					$_SESSION['Painting'][$i] = null;
+				}
+			}
+		}
+	}
+	
 	public function getGlassByID($id){
 		return $this->dbAdapter->fetchRow("SELECT Description, GlassID, Price, Title FROM typesglass");
 	}

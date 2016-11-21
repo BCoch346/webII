@@ -10,6 +10,7 @@ include_once('DataAccess/classfiles/Matt.class.php');
 	$controller = new PaintingsController;
 	$cart = new cartLogic;
 	$cart -> instantiateCartLogic();
+	$cart -> checkForUpdates();
 ?>
 
 <!DOCTYPE html>
@@ -60,11 +61,17 @@ include_once('DataAccess/classfiles/Matt.class.php');
                     <div class="ui divider"></div>
                     
                         <?php
- 
+                        $cart->addToCart();
+                        if(!isset($_SESSION['stopvariable'])){
+                        	$_SESSION['stopvariable'] = array();
+                        }
+                        
 if(!empty($_SESSION['Painting'])){
     $painting = $_SESSION['Painting'];
     $totalSubTotal = 0;
-                   
+    if(!isset($_SESSION['stopVariable'])){
+    	$_SESSION['stopVariable'] = 0;
+    }
     for($paintIndex = 0; $paintIndex < count($painting); $paintIndex++ ) { 
         
         $singlePainting = $controller->gateway->findById($painting[$paintIndex]['id']);
@@ -98,12 +105,14 @@ if(!empty($_SESSION['Painting'])){
         elseif($_SESSION['valueHolder']['totalSubtotal'] != ''){
             $totalSubTotal = $_SESSION['valueHolder']['totalSubtotal'];
         }
-
+        $standard = 0;
+        $express = 0;
         if($totalSubTotal <= 1500){
             $standard = $quantity * 25;}
                    
         if($totalSubTotal < 2500){
-            $express = $quantity * 50;} 
+            $express = $quantity * 50;
+        } 
         
             $_SESSION['totalValues']['standard'] = $standard;
             $_SESSION['totalValues']['express'] = $express;
@@ -159,7 +168,8 @@ if(!empty($_SESSION['Painting'])){
         echo '</table>';
         echo '</div></div><div>';
     
-        echo '<input class="ui right floated button" type="submit" name="'. $singlePainting['PaintingID']. 'remove" value="Remove">';
+        echo '<form method="post" action="view-cart.php"><button class="ui right floated button" type="submit" name="remove" value="'.$singlePainting['PaintingID'].'">Remove</button></form>';
+       
                     
         echo '<input class="ui right floated button" type="submit" value="Update Item">';       
                                    
@@ -198,7 +208,7 @@ if(!empty($_SESSION['Painting'])){
                 echo '</table>';
                 echo '</div><br>';
             
-                 $_SESSION['valueHolder']['standard'] = $standard;
+         $_SESSION['valueHolder']['standard'] = $standard;
          $_SESSION['valueHolder']['express'] = $express;
          $_SESSION['valueHolder']['totalSubtotal'] = $totalSubTotal ;
                 
@@ -206,7 +216,7 @@ if(!empty($_SESSION['Painting'])){
             
             
             }
-        elseif(!empty($_SESSION['Painting']) && $_SESSION['valueHolder']['standard'] != '')
+        elseif(!empty($_SESSION['Painting']) && isset($_SESSION['valueHolder']['standard']) &&  $_SESSION['valueHolder']['standard'] != '')
             {   
                 
                    /*  $_SESSION['valueHolder']['standard'] = $express;

@@ -29,36 +29,7 @@ $(function () {
     });
 
 });
-/*function addToTheCart(){
-$('#addToCart').on('click', function(e){
-    var paintingid = $(this).attr('value');
-    $.ajax({
-        type: 'POST',
-        url: 'single-painting.php',
-        data: { pid: paintingid, clicked: 'TRUE' }
-    }); 
-});}*/
 
-/*document.getElementById('addFavA').addEventListener('Click', function(e){
-	var id = event.target.getAttribute("value");
-    jQuery.ajax({
-		    type: "POST",
-		    url: 'view-favorites.php',
-		    dataType: 'json',
-		    data: {functionname: 'addFavoriteArtist', arguments: [id]}
-		});
-	});
-
-document.getElementById('addFavP').addEventListener('Click', function(e){
-	var id = event.target.getAttribute("value");
-    jQuery.ajax({
-		    type: "POST",
-		    url: 'view-favorites.php',
-		    dataType: 'json',
-		    data: {functionname: 'addFavoritePaintings', arguments: [id]}
-		});
-	});
-*/
 
 
 

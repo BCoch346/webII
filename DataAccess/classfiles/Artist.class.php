@@ -42,6 +42,9 @@ class Artist extends DomainObject{
     	return '<img src="images/art/artists/medium/'.$this->ArtistID.'.jpg" title="'.$name.'" alt="'.$name.'">';
     	 return $image;
     }
+    public function getHref(){
+    	return "images/art/artists/square-medium/".$this->ArtistID.".jpg";
+    }
     public function squareMediumImage(){
     	$name = $this->getFullName(false);
     	return '<img src="images/art/artists/square-medium/'.$this->ArtistID.'.jpg" title="'.$name.'" alt="'.$name.'">';
@@ -76,9 +79,9 @@ class Artist extends DomainObject{
     	return $button;
     }
     public function favoriteButton(){
-    	$button = "<button value=$this->ArtistID class='ui right floated animated button' id='addFavA'>";
+    	$button = "<form action='view-favorites.php' method='post'><button value=$this->ArtistID class='ui right floated animated button' name='addfava'>";
     	$button .= "<div class='visible content'>Add To Favourites</div><div class='hidden content'><i class='heart icon'></i></div>";
-    	$button .= "</button>";
+    	$button .= "</button></form>";
     
     	return $button;
     }

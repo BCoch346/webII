@@ -94,11 +94,9 @@ $dropdown = new DropdownController();
                         </h2>
                     </div>
                     <div class="ui divider"></div>
-                    <form action="includes/addTo_Functions.inc.php" method="post">
                     <?php 
                     $paintingController->setBrowsePaintingData();
                     echo $paintingController->createBrowsePaintingItems(); ?>
-                    </form>
                 </div>
         <div class="two wide column"></div>
 

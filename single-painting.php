@@ -150,7 +150,6 @@ $controller->setPaintingData($painting);
                 </div>
 
                 <!-- Cart and Price -->
-                <form action="includes/addTo_Functions.inc.php" method="post">
 
                 <div class="ui segment">
                     <div class="ui form">
@@ -183,17 +182,26 @@ $controller->setPaintingData($painting);
                     </div>
 
                     <div class="ui divider"></div>
-                    
-                        
-                    <button type="submit" name="addtocart" class="ui labeled icon orange button"  id="addToCart" value="<?php echo $painting->PaintingID;?>" >
+                    <div class="ui two column grid">
+                    <div class="ui column">
+                     <form method="post" action="view-cart.php">
+                        <button type="submit" name="addtocart" class="ui labeled icon orange button"  id="" value="<?php echo $painting->PaintingID;?>" >
                         <i class="add to cart icon"></i>
                         Add to Cart
                     </button>
-                    
-                    <button type="submit" name="addtofav" class="ui right labeled icon button" value="<?php echo $painting->PaintingID;?>">
+                     </form> 
+                    </div>
+                    <div class="ui column">
+                                        <form action="view-favorites.php" method="post">
+                    <button type="submit" name="addfavp" class="ui right labeled icon button" value="<?php echo $painting->PaintingID;?>">
                         <i class="heart icon"></i>
                         Add to Favorites
                     </button>
+                    </div>
+                    </div>
+
+
+
                 </div>                    
                          
                     </form>

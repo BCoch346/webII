@@ -37,7 +37,7 @@ function countFavorites(){
 }
 
 function countCart(){
-	if(isset($_SESSION['painting'])&& !empty($_SESSION['painting'])){
+	if(isset($_SESSION['Painting'])&& !empty($_SESSION['Painting'])){
 		return count($_SESSION['Painting']);
 	}
 	else{

@@ -40,12 +40,12 @@ $favorite = new FavoriteHelpers;
 
 		<div class="ui top attached tabular menu">
 			<a class="active item" id="menu_painting">Paintings</a> <a class="item"
-				id="menu_artist">Artists</a> <a class="right item"> <a class="ui compact button" id="rem_artist"><i class="trash icon"></i>Remove
-					Artists</a>
-			<a class="ui compact button" id="rem_painting"><i class="trash icon"></i>Remove
-					Paintings</a>
-			<a class="ui compact negative button" id="rem_all"><i class="trash icon"></i>Remove
-					Favorites</a>
+				id="menu_artist">Artists</a> <a class="right item"> <a class="ui compact button" id="rem_artist"><form action='view-favorites.php' method='post'><button class="ui button" name="remalla" type="submit" value="1"><i class="trash icon"></i>Remove
+					Artists</button></form></a>
+			<a class="ui compact button" id="rem_painting"><form action='view-favorites.php' method='post'><button class="ui button" name="remallp" type="submit" value="1"><i class="trash icon"></i>Remove
+					Paintings</button></form></a>
+			<a class="ui compact negative button" id="rem_all"><form action='view-favorites.php' method='post'><button class="ui red button" name="remallfav" type="submit" value="1"><i class="trash icon"></i>Remove
+					Favorites</button></form></a>
 			</a>
 
 
@@ -56,14 +56,18 @@ $favorite = new FavoriteHelpers;
 		</div>
 			<div class="ui six column grid fav-paintings">
 			<?php
-			
+			$favorite->updateFavorites();
+				
 			if (! empty ( $_SESSION ['favorite_paintings'] )) {
 				$paintings = $_SESSION ['favorite_paintings'];
 				
 				for($i = 0; $i < count ( $paintings ); $i ++) {
-					echo "<div class='ui column'>";
-					echo $paintings[$i]->createFavoriteCard ();
-					echo "</div>";
+					if(!empty($paintings[$i])){
+						echo "<div class='ui column'>";
+						echo $paintings[$i]->createFavoriteCard ();
+						echo "</div>";
+					}
+
 				}
 			}
 			?>

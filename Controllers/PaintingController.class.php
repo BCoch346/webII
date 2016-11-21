@@ -132,12 +132,12 @@ class PaintingsController extends Instance{
 		$item .= "</div><div class='middle aligned content'>";
 		$item .= "<h3 class='ui header'>" . $painting->Title . "<em class='sub header'>". $painting->artist->FirstName. " " . $painting->artist->LastName."</em></h3>";
 		$item .= "<br />" . $painting->Excerpt . "<br />";
-		$item .= "<div class='ui divider'></div><strong>" . "$ ". number_format($painting->Cost , 2). "</strong><br />";
-		$item .= '<button type="submit" name="addtocart" class="ui orange button" value='. $painting->PaintingID.'><i class="cart icon"></i></button>';
-		$item .= '<form method="get" action="view-favorites.php">
+		$item .= "<div class='ui divider'></div><strong>" . "$ ". number_format($painting->Cost , 2). "</strong><br /><div class='ui sixteen column compact grid'>";
+		$item .= '<div class="column"><form method="post" action="view-cart.php"><button type="submit" name="addtocart" class="ui orange button" value='. $painting->PaintingID.'><i class="cart icon"></i></button></form></div>';
+		$item .= '<div class="column"><form method="post" action="view-favorites.php">
 				<button type="submit" name="addfavp" class="ui button" value='. $painting->PaintingID.'><i class="favorite icon"></i></button>
-						</form>';
-		$item .="</div></div>";
+						</form></div>';
+		$item .="</div></div></div>";
 	
 		return $item;
 	}
