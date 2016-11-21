@@ -92,7 +92,9 @@ $paintingController = new PaintingsController;
                     </div>
                     <div class="ui divider"></div>
                     <form action="includes/addTo_Functions.inc.php" method="post">
-                    <?php echo $paintingController->createBrowsePaintingItems(); ?>
+                    <?php 
+                    $paintingController->setBrowsePaintingData();
+                    echo $paintingController->createBrowsePaintingItems(); ?>
                     </form>
                 </div>
         <div class="two wide column"></div>

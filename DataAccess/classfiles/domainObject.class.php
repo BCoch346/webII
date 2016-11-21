@@ -4,8 +4,11 @@ abstract class DomainObject{
 
     abstract protected static function getFieldNames();
 
-    public function __construct(array $data){
-        if (!empty($data)) {
+    public function __construct($data){
+        if(!is_array($data)){
+        	$data = array($data);
+        }
+    	if (!empty($data)) {
             foreach ($data as $name => $value) {
                 $this->__set($name, $value);
             }

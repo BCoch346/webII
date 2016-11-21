@@ -20,5 +20,9 @@ class Subject extends DomainObject{
     	return $card;
     }
     
+    public function getHref(){
+    	return 'single-subject.php?subjectid='.$this->SubjectID;
+    }
+    
 }
 ?>

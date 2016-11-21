@@ -11,7 +11,7 @@ abstract class TableDataGateway{
     abstract protected function getPrimaryKeyName();
     //Returns all records in table
     public function findAll(){
-        $sql = $this->getSelectStatment();
+        $sql = $this->getSelectStatement();
         $result = $this->dbAdapter->fetchAsArray($sql);
         return $result;
     }

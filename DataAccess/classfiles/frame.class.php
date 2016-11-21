@@ -1,10 +1,10 @@
 <?php
 class Frame extends DomainObject{
-    private $FrameID;
-    private $Title;
-    private $Price;
-    private $Color;
-    private $Syle;
+	public $FrameID;
+	public $Title;
+	public $Price;
+	public $Color;
+	public $Syle;
 
     protected static function getFieldNames(){
         return array("FrameID", "Title", "Price", "Color", "Syle");

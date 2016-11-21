@@ -1,10 +1,10 @@
 <?php
 class Order extends DomainObject{
-    private $OrderID;
-    private $ShipperID;
-    private $CustomerID;
-    private $DateStarted;
-    private $Quantity;
+	public $OrderID;
+	public $ShipperID;
+	public $CustomerID;
+	public $DateStarted;
+	public $Quantity;
 
     protected static function getFieldNames(){
         return array("OrderID", "ShipperID", "CustomerID", "DateStarted", "Quantity");

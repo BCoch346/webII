@@ -1,66 +1,94 @@
 <?php
+include_once('domainObject.class.php');
+
 class Artist extends DomainObject{
-    private $ArtistID;
-    private $FirstName;
-    private $LastName;
-    private $Nationality;
-    private $Gender;
-    private $YearOfBirth;
-    private $YearOfDeath;
-    private $Details;
-    private $ArtistLink;
-    private $works;
+    public $ArtistID;
+    public $FirstName;
+    public $LastName;
+    public $Nationality;
+    public $Gender;
+    public $YearOfBirth;
+    public $YearOfDeath;
+    public $Details;
+    public $ArtistLink;
+    public $works;
 
    protected static function getFieldNames(){
        return array("ArtistID", "FirstName", "LastName", "Nationality", "Gender", "YearOfBirth",
-           "yearOfDeath", "Details", "ArtistLink");
+           "YearOfDeath", "Details", "ArtistLink");
    }
    public function __construct($data){
        parent::__construct($data);
    }
-    public function getFullName($commaDelimited=bool){
-        if($commaDelimited){
-            return $this->lastName . ", " . $this->firstName;
+    public function getFullName($commaDelimited = false){
+        $name = "";
+    	if($commaDelimited){
+    		$name = ''.$this->LastName . ', ' . $this->FirstName;
         }
         else{
-            return $this->firstName . " " . $this->lastName;
+        	$name = ''.$this->FirstName . ' ' . $this->LastName;
         }
+        return $name;
     }
 
     public function getLifeSpan(){
-        return $this->yearOfDeath - $this->yearOfBirth;
+        return $this->YearOfDeath - $this->YearOfBirth;
     }
     
-    public function setWorks($data=array()){
-    	if(!is_array($data)){
-    		$data = array($data);
-    	}
-    	foreach($data as $painting){
-    		$works[] = new Painting($painting);
-    	}
-    }
-    
-    public function getWorks(){
-    	if(!is_array($this->works)){
-    		$this->works = array($this->works);
-    	}
-    	return $this->works;
-    }
+   
     
     public function mediumImage(){
-    	$name = getFullName(false);
-    	$image = createImage("images/art/artists/medium/".$this->ArtistID.".jpg",$name,$name, "image", "");
-    	return $image;
+    	$name = $this->getFullName(false);
+    	return '<img src="images/art/artists/medium/'.$this->ArtistID.'.jpg" title="'.$name.'" alt="'.$name.'">';
+    	 return $image;
     }
     public function squareMediumImage(){
-    	$name = getFullName(false);
-    	 $image = createImage("images/art/artists/square-medium/".$this->ArtistID.".jpg",$name,$name, "image", "");
-    	return $image;
+    	$name = $this->getFullName(false);
+    	return '<img src="images/art/artists/square-medium/'.$this->ArtistID.'.jpg" title="'.$name.'" alt="'.$name.'">';
+    	 return $image;
     }
-    public function squareThumbImage(){
-    	$name = getFullName(false);
-    	 $image = createImage("images/art/artists/square-thumb/".$this->ArtistID.".jpg",$name,$name, "image", "");
-    	return $image;
+    public function getThumbnail(){
+    	$name = $this->getFullName(false);
+    	return '<img src="images/art/artists/square-thumb/'.$this->ArtistID.'.jpg" title="'.$name.'" alt="'.$name.'">';
+    }
+    
+    public function createArtistCard(){
+    	$card = '<div class="ui card artist">';
+    	$card .= '<div class="image">'.$this->getThumbnail().'</div>';
+    	$card .= '<a class="ui text content" href="single-artist.php?artistid='.$this->ArtistID.'"><div class="extra header">'.$this->getFullName(false)."</div></a>";
+    	$card .= "</div>";
+    
+    	return $card;
+    }
+    
+    public function createItem(){
+    	$item = "<div class='item'>";
+    	$item .= "<div class='ui image'>" . $this->mediumImage() . "</div>";
+    	$item .= createArtistItemContent($artist);
+    	$item .= "</div>";
+    
+    	return $item;
+    }
+    public function viewWorksButton(){
+    	$button = "<a href='browse-paintings.php?artistid=$this->ArtistID'>";
+    	$button .= "<div class='ui right floated primary animated button'><div class='visible content'>View Works</div><div class='hidden content'><i class='right chevron icon'></i></div></div>";
+    	$button .= "</a>";
+    	return $button;
+    }
+    public function favoriteButton(){
+    	$button = "<button value=$this->ArtistID class='ui right floated animated button' id='addFavA'>";
+    	$button .= "<div class='visible content'>Add To Favourites</div><div class='hidden content'><i class='heart icon'></i></div>";
+    	$button .= "</button>";
+    
+    	return $button;
+    }
+    public function createArtistWorks(){
+    	$works = "";
+    	foreach($this->works as $painting){
+    		$works .= "<div class='ui column'><div class='ui image'>" . $painting->createThumbnail() . "</div></div>";
+    	}
+    	return $works;
+    
     }
 }
 ?>

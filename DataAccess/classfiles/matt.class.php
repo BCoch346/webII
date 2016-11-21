@@ -1,8 +1,8 @@
 <?php
 class Matt extends DomainObject{
-    private $MattID;
-    private $Title;
-    private $ColorCode;
+	public $MattID;
+	public $Title;
+	public $ColorCode;
 
     protected static function getFieldNames(){
         return array("MattID", "Title", "ColorCode");

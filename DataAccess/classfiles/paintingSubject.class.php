@@ -1,8 +1,8 @@
 <?php
 class PaintingSubject extends DomainObject{
-    private $PaintingSubjectID;
-    private $PaintingID;
-    private $SubjectID;
+	public $PaintingSubjectID;
+	public $PaintingID;
+	public $SubjectID;
 
     protected static function getFieldNames(){
         return array("PaintingSubjectID", "PaintingID", "SubjectID");

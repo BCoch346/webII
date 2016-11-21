@@ -1,9 +1,9 @@
 <?php
 class Glass extends DomainObject{
-    private $GlassID;
-    private $Title;
-    private $Description;
-    private $Price;
+	public $GlassID;
+	public $Title;
+	public $Description;
+	public $Price;
 
     protected static function getFieldNames(){
         return array("GlassID", "Title", "Description", "Price");

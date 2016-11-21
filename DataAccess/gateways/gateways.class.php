@@ -7,8 +7,8 @@ class ArtistTableGateway extends TableDataGateway{
     public function getSelectStatement(){
         return "SELECT ArtistID, ArtistLink, Details, FirstName, LastName, Gender, Nationality, YearOfBirth, YearOfDeath FROM artists";
     }
-    public function getArtistWorks(){
-    	
+    public function getArtistWorks($id){
+    	return "SELECT ImageFileName, Title, PaintingID FROM Paintings WHERE ArtistID = $id";
     }
     public function getPrimaryKeyName(){
         return "ArtistID";
@@ -123,12 +123,29 @@ class PaintingsTableGateway extends TableDataGateway{
         return "PaintingID";
     }
     public function getGenre($id){
-    	$sql = "SELECT Genres.GenreID, GenreName FROM Genres JOIN PaintingGenres ON Genres.GenreID = PaintingGenres.GenreID JOIN Paintings ON Paintings.PaintingID = PaintingGenres.PaintingID WHERE Paintings.PaintingID = ". $id;
+    	return "SELECT Genres.GenreID, GenreName FROM Genres JOIN PaintingGenres ON Genres.GenreID = PaintingGenres.GenreID JOIN Paintings ON Paintings.PaintingID = PaintingGenres.PaintingID WHERE Paintings.PaintingID = ". $id;
     }
     public function getShape($id){
     	return "SELECT shapes.ShapeID, ShapeName FROM shapes JOIN paintings ON shape.ShapeID = Paintings.ShapeID WHERE shape.ShapeID = ". $id;
     	 
     }
+    public function getGenreSqlStatement($id){
+    	return "SELECT Genres.GenreID, GenreName FROM Genres JOIN PaintingGenres ON Genres.GenreID = PaintingGenres.GenreID JOIN Paintings ON Paintings.PaintingID = PaintingGenres.PaintingID WHERE Paintings.PaintingID = ". $id;
+    	 
+    }    public function getSubjectSqlStatement($id){
+    	return "SELECT subjects.SubjectID, SubjectName FROM subjects JOIN paintingsubjects ON subjects.SubjectID = PaintingSubjects.SubjectID JOIN Paintings ON Paintings.PaintingID = PaintingSubjects.PaintingID WHERE Paintings.PaintingID = ". $id;
+    	 
+    }
+    public function getReviewSqlStatement($id){
+    	return "SELECT Comment, PaintingID, Rating, RatingID, ReviewDate FROM reviews WHERE PaintingID = $id";
+    }
+    public function getArtistSqlStatement($id){
+    	return "SELECT ArtistID, ArtistLink, Details, FirstName, LastName, Gender, Nationality, YearOfBirth, YearOfDeath FROM artists WHERE ArtistID = $id";
+    	}
+    	public function getGallerySqlStatement($id){
+    		return "SELECT GalleryID, GalleryName, GalleryCity, GalleryCountry, GalleryNativeName, GalleryWebSite, Latitude, Longitude FROM galleries WHERE GalleryId = $id";
+    		
+    	}
 
 }
 class PaintingSubjectsTableGateway extends TableDataGateway{
@@ -186,7 +203,7 @@ class TypesFramesTableGateway extends TableDataGateway{
         return "Frame";
     }
     public function getSelectStatement(){
-        return "SELECT Color, FrameID, Price, Syle, Title FROM typesFrames";
+        return "SELECT Color, FrameID, Price, Syle, Title FROM typesframes";
     }
     public function getPrimaryKeyName(){
         return "FrameID";

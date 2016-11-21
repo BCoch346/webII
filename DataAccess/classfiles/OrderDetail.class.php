@@ -1,11 +1,11 @@
 <?php
 class OrderDetail extends DomainObject{
-    private $OrderDetailID;
-    private $OrderID;
-    private $PaintingID;
-    private $FrameID;
-    private $GlassID;
-    private $MattID;
+	public $OrderDetailID;
+	public $OrderID;
+	public $PaintingID;
+	public $FrameID;
+	public $GlassID;
+	public $MattID;
 
     protected static function getFieldNames(){
         return array("OrderDetailID", "OrderID", "PaintingID", "FrameID", "GlassID", "MattID");

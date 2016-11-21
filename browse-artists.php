@@ -1,6 +1,8 @@
-<?php session_start();?>
-<?php include("includes/functions.inc.php"); ?>
+<?php
+include_once("Controllers/ArtistController.class.php");
 
+$controller = new ArtistsController();
+?>
 <!DOCTYPE html>
 <html lang=en>
 
@@ -41,7 +43,9 @@
 	</h2>
 
 	<div class="ui container six cards stackable">
-            <?php echo createBrowseArtistCards(); ?>
+            <?php 
+            $controller->setAllArtists();
+            echo $controller->createBrowseArtistCards(); ?>
         </div>
 
 	</main>

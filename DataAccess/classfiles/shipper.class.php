@@ -1,12 +1,12 @@
 <?php
 class Shipper extends DomainObject{
-    private $shipperID;
-    private $shipperName;
-    private $shipperDescription;
-    private $shipperAvgTime;
-    private $shipperClass;
-    private $shipperBaseFee;
-    private $shipperWeightFee;
+	public $shipperID;
+	public $shipperName;
+	public $shipperDescription;
+	public $shipperAvgTime;
+    public $shipperClass;
+    public $shipperBaseFee;
+    public $shipperWeightFee;
 
     protected static function getFieldNames(){
         return array("shipperID", "shipperName", "shipperDescription", "shipperAvgTime", "shipperClass", "shipperBaseFee", "shipperWeightFee");

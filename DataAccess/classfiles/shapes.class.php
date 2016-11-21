@@ -1,7 +1,7 @@
 <?php
 class Shape extends DomainObject{
-    private $ShapeID;
-    private $ShapeName;
+	public $ShapeID;
+	public $ShapeName;
 
     protected static function getFieldNames(){
         return array("ShapeID", "ShapeName");

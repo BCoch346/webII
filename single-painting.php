@@ -1,7 +1,11 @@
 <?php 
 include("Controllers/PaintingController.class.php");
+include("Controllers/DropdownController.class.php");
 
-$paintingController = new PaintingsController;
+$controller = new PaintingsController;
+$dropdown = new DropdownController();
+$painting = $controller->getPaintings();
+$controller->setPaintingData($painting);
 ?>
 
 <!DOCTYPE html>
@@ -32,8 +36,8 @@ $paintingController = new PaintingsController;
 
             <div class="nine wide column">
                 <?php
-            echo createWorksMediumImage("ui big image", "artwork");
-            echo createFullScreenPaintingModal("image");
+            echo $painting->mainImage();
+            echo $painting->createPaintingModal();
                 ?>
 
 
@@ -43,12 +47,12 @@ $paintingController = new PaintingsController;
 
                 <!-- Main Info -->
                 <div class="item">
-                    <?php echo createPaintingHeader(); ?>
+                    <?php echo $painting->createPaintingHeader(); ?>
                     <div class="meta">
                         <p>
-                            <?php echo createSinglePaintingRating(); ?>
+                            <?php echo $painting->createSinglePaintingRating(); ?>
                         </p>
-                        <?php echo createPaintingExcerpt(); ?>
+                        <?php echo utf8_encode($painting->Excerpt); ?>
                     </div>
                 </div>
 
@@ -68,7 +72,7 @@ $paintingController = new PaintingsController;
                                     Artist
                                 </td>
                                 <td>
-                                    <?php echo getPaintingArtistLink(); ?>
+                                    <?php echo $painting->getArtistLink(); ?>
                                 </td>
                             </tr>
                             <tr>
@@ -76,7 +80,7 @@ $paintingController = new PaintingsController;
                                     Year
                                 </td>
                                 <td>
-                                    <?php echo getPaintingDataField("YearOfWork"); ?>
+                                    <?php echo $painting->YearOfWork; ?>
                                 </td>
                             </tr>
                             <tr>
@@ -84,7 +88,7 @@ $paintingController = new PaintingsController;
                                     Medium
                                 </td>
                                 <td>
-                                    <?php echo getPaintingDataField("Medium"); ?>
+                                    <?php echo $painting->Medium; ?>
                                 </td>
                             </tr>
                             <tr>
@@ -92,7 +96,7 @@ $paintingController = new PaintingsController;
                                     Dimensions
                                 </td>
                                 <td>
-                                    <?php echo getPaintingDimensions(); ?>
+                                    <?php echo $painting->dimensions(); ?>
                                 </td>
                             </tr>
                         </tbody>
@@ -107,7 +111,7 @@ $paintingController = new PaintingsController;
                                     Museum
                                 </td>
                                 <td>
-                                    <?php echo createMuseumNameLink(); ?>
+                                    <?php echo $painting->gallery->GalleryName; ?>
                                 </td>
                             </tr>
                             <tr>
@@ -115,7 +119,7 @@ $paintingController = new PaintingsController;
                                     Assession #
                                 </td>
                                 <td>
-                                    <?php echo getPaintingDataField("AccessionNumber"); ?>
+                                    <?php echo $painting->AccessionNumber; ?>
                                 </td>
                             </tr>
                             <tr>
@@ -123,7 +127,7 @@ $paintingController = new PaintingsController;
                                     Copyright
                                 </td>
                                 <td>
-                                    <?php echo getPaintingDataField("CopyrightText"); ?>
+                                    <?php echo $painting->CopyrightText; ?>
                                 </td>
                             </tr>
                             <tr>
@@ -131,22 +135,18 @@ $paintingController = new PaintingsController;
                                     URL
                                 </td>
                                 <td>
-                                    <a href="<?php echo getPaintingDataField("MuseumLink"); ?>">View painting at museum site</a>
+                                    <a href="<?php echo $painting->museumLink ?>">View painting at museum site</a>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="ui bottom attached tab segment" data-tab="genres">
-                    <?php echo createPaintingGenreList(); ?>
+                	<?php echo $painting->getGenreList(); ?>
+                	
                 </div>
                 <div class="ui bottom attached tab segment" data-tab="subjects">
-                    <!--to be completed in a later assignment-->
-                    <!--<ul class="ui list">
-                        <li class="item"><a href="#">People</a></li>
-                        <li class="item"><a href="#">Science</a></li>-->
-                        <?php echo createPaintingSubjectList(); ?>
-                   <!-- </ul> -->
+                        <?php echo $painting->getSubjectList(); ?>
                 </div>
 
                 <!-- Cart and Price -->
@@ -156,7 +156,7 @@ $paintingController = new PaintingsController;
                     <div class="ui form">
                         <div class="ui tiny statistic">
                             <div class="value">
-                                <?php echo createPaintingCost(); ?>
+                                <?php echo utf8_encode("$ ".number_format($painting->MSRP)); ?>
                             </div>
                         </div>
                         <div class="four fields">
@@ -167,17 +167,15 @@ $paintingController = new PaintingsController;
                             </div>
                             <div class="four wide field">
                                 <label>Frame</label>
-                                <?php echo createFrameDropdownSelectList(); ?>
+                                <?php echo $dropdown->framesDropdown(); ?>
                             </div>
                             <div class="four wide field">
                                 <label>Glass</label>
-                                <?php echo createGlassDropdownSelectList(); ?>
-
-
+                                <?php echo $dropdown->glassDropdown(); ?>
                             </div>
                             <div class="four wide field">
                                 <label>Matt</label>
-                                <?php echo createMattDropdownSelectList(); ?>
+                                <?php echo $dropdown->mattDropdown(); ?>
 
 
                             </div>
@@ -187,12 +185,12 @@ $paintingController = new PaintingsController;
                     <div class="ui divider"></div>
                     
                         
-                    <button type="submit" name="addtocart" class="ui labeled icon orange button"  id="addToCart" value=<?php echo createButtonValue();?> >
+                    <button type="submit" name="addtocart" class="ui labeled icon orange button"  id="addToCart" value="<?php echo $painting->PaintingID;?>" >
                         <i class="add to cart icon"></i>
                         Add to Cart
                     </button>
                     
-                    <button type="submit" name="addtofav" class="ui right labeled icon button" value=<?php echo createButtonValue();?>>
+                    <button type="submit" name="addtofav" class="ui right labeled icon button" value="<?php echo $painting->PaintingID;?>">
                         <i class="heart icon"></i>
                         Add to Favorites
                     </button>
@@ -216,35 +214,34 @@ $paintingController = new PaintingsController;
             </div>
 
             <div class="ui bottom attached active tab segment" data-tab="first">
-                <?php echo getPaintingDataField("Description"); ?>
+                <?php echo utf8_encode($painting->Description); ?>
             </div>	<!-- END DescriptionTab -->
 
             <div class="ui bottom attached tab segment" data-tab="second">
                 <table class="ui definition very basic collapsing celled table">
                     <tbody>
-                        <tr>
-                            <td>
+                        <tr >
+                            <td class="three wide column">
                                 Wikipedia Link
                             </td>
                             <td>
-                                <a href="<?php echo getPaintingDataField("WikiLink"); ?>">View painting on Wikipedia</a>
+                                <a href="<?php echo $painting->WikiLink; ?>">View painting on Wikipedia</a>
                             </td>
                         </tr>
 
                         <tr>
-                            <td>
+                            <td class="three wide column">
                                 Google Link
                             </td>
                             <td>
-                                <a href="<?php echo getPaintingDataField("GoogleLink"); ?>">View painting on Google Art Project</a>
+                                <a href="<?php echo $painting->GoogleLink; ?>">View painting on Google Art Project</a>
                             </td>
                         </tr>
 
                         <tr>
-                            <td>
-                                <?php echo getPaintingDataField("GoogleDescription"); ?>
+                            <td colspan="2">
+                                <?php echo utf8_encode($painting->GoogleDescription); ?>
                             </td>
-                            <td></td>
                         </tr>
 
 
@@ -256,7 +253,7 @@ $paintingController = new PaintingsController;
             <div class="ui bottom attached tab segment" data-tab="third">
                 <div class="ui feed">
 
-                    <?php echo createPaintingReviews(); ?>
+                    <?php echo $painting->createReviewSection(); ?>
 
                 </div>
             </div>   <!-- END Reviews Tab -->
