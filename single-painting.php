@@ -189,11 +189,16 @@ $controller->setPaintingData($painting);
                         <i class="add to cart icon"></i>
                         Add to Cart
                     </button>
+<<<<<<< HEAD
                      </form> 
                     </div>
                     <div class="ui column">
                                         <form action="view-favorites.php" method="post">
                     <button type="submit" name="addfavp" class="ui right labeled icon button" value="<?php echo $painting->PaintingID;?>">
+=======
+                    
+                    <button type="button" name="addFavP" class="ui right labeled icon button" value=<?php echo createButtonValue();?>>
+>>>>>>> branch 'master' of https://github.com/bcoch346/webII.git
                         <i class="heart icon"></i>
                         Add to Favorites
                     </button>

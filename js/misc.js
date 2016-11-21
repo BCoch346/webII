@@ -30,6 +30,46 @@ $(function () {
 
 });
 
+<<<<<<< HEAD
+=======
+document.getElementById('addFavA').addEventListener('click', function(e){
+	var id = event.target.getAttribute("value");
+    jQuery.ajax({
+		    type: "POST",
+		    url: 'view-favorites.php',
+		    dataType: 'json',
+		    data: {functionname: 'addFavoriteArtist', '$id': [id]},
+        success: function (results) {
+            if(results){
+                alert('success');
+            }
+            else {
+                alrt('error');
+            }
+        }
+		});
+	});
+>>>>>>> branch 'master' of https://github.com/bcoch346/webII.git
+
+<<<<<<< HEAD
 
 
-
+=======
+document.getElementById('addFavP').addEventListener('click', function(e){
+	var id = event.target.getAttribute("value");
+    jQuery.ajax({
+		    type: "POST",
+		    url: 'view-favorites.php',
+		    dataType: 'json',
+		    data: {functionname: 'addFavoritePaintings', '$id': [id]},
+        success: function (results) {
+            if(results){
+                alert('success');
+            }
+            else {
+                alrt('error');
+            }
+        }
+		});
+	});
+>>>>>>> branch 'master' of https://github.com/bcoch346/webII.git
