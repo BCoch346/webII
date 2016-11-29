@@ -82,7 +82,7 @@
 							<div class="ui segment">
 								<strong>Development Environment: </strong>&nbsp; Code hosted on
 								Cloud 9 <strong><a
-									href="https://ide.c9.io/brandoncochrane/assign2_bcoch346">source
+									href="">source
 										code</a></strong> <br /> <strong>Languages:</strong>&nbsp;
 								CSS, HTML, JavaScript, PHP, MYSQL <br /> <strong>Frameworks:</strong>&nbsp;Semantic
 								UI Framework <br /> <strong>Additional Resources:</strong>&nbsp;Github, Cloud9, Site content is part of art.db provided by Instructor,

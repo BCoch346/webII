@@ -1,6 +1,6 @@
 <?php
 include_once('DataAccess/classfiles/painting.class.php');
-include_once('DataAccess/classfiles/artist.class.php');
+include_once('DataAccess/classfiles/Artist.class.php');
 include_once('DataAccess/classfiles/gallery.class.php');
 include_once('DataAccess/classfiles/subject.class.php');
 include_once('DataAccess/classfiles/genre.class.php');
@@ -44,22 +44,22 @@ class PaintingsController extends Instance{
 		$basesql = $this->gateway->getSelectStatement();
 		$paintings = $this->dbAdapter->fetchAsArray($basesql." ORDER BY YearOfWork LIMIT ".$this->BROWSE_PAINTING_LIMIT);
 		if($this->isValid("artistid")){
-			$sql = $basesql .' WHERE ArtistID = '.$_GET['artistid'] .' ORDER BY YearOfWork LIMIT '.$this->BROWSE_PAINTING_LIMIT;
+			$sql = $basesql ." WHERE ArtistID = ".$_GET['artistid'] ." ORDER BY YearOfWork LIMIT ". $this->BROWSE_PAINTING_LIMIT;
 			$paintings = $this->dbAdapter->fetchAsArray($sql);
 		}
 		else if($this->isValid("galleryid")){
-			$sql = $basesql .' WHERE GalleryID = '.$_GET['galleryid'] .' LIMIT '.$this->BROWSE_PAINTING_LIMIT;
+			$sql = $basesql ." WHERE GalleryID = ".$_GET['galleryid'] ." LIMIT ".$this->BROWSE_PAINTING_LIMIT;
 				$paintings = $this->dbAdapter->fetchAsArray($sql);
 				
 		}
 		else if($this->isValid("shapeid")){
-			$sql = $basesql .' WHERE ShapeID = '.$_GET['shapeid'] .' ORDER BY ShapeID LIMIT '.$this->BROWSE_PAINTING_LIMIT;
+			$sql = $basesql ." WHERE ShapeID = ".$_GET['shapeid'] ." ORDER BY ShapeID LIMIT ".$this->BROWSE_PAINTING_LIMIT;
 				$paintings = $this->dbAdapter->fetchAsArray($sql);
 				
 		}
 		else if(isset($_GET['title'])){
 			$searchValue = " '%".$_GET['title']."%'";
-			$sql = $basesql .' WHERE Title LIKE '.$searchValue.' LIMIT '.$this->BROWSE_PAINTING_LIMIT;
+			$sql = $basesql ." WHERE Title LIKE ".$searchValue." LIMIT ".$this->BROWSE_PAINTING_LIMIT;
 			$paintings = $this->dbAdapter->fetchAsArray($sql);
 		}
 		
@@ -69,7 +69,7 @@ class PaintingsController extends Instance{
 	
 	public function createBrowsePaintingItems(){
 		$items = "<div class='ui divided items'>";
-		if(is_array($this->paintings) && $this->paintings != null){
+		if(is_array($this->paintings)){
 			foreach($this->paintings as $painting){
 				if($painting != null){
 					$items .= $this->createBrowsePaintingItem($painting);
@@ -115,27 +115,47 @@ class PaintingsController extends Instance{
 	private function setGallery($painting){
 		$sql = $this->gateway->getGallerySqlStatement($painting->GalleryID);
 		$data = $this->dbAdapter->fetchRow($sql);
-		$painting->gallery = new Gallery($data);
+		$painting->museum = new Gallery($data);
 	}
 	private function setArtist($painting){
 		$sql = $this->gateway->getArtistSqlStatement($painting->ArtistID);
 		$data = $this->dbAdapter->fetchRow($sql);
-		$painting->artist = new Artist($data);
+		$painting->creator = new Artist($data);
 	}
 	private function createBrowsePaintingItem($painting){
 		$image = $this->createImage($painting->squareMediumImageFilePath(), $painting->Title, $painting->title, "ui rounded image", "");
 		$this->setArtist($painting);
 	
-		$item = "<div class='item'>";
-		$item .= "<div class='ui image'>";
-		$item .= "<a href='".$painting->getLink()."'>". $image."</a>";
+		$item = "<div class='item'><div style='padding-right:20px;'>";
+		$item .= $painting->createThumbnail();
 		$item .= "</div><div class='middle aligned content'>";
-		$item .= "<h3 class='ui header'>" . $painting->Title . "<em class='sub header'>". $painting->artist->FirstName. " " . $painting->artist->LastName."</em></h3>";
+		$item .= "<h3 class='ui header'>" . $painting->Title . "<em class='sub header'>". $painting->creator->FirstName. " " . $painting->creator->LastName."</em></h3>";
 		$item .= "<br />" . $painting->Excerpt . "<br />";
-		$item .= "<div class='ui divider'></div><strong>" . "$ ". number_format($painting->Cost , 2). "</strong><br /><div class='ui sixteen column compact grid'>";
-		$item .= '<div class="column"><form method="post" action="view-cart.php"><button type="submit" name="addtocart" class="ui orange button" value='. $painting->PaintingID.'><i class="cart icon"></i></button></form></div>';
+		$item .= "<div class='ui divider'></div><strong>" . "$ ". number_format($painting->Cost , 2). "</strong><br /><div class='ui ten column compact grid'>";
+        
+        if(isset($_SESSION['Painting'])){
+        $link = 'no';
+        for($n=0;$n<count($_SESSION['Painting']); $n++){
+            if($_SESSION['Painting'][$n]['id'] == $painting->PaintingID){
+                $link = 'yes';
+            } 
+        }
+        
+        
+        if($link == 'no'){
+		$item .= '<div class="column"><form method="post" action="view-cart.php"><button type="submit" name="addtocart" class="ui orange button" value='. $painting->PaintingID.'><i class="cart icon"></i></button></form></div><span></span>';
+        }
+        else{
+            
+            $item .= '<div class="column"><a href="view-favorites.php"><button type="button" name="addtocart" class="ui orange button" value='. $painting->PaintingID.'><i class="heartbeat icon"></i></button></a></div><span></span>';
+        }
+        }
+           else{
+$item .= '<div class="column"><form method="post" action="view-cart.php"><button type="submit" name="addtocart" class="ui fluid orange button" value='. $painting->PaintingID.'><i class="cart icon"></i></button></form></div><span></span>';
+        }
+        
 		$item .= '<div class="column"><form method="post" action="view-favorites.php">
-				<button type="submit" name="addfavp" class="ui button" value='. $painting->PaintingID.'><i class="favorite icon"></i></button>
+				<button type="submit" name="addfavp" class="ui fluid button" value='. $painting->PaintingID.'><i class="favorite icon"></i></button>
 						</form></div>';
 		$item .="</div></div></div>";
 	
@@ -147,16 +167,16 @@ class PaintingsController extends Instance{
 		$string = "All Paintings [Top 20]";
 	
 		if($this->isValid("artistid")){
-			$data = $this->dbAdapter->fetchRow("SELECT FirstName, LastName FROM artists WHERE ArtistID = ".$_GET['artistid']);
+			$data = $this->dbAdapter->fetchRow("SELECT FirstName, LastName FROM Artists WHERE ArtistID = ".$_GET['artistid']);
 			$string = "Artist = " . $data[0]." ".$data[1];
 		}
 		else if($this->isValid("galleryid")){
-			$data = $this->dbAdapter->fetchRow("SELECT GalleryName FROM galleries WHERE GalleryID = ".$_GET['galleryid']);
+			$data = $this->dbAdapter->fetchRow("SELECT GalleryName FROM Galleries WHERE GalleryID = ".$_GET['galleryid']);
 
 			$string = "Museum = " . $data[0];
 		}
 		else if($this->isValid("shapeid")){
-			$data = $this->dbAdapter->fetchRow("SELECT ShapeName FROM shapes WHERE ShapeID = ".$_GET['shapeid']);
+			$data = $this->dbAdapter->fetchRow("SELECT ShapeName FROM Shapes WHERE ShapeID = ".$_GET['shapeid']);
 			
 			$string = "Shape = " . $data[0];
 		}

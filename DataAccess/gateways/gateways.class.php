@@ -5,10 +5,10 @@ class ArtistTableGateway extends TableDataGateway{
         return "Artist";
     }
     public function getSelectStatement(){
-        return "SELECT ArtistID, ArtistLink, Details, FirstName, LastName, Gender, Nationality, YearOfBirth, YearOfDeath FROM artists";
+        return "SELECT ArtistID, ArtistLink, Details, FirstName, LastName, Gender, Nationality, YearOfBirth, YearOfDeath FROM Artists";
     }
     public function getArtistWorks($id){
-    	return "SELECT ImageFileName, Title, PaintingID FROM Paintings WHERE ArtistID = $id";
+    	return "SELECT ImageFileName, Title, PaintingID FROM Paintings WHERE ArtistID = ".$id;
     }
     public function getPrimaryKeyName(){
         return "ArtistID";
@@ -20,7 +20,7 @@ class CustomerLogonTableGateway extends TableDataGateway{
         return "CustomerLogon";
     }
     public function getSelectStatement(){
-        return "SELECT CustomerID, DateJoined, DateLastModified, Pass, Salt, State, UserName FROM customerLogon";
+        return "SELECT CustomerID, DateJoined, DateLastModified, Pass, Salt, State, UserName FROM CustomerLogon";
     }
     public function getPrimaryKeyName(){
         return "CustomerID";
@@ -31,7 +31,7 @@ class CustomersTableGateway extends TableDataGateway{
         return "Customer";
     }
     public function getSelectStatement(){
-        return "SELECT CustomerID, Address, City, Country, Email, FirstName, LastName, Phone, Postal, Privacy, Region  FROM customers";
+        return "SELECT CustomerID, Address, City, Country, Email, FirstName, LastName, Phone, Postal, Privacy, Region  FROM Customers";
     }
     public function getPrimaryKeyName(){
         return "CustomerID";
@@ -42,7 +42,7 @@ class ErasTableGateway extends TableDataGateway{
         return "Era";
     }
     public function getSelectStatement(){
-        return "SELECT EraID, EraName, EraYears FROM eras";
+        return "SELECT EraID, EraName, EraYears FROM Eras";
     }
     public function getPrimaryKeyName(){
         return "EraID";
@@ -53,16 +53,16 @@ class GalleriesTableGateway extends TableDataGateway{
         return "Gallery";
     }
     public function getSelectStatement(){
-        return "SELECT GalleryID, GalleryName, GalleryCity, GalleryCountry, GalleryNativeName, GalleryWebSite, Latitude, Longitude FROM galleries";
+        return "SELECT GalleryID, GalleryName, GalleryCity, GalleryCountry, GalleryNativeName, GalleryWebSite, Latitude, Longitude FROM Galleries";
     }
     public function getPrimaryKeyName(){
         return "GalleryID";
     }
     public function getSelectStatementForBrowseAll(){
-    	return "SELECT GalleryID, GalleryName, GalleryCity, GalleryCountry FROM galleries";
+    	return "SELECT GalleryID, GalleryName, GalleryCity, GalleryCountry FROM Galleries";
     }
     public function getPaintings($id){
-    	return "SELECT PaintingID, ImageFileName, Title FROM paintings WHERE GalleryID = ".$id." ORDER BY Title";
+    	return "SELECT PaintingID, ImageFileName, Title FROM Paintings WHERE GalleryID = " . $id . " ORDER BY Title";
     }
 }
 class GenresTableGateway extends TableDataGateway{
@@ -70,7 +70,7 @@ class GenresTableGateway extends TableDataGateway{
         return "Genre";
     }
     public function getSelectStatement(){
-        return "SELECT GenreID, GenreName, EraID, Link, Description FROM genres";
+        return "SELECT GenreID, GenreName, EraID, Link, Description FROM Genres";
     }
     public function getPrimaryKeyName(){
         return "GenreID";
@@ -84,7 +84,7 @@ class OrderDetailsTableGateway extends TableDataGateway{
         return "OrderDetail";
     }
     public function getSelectStatement(){
-        return "SELECT OrderDetailID, OrderID, PaintingID, FramID, GlassID, MattID FROM orderDetails";
+        return "SELECT OrderDetailID, OrderID, PaintingID, FramID, GlassID, MattID FROM OrderDetails";
     }
     public function getPrimaryKeyName(){
         return "OrderDetailID";
@@ -95,7 +95,7 @@ class OrdersTableGateway extends TableDataGateway{
         return "Order";
     }
     public function getSelectStatement(){
-        return "SELECT CustomerID, DateStarted, OrderID, Quantity, ShipperID FROM orders";
+        return "SELECT CustomerID, DateStarted, OrderID, Quantity, ShipperID FROM Orders";
     }
     public function getPrimaryKeyName(){
         return "OrderID";
@@ -106,7 +106,7 @@ class PaintingGenreTableGateway extends TableDataGateway{
         return "PaintingGenre";
     }
     public function getSelectStatement(){
-        return "SELECT GenreID, PaintingGenreID, PaintingID FROM paintingGenres";
+        return "SELECT GenreID, PaintingGenreID, PaintingID FROM PaintingGenres";
     }
     public function getPrimaryKeyName(){
         return "PaintingGenreID";
@@ -117,7 +117,7 @@ class PaintingsTableGateway extends TableDataGateway{
         return "Painting";
     }
     public function getSelectStatement(){
-        return "SELECT AccessionNumber, ArtistID, CopyrightText, Cost, Description, Excerpt, GalleryID, GoogleDescription, GoogleLink, Height, ImageFileName, Medium, MSRP, MuseumLink, PaintingID, ShapeID, Title, Width, WikiLink, YearOfWork FROM paintings";
+        return "SELECT AccessionNumber, ArtistID, CopyrightText, Cost, Description, Excerpt, GalleryID, GoogleDescription, GoogleLink, Height, ImageFileName, Medium, MSRP, MuseumLink, PaintingID, ShapeID, Title, Width, WikiLink, YearOfWork FROM Paintings";
     }
     public function getPrimaryKeyName(){
         return "PaintingID";
@@ -126,26 +126,26 @@ class PaintingsTableGateway extends TableDataGateway{
     	return "SELECT Genres.GenreID, GenreName FROM Genres JOIN PaintingGenres ON Genres.GenreID = PaintingGenres.GenreID JOIN Paintings ON Paintings.PaintingID = PaintingGenres.PaintingID WHERE Paintings.PaintingID = ". $id;
     }
     public function getShape($id){
-    	return "SELECT shapes.ShapeID, ShapeName FROM shapes JOIN paintings ON shape.ShapeID = Paintings.ShapeID WHERE shape.ShapeID = ". $id;
+    	return "SELECT Shapes.ShapeID, ShapeName FROM Shapes JOIN Paintings ON Shape.ShapeID = Paintings.ShapeID WHERE Shape.ShapeID = ". $id;
     	 
     }
     public function getGenreSqlStatement($id){
     	return "SELECT Genres.GenreID, GenreName FROM Genres JOIN PaintingGenres ON Genres.GenreID = PaintingGenres.GenreID JOIN Paintings ON Paintings.PaintingID = PaintingGenres.PaintingID WHERE Paintings.PaintingID = ". $id;
     	 
-    }    public function getSubjectSqlStatement($id){
-    	return "SELECT subjects.SubjectID, SubjectName FROM subjects JOIN paintingsubjects ON subjects.SubjectID = PaintingSubjects.SubjectID JOIN Paintings ON Paintings.PaintingID = PaintingSubjects.PaintingID WHERE Paintings.PaintingID = ". $id;
+    }    
+    public function getSubjectSqlStatement($id){
+    	return "SELECT Subjects.SubjectID, SubjectName FROM Subjects JOIN PaintingSubjects ON Subjects.SubjectID = PaintingSubjects.SubjectID JOIN Paintings ON Paintings.PaintingID = PaintingSubjects.PaintingID WHERE Paintings.PaintingID = ". $id;
     	 
     }
     public function getReviewSqlStatement($id){
-    	return "SELECT Comment, PaintingID, Rating, RatingID, ReviewDate FROM reviews WHERE PaintingID = $id";
+    	return "SELECT Comment, PaintingID, Rating, RatingID, ReviewDate FROM Reviews WHERE PaintingID = ".$id;
     }
     public function getArtistSqlStatement($id){
-    	return "SELECT ArtistID, ArtistLink, Details, FirstName, LastName, Gender, Nationality, YearOfBirth, YearOfDeath FROM artists WHERE ArtistID = $id";
-    	}
-    	public function getGallerySqlStatement($id){
-    		return "SELECT GalleryID, GalleryName, GalleryCity, GalleryCountry, GalleryNativeName, GalleryWebSite, Latitude, Longitude FROM galleries WHERE GalleryId = $id";
-    		
-    	}
+    	return "SELECT ArtistID, ArtistLink, Details, FirstName, LastName, Gender, Nationality, YearOfBirth, YearOfDeath FROM Artists WHERE ArtistID = ".$id;
+    }
+    public function getGallerySqlStatement($id){
+    		return "SELECT GalleryID, GalleryName, GalleryCity, GalleryCountry, GalleryNativeName, GalleryWebSite, Latitude, Longitude FROM Galleries WHERE GalleryId = ".$id;
+    }
 
 }
 class PaintingSubjectsTableGateway extends TableDataGateway{
@@ -154,7 +154,7 @@ class PaintingSubjectsTableGateway extends TableDataGateway{
         return "PaintingSubject";
     }
     public function getSelectStatement(){
-        return "SELECT PaintingID, PaintingSubjectID, SubjectID FROM paintingSubjects";
+        return "SELECT PaintingID, PaintingSubjectID, SubjectID FROM PaintingSubjects";
     }
     public function getPrimaryKeyName(){
         return "PaintingSubjectID";
@@ -165,7 +165,7 @@ class ReviewsTableGateway extends TableDataGateway{
         return "Review";
     }
     public function getSelectStatement(){
-        return "SELECT Comment, PaintingID, Rating, RatingID, ReviewDate FROM reviews";
+        return "SELECT Comment, PaintingID, Rating, RatingID, ReviewDate FROM Reviews";
     }
     public function getPrimaryKeyName(){
         return "RatingID";
@@ -176,7 +176,7 @@ class ShapesTableGateway extends TableDataGateway{
         return "Shape";
     }
     public function getSelectStatement(){
-        return "SELECT ShapeID, ShapeName FROM shapes";
+        return "SELECT ShapeID, ShapeName FROM Shapes";
     }
     public function getPrimaryKeyName(){
         return "ShapeID";
@@ -187,7 +187,7 @@ class SubjectsTableGateway extends TableDataGateway{
         return "Subject";
     }
     public function getSelectStatement(){
-        return "SELECT SubjectID, SubjectName FROM subjects";
+        return "SELECT SubjectID, SubjectName FROM Subjects";
     }
     public function getPrimaryKeyName(){
         return "SubjectID";
@@ -203,7 +203,7 @@ class TypesFramesTableGateway extends TableDataGateway{
         return "Frame";
     }
     public function getSelectStatement(){
-        return "SELECT Color, FrameID, Price, Syle, Title FROM typesframes";
+        return "SELECT Color, FrameID, Price, Syle, Title FROM TypesFrames";
     }
     public function getPrimaryKeyName(){
         return "FrameID";
@@ -214,7 +214,7 @@ class TypesGlassTableGateway extends TableDataGateway{
         return "Glass";
     }
     public function getSelectStatement(){
-        return "SELECT Description, GlassID, Price, Title FROM typesGlass";
+        return "SELECT Description, GlassID, Price, Title FROM TypesGlass";
     }
     public function getPrimaryKeyName(){
         return "GlassID";
@@ -225,7 +225,7 @@ class TypesMattTableGateway extends TableDataGateway{
         return "Matt";
     }
     public function getSelectStatement(){
-        return "SELECT ColorCode, MattID, Title FROM typesMatt";
+        return "SELECT ColorCode, MattID, Title FROM TypesMatt";
     }
     public function getPrimaryKeyName(){
         return "MattID";
@@ -236,7 +236,7 @@ class TypesShippersTableGateway extends TableDataGateway{
         return "Shipper";
     }
     public function getSelectStatement(){
-        return "SELECT shipperAvgTime, shipperBaseFee, shipperClass, shipperDescription, shipperID, shipperName, shipperWeightFee FROM typeShippers";
+        return "SELECT shipperAvgTime, shipperBaseFee, shipperClass, shipperDescription, shipperID, shipperName, shipperWeightFee FROM TypeShippers";
     }
     public function getPrimaryKeyName(){
         return "shipperID";
@@ -247,7 +247,7 @@ class TypesStatusCodesTableGateway extends TableDataGateway{
         return "Status";
     }
     public function getSelectStatement(){
-        return "SELECT StatusID, status FROM typesStatusCodes";
+        return "SELECT StatusID, Status FROM TypesStatusCodes";
     }
     public function getPrimaryKeyName(){
         return "StatusID";
@@ -258,7 +258,7 @@ class VisitsTableGateway extends TableDataGateway{
         return "Visit";
     }
     public function getSelectStatement(){
-        return "SELECT * FROM visits";
+        return "SELECT * FROM Visits";
     }
     public function getPrimaryKeyName(){
         return "VisitID";

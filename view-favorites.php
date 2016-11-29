@@ -134,64 +134,6 @@ $favorite = new FavoriteHelpers;
 			
 		}
 	};
-
-
-	var removeAllFavorites = function(e){;
-		jQuery.ajax({
-		    type: "POST",
-		    url: 'includes/favoriteFunctions.inc.php',
-		    dataType: 'json',
-		    data: {functionname: 'emptyFavorites' },
-		    success: function (result) {
-		                  if(result) {
-		                      alert("success");
-		                  }
-		                  else {
-		                      alert("error");
-		                  }
-		            }
-		});
-		console.log("removed");
-	};
-	var removeArtistFromFavorites = function(e){
-		console.log("f:"+ e);
-		jQuery.ajax({
-		    type: "POST",
-		    url: 'includes/favoriteFunctions.php',
-		    dataType: 'json',
-		    data: {functionname: 'emptyFavorites' },
-		    success: function (result) {
-		                  if(result) {
-		                      alert("success");
-		                  }
-		                  else {
-		                      alert("error");
-		                  }
-		            }
-		});
-		console.log("removed");
-
-		}
-
-	var removePaintingFromFavorites = function(e){
-		console.log("f:"+ e);
-		jQuery.ajax({
-		    type: "POST",
-		    url: 'view-favorites.php',
-		    dataType: 'json',
-		    data: {functionname: 'FavoriteFunctions::emptyFavorites' },
-		    success: function (result) {
-		                  if(result) {
-		                      alert("success");
-		                  }
-		                  else {
-		                      alert("error");
-		                  }
-		            }
-		});
-		console.log("removed");
-
-		}
 	hide(artists);
 	remArtist.style.display = "none";
 	

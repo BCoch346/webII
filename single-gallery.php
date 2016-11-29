@@ -1,5 +1,5 @@
  <?php 
- include("Controllers/singleGallery.class.php");
+ require("Controllers/singleGallery.class.php");
  
  $galleryController = new SingleGalleryController;
  ?>
@@ -40,7 +40,7 @@
         <div class="ui wide container">
                     <div class="ui stackable grid">
             	<div class="ui four wide column">
-            		<h2 class="ui header"><?php echo utf8_encode($galleryController->gallery->GalleryName); ?></h2>
+            		<h2 class="ui header"><?php echo utf8_encode($galleryController->getGallery()->GalleryName);?></h2>
             		<p><?php echo $galleryController->gallery->getGalleryLocation(); ?></p>
             		<div class='ui divider'></div>
 					<div class="animated fluid ui button">

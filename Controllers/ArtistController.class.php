@@ -1,6 +1,6 @@
 <?php
-include('DataAccess/classfiles/Artist.class.php');
-include('DataAccess/classfiles/Painting.class.php');
+include_once('DataAccess/classfiles/Artist.class.php');
+include('DataAccess/classfiles/painting.class.php');
 
 include_once("instance.class.php");
 

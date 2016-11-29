@@ -1,6 +1,6 @@
 <?php
 include('DataAccess/classfiles/genre.class.php');
-include('DataAccess/classfiles/Painting.class.php');
+include('DataAccess/classfiles/painting.class.php');
 
 include_once("instance.class.php");
 
@@ -15,7 +15,7 @@ class GenresController extends Instance{
 	
 	public function setBrowseGenreData(){
 		$sql = $this->gateway->getSelectStatement();
-		$statement = $this->dbAdapter->fetchAsArray($sql, "GenreName");
+		$statement = $this->dbAdapter->fetchAsArray($sql);
 		foreach($statement as $data){
 			$genre = new Genre($data);
 			$this->genres[] = $genre;

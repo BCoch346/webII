@@ -18,12 +18,6 @@ class DropdownController extends Instance{
 	
 	public function __construct(){
 		parent::__construct();
-		//$this->frames = $this->setFrames();
-		//$this->glass = $this->setGlass();
-		//$this->matts = $this->setMatt();
-		//$this->artists = $this->getArtists();
-		//$this->museums = $this->getMuseums();
-		//$this->shapes = $this->getShapes();
 	}
 	
 	public function createListItem($class, $content){
@@ -33,7 +27,6 @@ class DropdownController extends Instance{
 		$list = '<select name="FrameID" id="frame" class="ui search dropdown">';
 			foreach($this->frames as $item){
 				$list .= $item;
-				//$list .= $this->createOption($item->FrameID, $item->Title);
 			}
 
 		$list .= '</select>';
@@ -75,7 +68,7 @@ class DropdownController extends Instance{
 	//-DROPDOWN----
 	//-------------
 	public function framesDropdown(){
-		$sql = "SELECT FrameID, Title FROM typesframes ORDER BY Title";
+		$sql = "SELECT FrameID, Title FROM TypesFrames ORDER BY Title";
 		
 		$frames = $this->dbAdapter->fetchAsArray($sql);
 		$list = '<select name="frameid" id="frame" class="ui search dropdown">';
@@ -86,7 +79,7 @@ class DropdownController extends Instance{
 		return utf8_encode($list);
 		}
 	public function glassDropdown(){
-		$sql = "SELECT GlassID, Title FROM typesglass ORDER BY Title";
+		$sql = "SELECT GlassID, Title FROM TypesGlass ORDER BY Title";
 		
 		$statement = $this->dbAdapter->fetchAsArray($sql);
 		$list = '<select name="glassid" id="glass" class="ui search dropdown">';
@@ -97,7 +90,7 @@ class DropdownController extends Instance{
 		return utf8_encode($list);
 		}	
 	public function mattDropdown(){
-		$sql = "SELECT MattID, Title FROM typesmatt ORDER BY Title";
+		$sql = "SELECT MattID, Title FROM TypesMatt ORDER BY Title";
 		
 		$statement = $this->dbAdapter->fetchAsArray($sql);
 		$list = '<select name="mattid" id="matt" class="ui search dropdown">';
@@ -109,7 +102,7 @@ class DropdownController extends Instance{
 		}
 
 	public function artistDropdown(){
-		$sql = "SELECT ArtistID, FirstName, LastName FROM artists ORDER BY LastName";
+		$sql = "SELECT ArtistID, FirstName, LastName FROM Artists ORDER BY LastName";
 		
 		$statement = $this->dbAdapter->fetchAsArray($sql);
 		$list = '<select name="artistid" id="artist" class="ui fluid search dropdown">';
@@ -122,7 +115,7 @@ class DropdownController extends Instance{
 		return utf8_encode($list);
 		}
 	public function museumDropdown(){
-		$sql = "SELECT GalleryID, GalleryName FROM galleries ORDER BY GalleryName";
+		$sql = "SELECT GalleryID, GalleryName FROM Galleries ORDER BY GalleryName";
 		
 		$statement = $this->dbAdapter->fetchAsArray($sql);
 		$list = '<select name="galleryid" id="gallery" class="ui fluid search dropdown">';
@@ -135,7 +128,7 @@ class DropdownController extends Instance{
 		return utf8_encode($list);
 		}
 	public function shapeDropdown(){
-		$sql = "SELECT ShapeID, ShapeName FROM shapes ORDER BY ShapeName";
+		$sql = "SELECT ShapeID, ShapeName FROM Shapes ORDER BY ShapeName";
 		
 		$statement = $this->dbAdapter->fetchAsArray($sql);
 		$list = '<select name="shapeid" id="shape" class="ui fluid search dropdown">';

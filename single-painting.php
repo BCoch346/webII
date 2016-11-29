@@ -111,7 +111,7 @@ $controller->setPaintingData($painting);
                                     Museum
                                 </td>
                                 <td>
-                                    <?php echo $painting->gallery->GalleryName; ?>
+                                    <?php echo '<a href="single-gallery.php?galleryid='.$painting->museum->GalleryID.'">'.utf8_encode($painting->museum->GalleryName).'</a>'; ?>
                                 </td>
                             </tr>
                             <tr>
@@ -127,7 +127,7 @@ $controller->setPaintingData($painting);
                                     Copyright
                                 </td>
                                 <td>
-                                    <?php echo $painting->CopyrightText; ?>
+                                    <?php echo utf8_encode($painting->CopyrightText); ?>
                                 </td>
                             </tr>
                             <tr>
@@ -135,23 +135,25 @@ $controller->setPaintingData($painting);
                                     URL
                                 </td>
                                 <td>
-                                    <a href="<?php echo $painting->museumLink ?>">View painting at museum site</a>
+                                    <a href=<?php echo $painting->MuseumLink ?>>View painting at museum site</a>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="ui bottom attached tab segment" data-tab="genres">
-                	<?php echo $painting->getGenreList(); ?>
+                	<?php echo utf8_encode($painting->getGenreList()); ?>
                 	
                 </div>
                 <div class="ui bottom attached tab segment" data-tab="subjects">
-                        <?php echo $painting->getSubjectList(); ?>
+                        <?php echo utf8_encode($painting->getSubjectList()); ?>
                 </div>
 
                 <!-- Cart and Price -->
 
                 <div class="ui segment">
+                    <form method='POST' action="view-cart.php">
+
                     <div class="ui form">
                         <div class="ui tiny statistic">
                             <div class="value">
@@ -159,10 +161,12 @@ $controller->setPaintingData($painting);
                             </div>
                         </div>
                         <div class="four fields">
+													
                             <div class="three wide field">
-                                
+																	
+															
                                 <label>Quantity</label>
-                                <input type="number" name="quantity">
+                                <input  min=1 type="number" name="quantity">
                             </div>
                             <div class="four wide field">
                                 <label>Frame</label>
@@ -175,41 +179,31 @@ $controller->setPaintingData($painting);
                             <div class="four wide field">
                                 <label>Matt</label>
                                 <?php echo $dropdown->mattDropdown(); ?>
-
-
                             </div>
                         </div>
                     </div>
-
                     <div class="ui divider"></div>
                     <div class="ui two column grid">
                     <div class="ui column">
-                     <form method="post" action="view-cart.php">
                         <button type="submit" name="addtocart" class="ui labeled icon orange button"  id="" value="<?php echo $painting->PaintingID;?>" >
                         <i class="add to cart icon"></i>
                         Add to Cart
                     </button>
-<<<<<<< HEAD
-                     </form> 
                     </div>
-                    <div class="ui column">
-                                        <form action="view-favorites.php" method="post">
-                    <button type="submit" name="addfavp" class="ui right labeled icon button" value="<?php echo $painting->PaintingID;?>">
-=======
-                    
-                    <button type="button" name="addFavP" class="ui right labeled icon button" value=<?php echo createButtonValue();?>>
->>>>>>> branch 'master' of https://github.com/bcoch346/webII.git
+                       
+                
+																										<div class="ui column">
+                    <button type="submit" formaction="view-favorites.php" name="addfavp" class="ui right labeled icon button" value="<?php echo $painting->PaintingID;?>">
                         <i class="heart icon"></i>
                         Add to Favorites
                     </button>
                     </div>
                     </div>
 
-
+ </form>
 
                 </div>                    
                          
-                    </form>
             </div> <p>
             <!-- END Cart -->
             </div>	<!-- END RIGHT data Column -->
@@ -238,7 +232,7 @@ $controller->setPaintingData($painting);
                                 Wikipedia Link
                             </td>
                             <td>
-                                <a href="<?php echo $painting->WikiLink; ?>">View painting on Wikipedia</a>
+                                <a href=<?php echo $painting->WikiLink; ?>>View painting on Wikipedia</a>
                             </td>
                         </tr>
 

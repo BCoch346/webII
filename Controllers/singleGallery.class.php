@@ -1,7 +1,7 @@
 <?php
-include ('DataAccess/classfiles/gallery.class.php');
-include ('DataAccess/classfiles/painting.class.php');
-include ("instance.class.php");
+include('DataAccess/classfiles/gallery.class.php');
+include('DataAccess/classfiles/painting.class.php');
+include("instance.class.php");
 class SingleGalleryController extends Instance {
 	private $gateway;
 	public $gallery;
@@ -9,26 +9,30 @@ class SingleGalleryController extends Instance {
 	public function __construct() {
 		parent::__construct ();
 		$this->gateway = new GalleriesTableGateway ( $this->dbAdapter );
-		$this->gallery = $this->getGallery ();
-		$this->getPaintings ();
+		$this->getGallery();
+		$this->getPaintings();
 	}
-	private function getGallery() {
+	public function getGallery() {
 		$galleryID = $this->DEFAULT_GALLERY_ID;
 		if ($this->isValid ( 'galleryid' )) {
 			$galleryID = $_GET ['galleryid'];
 		}
 		
-		$data = $this->gateway->findById ( $galleryID );
+		$data = $this->gateway->findById( $galleryID );
 		if(empty($data)){
 			$data = $this->gateway->findById ( $this->DEFAULT_GALLERY_ID );	
 		}
-		return new Gallery ( $data );
+		$g = new Gallery($data);
+		$this->gallery = $g;
+		return $this->gallery;
 	}
-	private function getPaintings() {
+	
+	public function getPaintings() {
 		$paintings = array ();
-		$data = $this->dbAdapter->fetchAsArray ( $this->gateway->getpaintings ( $this->gallery->GalleryID ) );
+		$data = $this->dbAdapter->fetchAsArray ( $this->gateway->getPaintings ( $this->gallery->GalleryID ) );
+		
 		foreach ( $data as $painting ) {
-			$this->paintings [] = new Painting ( $painting );
+			$this->paintings[] = new Painting ( $painting );
 		}
 	}
 	public function createMuseumMap() {
@@ -54,7 +58,7 @@ class SingleGalleryController extends Instance {
 	}
 	public function createGalleryHeader() {
 		if ($this->gallery != null) {
-			
+			print_r($this->gallery->GalleryName);
 			$header = "<div class='item'>";
 			$header .= '<div class="content"><h2 class="ui header">' . $this->gallery->GalleryName . '</h2>';
 			$header .= '<div class="meta"><span>' . $gallery ["GalleryCity"] . ', ' . $this->gallery->GalleryCountry . '</span></div>';

@@ -1,7 +1,7 @@
 <?php
-include ("DataAccess/classfiles/domainObject.class.php");
-include ("DataAccess/classfiles/Artist.class.php");
-include ("DataAccess/classfiles/Painting.class.php");
+include_once ("DataAccess/classfiles/domainObject.class.php");
+include_once ("DataAccess/classfiles/Artist.class.php");
+include_once ("DataAccess/classfiles/painting.class.php");
 
 include ("instance.class.php");
 
@@ -10,11 +10,13 @@ class favorite extends DomainObject {
 	public $name;
 	public $id;
 	public $destination;
-	public function __construct($id, $imagePath, $name, $destination) {
+	public $formName;
+	public function __construct($id, $imagePath, $name, $destination, $formName) {
 		$this->id = $id;
 		$this->name = $name;
 		$this->image = $imagePath;
 		$this->destination = $destination;
+		$this->formName = $formName;
 	}
 	public static function getFieldNames() {
 		return array (
@@ -31,7 +33,7 @@ class favorite extends DomainObject {
 		</div>
 		<div class='extra content'>
 		<form action='view-favorites.php' method='post'>
-		<button name='remfavp' value ='" . $this->id . "' class='ui right floated mini button'>
+		<button name='".$this->formName."' value ='" . $this->id . "' class='ui right floated mini button'>
 		<i class='trash icon'></i>remove
 		</button>
 				</form>
@@ -43,7 +45,6 @@ class favorite extends DomainObject {
 class FavoriteHelpers extends Instance{
 	public function __construct(){
 		parent::__construct();
-
 	}
 	public function updateFavorites(){
 		if(isset($_POST['addfava'])){
@@ -81,7 +82,7 @@ class FavoriteHelpers extends Instance{
 		$_SESSION ['favorite_paintings'] = array ();
 	}
 	public function removeFavoriteArtist($id) {
-		if (null != $_SESSION["favorite_artists"] ) {
+		if (null != $_SESSION["favorite_artists"]  && count($_SESSION['favorite_artists'] > 0)) {
 			for($i = 0; $i < count ( $_SESSION ["favorite_artists"] ); $i ++) {
 				if ($_SESSION ["favorite_artists"] [$i]->id == $id) {
 					unset ( $_SESSION ["favorite_artists"] [$i] );
@@ -90,7 +91,7 @@ class FavoriteHelpers extends Instance{
 		}
 	}
 	public function removeFavoritePainting($id) {
-		if (null != $_SESSION["favorite_paintings"] ) {
+		if (null != $_SESSION["favorite_paintings"] && count($_SESSION['favorite_paintings'] > 0)) {
 			for($i = 0; $i < count ( $_SESSION ["favorite_paintings"] ); $i ++) {
 				if($_SESSION ["favorite_paintings"] [$i] != null){
 					if ($_SESSION ["favorite_paintings"] [$i]->id == $id) {
@@ -127,7 +128,8 @@ class FavoriteHelpers extends Instance{
 						$painting->PaintingID,
 						$painting->squareMediumImageFilePath(),
 						$painting->Title,
-						"single-painting.php?paintingid=".$painting->PaintingID
+						"single-painting.php?paintingid=".$painting->PaintingID,
+						"remfavp"
 						);
 				array_push($_SESSION['favorite_paintings'], $favoritePainting);
 				$success = true;
@@ -138,6 +140,7 @@ class FavoriteHelpers extends Instance{
 		return $success;
 	}
 	public function addArtist($id){
+
 		$success = false;
 		$this->gateway = new ArtistTableGateway($this->dbAdapter);
 		if(!$this->exists($id, $_SESSION['favorite_artists'])){
@@ -148,9 +151,22 @@ class FavoriteHelpers extends Instance{
 						$artist->ArtistID,
 						$artist->getHref(),
 						$artist->getFullName(false),
-						"single-artist.php?artistid=".$artist->ArtistId
+						"single-artist.php?artistid=".$artist->ArtistID,
+						"remfava"
 						);
-				array_push($_SESSION['favorite_artists'], $favoriteArtist);
+				//array_push($_SESSION['favorite_artists'], $favoriteArtist);
+                
+                
+        if(!empty($_SESSION['favorite_artists'])){
+				    array_push($_SESSION['favorite_artists'], $favoriteArtist);
+			}
+			     else{
+				    $_SESSION['favorite_artists'] = array($favoriteArtist);
+			     }
+                
+                
+                
+                
 				$success = true;
 			}
 		}

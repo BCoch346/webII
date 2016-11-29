@@ -5,7 +5,8 @@ abstract class DomainObject{
     abstract protected static function getFieldNames();
 
     public function __construct($data){
-        if(!is_array($data)){
+      
+      if(!is_array($data)){
         	$data = array($data);
         }
     	if (!empty($data)) {
@@ -23,6 +24,7 @@ abstract class DomainObject{
     }
     public function __set($name, $value){
         $mutator = 'set' . ucfirst($name);
+ 
         //if(method_exists($this, $mutator) && is_callable(array($this, $mutator))){
          //   $this->$mutator($value);
         //}
@@ -40,6 +42,22 @@ abstract class DomainObject{
     public function doesFieldExist($name){
         return property_exists($this, $name);
     }
+    
+    public function toJSON(){
+    	$json = array();
+    	$fields = $this->getFieldNames();
+    	
+    	foreach($fields as $field){
+    		$value = $this->__get($field);
+    		
+    		$json[$field] = $value;
+    	}
+    	return $json;
+    	
+    }
+    
+    
+
 }
 
 ?>

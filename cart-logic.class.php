@@ -1,37 +1,66 @@
 <?php
 include("Controllers/instance.class.php");
 
+
 class cartLogic extends instance{
 	private $gateway;
+    
 	public function __construct(){
 		parent::__construct();
 		$this->gateway = new PaintingsTableGateway($this->dbAdapter);
 	}
-	public function checkForUpdates(){
+	/*public function checkForUpdates(){
 		$this->remove();
-	}
+	}*/
+    
 	public function addToCart(){
 		if(isset($_POST["addtocart"])){
+            
+            
 			$data = $this->gateway->findById($_POST["addtocart"]);
 			$painting = new Painting($data);
 			$quantity=1;
 			if(isset($_POST['quantity'])){$quantity = $_POST['quantity'];}
-			$frame='None';
-			if(isset($_POST['frameid'])){$frame = $_POST['frameid'];}
-			$glass='None';
-			if(isset($_POST['glassid'])){$glass = $_POST['glassid'];}
-			$matt='None';
-			if(isset($_POST['mattid'])){$matt = $_POST['mattid'];}
+			$frame='18';
+			if(isset($_POST['frameid']) && $_POST['frameid'] != 'None' ){$frame = $_POST['frameid'];}
+            if($frame == 'None'){$frame = 18;}
+			$glass='5';
+			if(isset($_POST['glassid']) && $_POST['glassid'] != 'None' ){$glass = $_POST['glassid'];}
+            if($glass == 'None'){$glass = 5;}
+			$matt='35';
+			if(isset($_POST['mattid']) && $_POST['mattid'] != 'None' ){$matt = $_POST['mattid'];}
+            if($matt == 'None'){$mat = 35;}
 			
-			$order = array("id"=>$painting->PaintingID, "quantity"=>$quantity, "frame"=>$frame, "glass"=>$glass, "matt"=>$matt);
+			$order = array("id"=>$_POST['addtocart'], "quantity"=>$quantity, "frame"=>$frame, "glass"=>$glass, "matt"=>$matt);
 			
-			
-			if(!empty($_SESSION['Painting'])){
-				array_push($_SESSION['Painting'], $order);
+            $stopAdd = 'no';
+            $foundPainting = '';
+            if(isset($_SESSION['Painting'])){
+                for($n=0; $n < count($_SESSION['Painting']); $n++){
+                    if($_POST['addtocart'] == $_SESSION['Painting'][$n]['id']){
+                        $stopAdd = 'yes';
+                        $foundPainting = $n;
+                }
+                }
+    
+    
+}
+            if($stopAdd == 'no'){
+			     if(!empty($_SESSION['Painting'])){
+				    array_push($_SESSION['Painting'], $order);
 			}
-			else{
-				$_SESSION['Painting'] = array($order);
-			}
+			     else{
+				    $_SESSION['Painting'] = array($order);
+			     }
+            }
+            else{
+                
+                $_SESSION['Painting'][$foundPainting] = $order;
+                echo '<script> alert("This painting was already in the cart, it has now been overwritten");</script>';
+                
+                
+                
+            }
 	}
 
 
@@ -49,26 +78,28 @@ class cartLogic extends instance{
 	}
 	
 	public function getGlassByID($id){
-		return $this->dbAdapter->fetchRow("SELECT Description, GlassID, Price, Title FROM typesglass");
+		return $this->dbAdapter->fetchRow("SELECT Description, GlassID, Price, Title FROM TypesGlass WHERE GlassID=" .$id);
 	}
 	public function getMattByID($id){
-		return $this->dbAdapter->fetchRow("SELECT ColorCode, MattID, Title FROM typesmatt");
+		return $this->dbAdapter->fetchRow("SELECT ColorCode, MattID, Title FROM TypesMatt WHERE MattID=". $id);
 	}
 	public function getFrameByID($id){
-		return $this->dbAdapter->fetchRow("SELECT Color, FrameID, Price, Syle, Title FROM typesframes");
+		return $this->dbAdapter->fetchRow("SELECT Color, FrameID, Price, Syle, Title FROM TypesFrames WHERE FrameID=". $id);
 	}
 	// ADD CURRENT SELECTIONS TO THE CART DISPLAY
-	public function instantiateCartLogic() {
+	// ADD CURRENT SELECTIONS TO THE CART DISPLAY
+	function instantiateCartLogic() {
 		if (! empty ( $_SESSION ['Painting'] )) {
 			$painting = $_SESSION ['Painting'];
 			for($paintIndex = 0; $paintIndex < count ( $painting ); $paintIndex ++) {
-				// echo'<script>console.log($painting[$paintIndex]["id"])</script>';
-				$singlePainting = $this->gateway->findById( $painting [$paintIndex] ['id'] );
-				if (isset ( $_POST [$singlePainting ['PaintingID'] . 'Quantity'] ) && ! empty ( $_POST [$singlePainting ['PaintingID'] . 'Quantity'] )) {
-					$_SESSION ['Painting'] [$paintIndex] ['quantity'] = $_POST [$singlePainting ['PaintingID'] . 'Quantity'];
+			
+				$singlePainting = $painting[$paintIndex]['id'];
+				if (isset ( $_POST[$singlePainting . 'Quantity'] ) && !empty( $_POST [$singlePainting . 'Quantity'] )) {
+					$_SESSION ['Painting'] [$paintIndex] ['quantity'] = $_POST [$singlePainting . 'Quantity'];
+                    
 				}
 				
-				if (isset ( $_POST [$singlePainting ['PaintingID'] . 'changeFrame'] ) && $_POST [$singlePainting ['PaintingID'] . 'changeFrame'] == "yes" && isset ( $_POST ['frameid'] ) && $_POST ['frameid'] != $painting [$paintIndex] ['frame']) {
+				if (isset ( $_POST [$singlePainting. 'changeFrame'] ) && $_POST [$singlePainting . 'changeFrame'] == "yes" && isset ( $_POST ['frameid'] ) && $_POST ['frameid'] != $painting [$paintIndex] ['frame']) {
 					if ($_POST ['frameid'] == 'None') {
 						$_SESSION ['Painting'] [$paintIndex] ['frame'] = 18;
 					} else {
@@ -76,7 +107,7 @@ class cartLogic extends instance{
 					}
 				}
 				
-				if (isset ( $_POST [$singlePainting ['PaintingID'] . 'changeGlass'] ) && $_POST [$singlePainting ['PaintingID'] . 'changeGlass'] == "yes" && isset ( $_POST ['glassid'] ) && $_POST ['glassid'] != $painting [$paintIndex] ['glass']) {
+				if (isset ( $_POST [$singlePainting . 'changeGlass'] ) && $_POST [$singlePainting . 'changeGlass'] == "yes" && isset ( $_POST ['glassid'] ) && $_POST ['glassid'] != $painting [$paintIndex] ['glass']) {
 					if ($_POST ['glassid'] == 'None') {
 						$_SESSION ['Painting'] [$paintIndex] ['glass'] = 5;
 					} else {
@@ -84,7 +115,7 @@ class cartLogic extends instance{
 					}
 				}
 				
-				if (isset ( $_POST [$singlePainting ['PaintingID'] . 'changeMatt'] ) && $_POST [$singlePainting ['PaintingID'] . 'changeMatt'] == "yes" && isset ( $_POST ['mattid'] ) && $_POST ['mattid'] != $painting [$paintIndex] ['matt']) {
+				if (isset ( $_POST [$singlePainting . 'changeMatt'] ) && $_POST [$singlePainting . 'changeMatt'] == "yes" && isset ( $_POST ['mattid'] ) && $_POST ['mattid'] != $painting [$paintIndex] ['matt']) {
 					if ($_POST ['mattid'] == 'None') {
 						$_SESSION ['Painting'] [$paintIndex] ['matt'] = 35;
 					} else {
@@ -92,18 +123,22 @@ class cartLogic extends instance{
 					}
 				}
 				
-				if (isset ( $_POST [$singlePainting ['PaintingID'] . 'remove'] ) && $_POST [$singlePainting ['PaintingID'] . 'remove'] == "Remove") {
+				if (isset ( $_POST [$singlePainting . 'remove'] ) && !empty($_POST [$singlePainting . 'remove'])) {
 					for($i = 0; $i < count ( $painting ); $i ++) {
-						if ($singlePainting ['PaintingID'] == $_SESSION ['Painting'] [$i] ['id']) {
+						if ($singlePainting == $_SESSION ['Painting'] [$i] ['id']) {
 							break;
 						}
 					}
 					unset ( $_SESSION ['Painting'] [$i] );
+                    $_SESSION['valueHolder']['standard'] == '';
 					$_SESSION ['Painting'] = array_values ( $_SESSION ['Painting'] );
+                    
+                    
 				}
 				
 				if (isset ( $_POST ['cartOptions'] ) && $_POST ['cartOptions'] == "Empty Cart") {
 					unset ( $_SESSION ['Painting'] );
+                    $_SESSION['valueHolder']['standard'] == '';
 				}
 				
 				if (isset ( $_POST ['cartOptions'] ) && $_POST ['cartOptions'] == "Update") {

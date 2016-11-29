@@ -1,7 +1,7 @@
 <?php
  include("Controllers/GenresController.class.php");
  
- $controller = new GenresController();
+ $controller = new GenresController;
  ?>
 
 <!DOCTYPE html>

@@ -33,12 +33,6 @@ $controller = new SubjectController ();
 	<header>
         <?php include('includes/header.inc.php'); ?>
     </header>
-<<<<<<< HEAD
-=======
-        <div class="ui container items">
-                   <?php echo createSingleSubjectHeader(); ?>
-            </div>
->>>>>>> branch 'master' of https://github.com/bcoch346/webII.git
 
 	<div class="ui horizontal divider"><h2><?php echo $controller->getSubject()->SubjectName; ?></h2></div>
 

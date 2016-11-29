@@ -16,8 +16,9 @@ class Genre extends DomainObject{
         parent::__construct($data);
     }
     
-    public function createImage(){
-    	return '<img src="images/art/genres/square-medium/'.$this->GenreID.'.jpg" title="'.$this->GenreName.'" alt="'.$this->GenreName.'">';
+    public function createImage(){ 
+      return "<img src='images/art/genres/square-medium/".$this->GenreID.".jpg' title='".$this->GenreName."' alt='".$this->GenreName."'>";
+
     }
     
     public function getHref(){
@@ -31,8 +32,7 @@ class Genre extends DomainObject{
     {
     		$card = "<div class='ui card genre'>";
     		$card .= "<div class='image'>".$this->createImage()."</div>";
-    		$card .= '<a class="ui text content" href="single-genre.php?genreid='.$this->GenreID.'"><div class="extra header">'.$this->GenreName.'</div></a></div>';
-    	
+    		$card .= "<a class='ui text content' href='single-genre.php?genreid=".$this->GenreID."'><div class='extra header'>".$this->GenreName."</div></a></div>";
     		return $card;
     }
 

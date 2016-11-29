@@ -22,8 +22,8 @@ class Painting extends DomainObject{
     public $GoogleLink;
     public $GoogleDescription;
     public $WikiLink;
-    public $artist;
-    public $gallery;
+    public $creator;
+    public $museum;
     public $genres;
     public $subjects;
     public $reviews;
@@ -31,7 +31,7 @@ class Painting extends DomainObject{
     protected static function getFieldNames(){
         return array("PaintingID", "ArtistID", "GalleryID", "ImageFileName", "Title", "ShapeID", "MuseumLink", "AccessionNumber",
             "CopyrightText", "Description", "Excerpt", "YearOfWork", "Width", "Height", "Medium", "Cost", "MSRP", "GoogleLink", 
-            "GoogleDescription", "WikiLink");
+            "GoogleDescription", "WikiLink", "creator", "museum", "genres", "subjects", "reviews");
     }
 
     public function __construct($data){
@@ -42,9 +42,9 @@ class Painting extends DomainObject{
     	return $this->Height." x ".$this->Width;
     }
     public function createThumbnail(){
-    	return '<div class="painting-thumbnail"><a href="single-painting.php?paintingid='.$this->PaintingID.'"><img src="'.$this->squareMediumImageFilePath().'" alt="'.$this->Title.'" title="'.$this->title.'"></a></div>';
+    	return '<div id="'.$this->ImageFileName.'" class="painting-thumbnail"><a href="single-painting.php?paintingid='.$this->PaintingID.'"><img src="'.$this->squareMediumImageFilePath().'" alt="'.$this->Title.'" title="'.$this->title.'"></a></div>';
     }
-    
+
     public function mediumImage(){
     	return '<img src="images/art/works/medium/'.$this->ImageFileName.'.jpg" class="image" title="'.$this->Title.'" alt="'.$this->title.'">';
     	     	
@@ -92,13 +92,13 @@ class Painting extends DomainObject{
     	return utf8_encode($modal);
     }
     public function getArtistLink(){
-    	$anchor = '<a href="single-artist.php?artistid='.$this->ArtistID.'">'. $this->artist->LastName.'</a>';
+    	$anchor = '<a href="single-artist.php?artistid='.$this->ArtistID.'">'. $this->creator->LastName.'</a>';
     	return utf8_encode($anchor);
     }
     
     public function createPaintingHeader(){
     	$header = "<h2 class='header'>" .$this->Title. "</h2>";
-    	$header .= "<h3>" . $this->artist->LastName. "</h3>";
+    	$header .= "<h3>" . $this->creator->LastName. "</h3>";
     
     	return utf8_encode($header);
     }
@@ -141,6 +141,26 @@ class Painting extends DomainObject{
     	}
     	return utf8_encode($reviews);
     }
+    
+    public toJSON(){
+    	$JSON = array{
+    		'PaintingID' => $PaintingID,
+    		
+    	};
+    }
+
+    	$bus = array(
+    			'latitude' => $row['lat'],
+    			'longitude' => $row['lng'],
+    			'icon' => './images/' . $row['busColor'] . '.png'
+    	);
+    	array_push($json, $bus);
+    }
+    
+    $jsonstring = json_encode($json);
+    echo $jsonstring;
+    
+    die();
     
 }
 ?>
